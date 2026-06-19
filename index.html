@@ -3103,269 +3103,49 @@
   <div class="section" id="sysmap">
     <div class="page-header">
       <h1>End-to-End System Map</h1>
-      <p>All actors, systems, and flows in a more. store — from supply chain to Roz. Scroll to zoom · drag to pan · double-click to reset.</p>
+      <p>The full operational flow of a more. store — supply on the left, customer on the right, systems and Roz underneath.</p>
     </div>
 
-    <!-- Legend -->
     <div class="sm-legend">
       <div class="sm-leg-item"><span class="sm-dot" style="background:#1A1A1A"></span>People</div>
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#7C3AED"></span>Supply</div>
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#E8460A"></span>Store / Roz</div>
       <div class="sm-leg-item"><span class="sm-dot" style="background:#2563EB"></span>Systems</div>
-      <div class="sm-leg-item"><span class="sm-dot" style="background:#7C3AED"></span>External</div>
-      <div class="sm-leg-item"><span class="sm-dot" style="background:#E8460A"></span>Roz AI</div>
-      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#94A3B8"></span>Flow</div>
-      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#DC2626;border-style:dashed"></span>Pain / Manual</div>
-      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#E8460A"></span>AI Flow</div>
-      <div class="sm-leg-zoom">
-        <button onclick="resetZoom()" class="sm-reset-btn">↺ Reset</button>
-      </div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#94A3B8"></span>Goods / Flow</div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#DC2626;border-style:dashed"></span>Manual / Pain</div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#E8460A;border-style:dashed"></span>AI Flow</div>
+      <div class="sm-leg-zoom"><button onclick="smReset()" class="sm-reset-btn">↺ Reset layout</button></div>
     </div>
 
-    <!-- Zoomable container -->
-    <div class="sm-outer" id="smOuter">
+    <div class="sm-hint">✋ Drag any box to rearrange · drag the empty background to pan the whole map</div>
+
+    <div class="sm-canvas" id="smCanvas">
       <div class="sm-inner" id="smInner">
-      <svg id="smSvg" viewBox="0 0 1100 860" xmlns="http://www.w3.org/2000/svg" style="width:1100px;height:860px;display:block">
-        <defs>
-          <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#94A3B8"/></marker>
-          <marker id="arr-red" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#DC2626"/></marker>
-          <marker id="arr-orange" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#E8460A"/></marker>
-          <marker id="arr-blue" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#2563EB"/></marker>
-          <filter id="sh"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.10)"/></filter>
-          <filter id="sh-sm"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.07)"/></filter>
-          <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
-            <circle cx="12" cy="12" r="1" fill="#E2E8F0"/>
-          </pattern>
-        </defs>
-
-        <!-- BG -->
-        <rect width="1100" height="860" fill="#F8F8F6"/>
-        <rect width="1100" height="860" fill="url(#dots)"/>
-
-        <!-- Zone labels (subtle) -->
-        <text x="28" y="100" font-size="9" font-weight="700" letter-spacing="2" fill="#CBD5E1" font-family="Inter,sans-serif">EXTERNAL</text>
-        <text x="28" y="310" font-size="9" font-weight="700" letter-spacing="2" fill="#CBD5E1" font-family="Inter,sans-serif">STORE OPS</text>
-        <text x="28" y="620" font-size="9" font-weight="700" letter-spacing="2" fill="#CBD5E1" font-family="Inter,sans-serif">SYSTEMS</text>
-        <text x="28" y="790" font-size="9" font-weight="700" letter-spacing="2" fill="#E8460A" font-family="Inter,sans-serif">AI LAYER</text>
-
-        <!-- Zone dividers -->
-        <line x1="100" y1="110" x2="1080" y2="110" stroke="#E8E8E6" stroke-width="1"/>
-        <line x1="100" y1="322" x2="1080" y2="322" stroke="#E8E8E6" stroke-width="1"/>
-        <line x1="100" y1="634" x2="1080" y2="634" stroke="#E8E8E6" stroke-width="1"/>
-        <line x1="100" y1="798" x2="1080" y2="798" stroke="rgba(232,70,10,0.2)" stroke-width="1"/>
-
-        <!-- ══════════════════════════
-             CONNECTIONS (behind nodes)
-        ══════════════════════════ -->
-
-        <!-- HQ → Vikram -->
-        <line x1="550" y1="132" x2="298" y2="248" stroke="#CBD5E1" stroke-width="1.5" marker-end="url(#arr)"/>
-        <!-- HQ → Customers -->
-        <line x1="650" y1="132" x2="862" y2="248" stroke="#CBD5E1" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- Vikram → Radhika (audit/direction) -->
-        <line x1="270" y1="294" x2="490" y2="420" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
-
-        <!-- Radhika → Vikram (manual report — RED PAIN) -->
-        <line x1="475" y1="405" x2="255" y2="285" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arr-red)"/>
-
-        <!-- Customers → Store -->
-        <line x1="870" y1="294" x2="700" y2="390" stroke="#CBD5E1" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- Vendors → Radhika -->
-        <line x1="160" y1="436" x2="488" y2="444" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr)"/>
-        <!-- Amazon → Radhika -->
-        <line x1="960" y1="436" x2="712" y2="444" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr)"/>
-        <!-- DC → Radhika -->
-        <line x1="550" y1="730" x2="550" y2="510" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- Radhika ↔ ERP (pain — dashed red) -->
-        <line x1="510" y1="495" x2="290" y2="660" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
-        <line x1="275" y1="652" x2="495" y2="488" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-blue)"/>
-
-        <!-- Radhika ↔ POS -->
-        <line x1="580" y1="498" x2="490" y2="658" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- Radhika ↔ WhatsApp (pain) -->
-        <line x1="620" y1="498" x2="660" y2="658" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
-
-        <!-- Radhika ↔ Inventory -->
-        <line x1="650" y1="498" x2="820" y2="658" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- ERP → DC (indent) -->
-        <line x1="310" y1="724" x2="450" y2="752" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arr-blue)"/>
-
-        <!-- Systems → Roz (data feeds) -->
-        <line x1="258" y1="725" x2="440" y2="818" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
-        <line x1="464" y1="725" x2="490" y2="818" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
-        <line x1="676" y1="725" x2="600" y2="818" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
-        <line x1="840" y1="725" x2="650" y2="818" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
-
-        <!-- Roz → Radhika (the key AI flow — thick orange) -->
-        <line x1="550" y1="820" x2="560" y2="510" stroke="#E8460A" stroke-width="3" marker-end="url(#arr-orange)" filter="url(#glow)"/>
-        <rect x="487" y="645" width="120" height="22" rx="11" fill="#E8460A"/>
-        <text x="547" y="660" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Inter,sans-serif">AI recommendation ↑</text>
-
-        <!-- ══════════════════════════
-             PAIN ANNOTATIONS (side)
-        ══════════════════════════ -->
-
-        <!-- Pain 1: Manual report -->
-        <rect x="52" y="330" width="116" height="38" rx="7" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
-        <text x="110" y="346" text-anchor="middle" font-size="9" font-weight="700" fill="#DC2626" font-family="Inter,sans-serif">⚠ Manual report</text>
-        <text x="110" y="360" text-anchor="middle" font-size="8" fill="#DC2626" font-family="Inter,sans-serif">60 min/day · error-prone</text>
-        <line x1="168" y1="349" x2="252" y2="349" stroke="#FECACA" stroke-width="1" stroke-dasharray="3,2"/>
-
-        <!-- Pain 2: Manual order -->
-        <rect x="52" y="440" width="116" height="38" rx="7" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
-        <text x="110" y="456" text-anchor="middle" font-size="9" font-weight="700" fill="#DC2626" font-family="Inter,sans-serif">⚠ Manual order</text>
-        <text x="110" y="470" text-anchor="middle" font-size="8" fill="#DC2626" font-family="Inter,sans-serif">45 min · gut feel only</text>
-        <line x1="168" y1="459" x2="488" y2="459" stroke="#FECACA" stroke-width="1" stroke-dasharray="3,2"/>
-
-        <!-- Pain 3: Data not surfaced -->
-        <rect x="880" y="440" width="120" height="38" rx="7" fill="#FEF2F2" stroke="#FECACA" stroke-width="1.2"/>
-        <text x="940" y="456" text-anchor="middle" font-size="9" font-weight="700" fill="#DC2626" font-family="Inter,sans-serif">⚠ Data in silos</text>
-        <text x="940" y="470" text-anchor="middle" font-size="8" fill="#DC2626" font-family="Inter,sans-serif">Not surfaced in real-time</text>
-        <line x1="880" y1="459" x2="712" y2="459" stroke="#FECACA" stroke-width="1" stroke-dasharray="3,2"/>
-
-        <!-- ══════════════════════════
-             NODES
-        ══════════════════════════ -->
-
-        <!-- HQ -->
-        <g filter="url(#sh)">
-          <circle cx="600" cy="68" r="44" fill="#1A1A1A"/>
-          <text x="600" y="60" text-anchor="middle" font-size="18">🏢</text>
-          <text x="600" y="76" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">HQ &amp; Category</text>
-          <text x="600" y="90" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif">Targets · Promos · Plans</text>
-        </g>
-
-        <!-- Vikram -->
-        <g filter="url(#sh)">
-          <circle cx="270" cy="268" r="44" fill="#1A1A1A"/>
-          <text x="270" y="259" text-anchor="middle" font-size="20">👨‍💼</text>
-          <text x="270" y="276" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">Vikram</text>
-          <text x="270" y="290" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif">Area Manager · 8 stores</text>
-        </g>
-
-        <!-- Customers -->
-        <g filter="url(#sh)">
-          <circle cx="890" cy="268" r="44" fill="#1A1A1A"/>
-          <text x="890" y="259" text-anchor="middle" font-size="20">🛒</text>
-          <text x="890" y="276" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">Customers</text>
-          <text x="890" y="290" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif">Peak 9–11am · 5–8pm</text>
-        </g>
-
-        <!-- Vendors -->
-        <g filter="url(#sh-sm)">
-          <rect x="68" y="408" width="130" height="60" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
-          <text x="133" y="428" text-anchor="middle" font-size="14">🚛</text>
-          <text x="133" y="446" text-anchor="middle" font-size="10" font-weight="700" fill="#5B21B6" font-family="Inter,sans-serif">Vendors</text>
-          <text x="133" y="460" text-anchor="middle" font-size="8" fill="#7C3AED" font-family="Inter,sans-serif">Fresh · FMCG · Staples</text>
-        </g>
-
-        <!-- Amazon -->
-        <g filter="url(#sh-sm)">
-          <rect x="960" y="408" width="130" height="60" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
-          <text x="1025" y="428" text-anchor="middle" font-size="14">📦</text>
-          <text x="1025" y="446" text-anchor="middle" font-size="10" font-weight="700" fill="#5B21B6" font-family="Inter,sans-serif">Amazon Fresh/Now</text>
-          <text x="1025" y="460" text-anchor="middle" font-size="8" fill="#7C3AED" font-family="Inter,sans-serif">Online · Q-Comm orders</text>
-        </g>
-
-        <!-- RADHIKA — Hero node -->
-        <circle cx="600" cy="444" r="90" fill="rgba(232,70,10,0.06)" stroke="rgba(232,70,10,0.2)" stroke-width="1.5" stroke-dasharray="5,4"/>
-        <g filter="url(#sh)">
-          <circle cx="600" cy="444" r="64" fill="#E8460A"/>
-          <text x="600" y="430" text-anchor="middle" font-size="26">👩</text>
-          <text x="600" y="452" text-anchor="middle" font-size="13" font-weight="800" fill="white" font-family="Inter,sans-serif">Radhika</text>
-          <text x="600" y="468" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.75)" font-family="Inter,sans-serif">Store Ops Manager</text>
-          <text x="600" y="482" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif">All decisions pass through her</text>
-        </g>
-
-        <!-- DC -->
-        <g filter="url(#sh-sm)">
-          <rect x="450" y="730" width="150" height="58" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
-          <text x="525" y="750" text-anchor="middle" font-size="14">🏭</text>
-          <text x="525" y="768" text-anchor="middle" font-size="10" font-weight="700" fill="#5B21B6" font-family="Inter,sans-serif">DC / Warehouse</text>
-          <text x="525" y="782" text-anchor="middle" font-size="8" fill="#7C3AED" font-family="Inter,sans-serif">Replenishment 1–2× daily</text>
-        </g>
-
-        <!-- ── SYSTEMS ROW ── -->
-        <!-- Oracle ERP -->
-        <g filter="url(#sh-sm)">
-          <rect x="166" y="660" width="130" height="64" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
-          <text x="231" y="680" text-anchor="middle" font-size="13">🗄</text>
-          <text x="231" y="698" text-anchor="middle" font-size="10" font-weight="700" fill="#1E3A5F" font-family="Inter,sans-serif">Oracle ERP</text>
-          <text x="231" y="712" text-anchor="middle" font-size="8" fill="#2563EB" font-family="Inter,sans-serif">Indent · PO · GRN · GST</text>
-          <text x="231" y="724" text-anchor="middle" font-size="7" fill="#94A3B8" font-family="Inter,sans-serif">Data exists, not surfaced</text>
-        </g>
-
-        <!-- POS -->
-        <g filter="url(#sh-sm)">
-          <rect x="374" y="660" width="130" height="64" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
-          <text x="439" y="680" text-anchor="middle" font-size="13">🖥</text>
-          <text x="439" y="698" text-anchor="middle" font-size="10" font-weight="700" fill="#1E3A5F" font-family="Inter,sans-serif">POS / Billing</text>
-          <text x="439" y="712" text-anchor="middle" font-size="8" fill="#2563EB" font-family="Inter,sans-serif">Sales · Transactions</text>
-          <text x="439" y="724" text-anchor="middle" font-size="7" fill="#94A3B8" font-family="Inter,sans-serif">Batch, not real-time</text>
-        </g>
-
-        <!-- WhatsApp + Excel -->
-        <g filter="url(#sh-sm)">
-          <rect x="582" y="660" width="130" height="64" rx="12" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
-          <text x="647" y="680" text-anchor="middle" font-size="13">💬</text>
-          <text x="647" y="698" text-anchor="middle" font-size="10" font-weight="700" fill="#9A3412" font-family="Inter,sans-serif">WhatsApp + Excel</text>
-          <text x="647" y="712" text-anchor="middle" font-size="8" fill="#C2410C" font-family="Inter,sans-serif">HQ reporting today</text>
-          <text x="647" y="724" text-anchor="middle" font-size="7" fill="#94A3B8" font-family="Inter,sans-serif">Manual · 60 min nightly</text>
-        </g>
-
-        <!-- Inventory -->
-        <g filter="url(#sh-sm)">
-          <rect x="790" y="660" width="130" height="64" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
-          <text x="855" y="680" text-anchor="middle" font-size="13">📦</text>
-          <text x="855" y="698" text-anchor="middle" font-size="10" font-weight="700" fill="#1E3A5F" font-family="Inter,sans-serif">Inventory System</text>
-          <text x="855" y="712" text-anchor="middle" font-size="8" fill="#2563EB" font-family="Inter,sans-serif">Stock · Expiry · Batches</text>
-          <text x="855" y="724" text-anchor="middle" font-size="7" fill="#94A3B8" font-family="Inter,sans-serif">Manual, disconnected</text>
-        </g>
-
-        <!-- ── ROZ NODE ── -->
-        <g filter="url(#glow)">
-          <rect x="400" y="812" width="290" height="36" rx="8" fill="rgba(232,70,10,0.08)" stroke="rgba(232,70,10,0.3)" stroke-width="1"/>
-        </g>
-        <g filter="url(#sh)">
-          <rect x="420" y="820" width="250" height="78" rx="16" fill="#1A1A1A" stroke="#E8460A" stroke-width="2"/>
-          <text x="545" y="844" text-anchor="middle" font-size="14" font-weight="900" fill="#E8460A" font-family="Inter,sans-serif">रोज़ · Roz</text>
-          <text x="545" y="860" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">AI Ops Assistant</text>
-          <line x1="440" y1="866" x2="650" y2="866" stroke="rgba(255,255,255,0.08)"/>
-          <text x="490" y="880" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">📦 Smart Order</text>
-          <text x="545" y="880" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.15)" font-family="Inter,sans-serif">|</text>
-          <text x="605" y="880" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">📊 Auto Report</text>
-          <text x="490" y="893" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">🔔 Alerts</text>
-        </g>
-
-      </svg>
+        <svg class="sm-links" id="smLinks" width="1320" height="770"></svg>
+        <!-- nodes + labels injected by JS -->
       </div>
     </div>
 
-    <!-- Bottom callouts -->
     <div class="sm-callouts">
       <div class="sm-callout red">
         <div class="sm-callout-icon">⚠</div>
         <div>
-          <div class="sm-callout-title">3 critical decisions daily — no data support</div>
-          <div class="sm-callout-body">Fresh order (noon) · Markdown calls (4pm) · HQ report (8pm). Combined: ~2.5 hrs of manual drudgery. All driven by gut feel.</div>
+          <div class="sm-callout-title">3 manual decisions, zero data support</div>
+          <div class="sm-callout-body">Fresh order (noon) · Markdowns (4pm) · HQ report (8pm). ~2.5 hrs of daily drudgery driven by gut feel.</div>
         </div>
       </div>
       <div class="sm-callout orange">
         <div class="sm-callout-icon">✦</div>
         <div>
-          <div class="sm-callout-title">The data is there — it's just siloed</div>
-          <div class="sm-callout-body">Oracle ERP, POS, and Inventory already hold everything Radhika needs. None of it reaches her without manual effort.</div>
+          <div class="sm-callout-title">The data already exists — siloed</div>
+          <div class="sm-callout-body">Oracle ERP, POS and Inventory hold everything Radhika needs. None of it reaches her without manual effort.</div>
         </div>
       </div>
       <div class="sm-callout green">
         <div class="sm-callout-icon">→</div>
         <div>
           <div class="sm-callout-title">Roz bridges the gap</div>
-          <div class="sm-callout-body">Reads ERP + POS + Inventory → computes the recommendation → pushes one decision to Radhika. She approves in 2 minutes. AI suggests, she decides.</div>
+          <div class="sm-callout-body">Reads the 3 systems → computes one recommendation → Radhika approves in 2 minutes. AI suggests, she decides.</div>
         </div>
       </div>
     </div>
@@ -3378,7 +3158,7 @@
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     font-size: 12px; color: var(--mid);
     align-items: center;
   }
@@ -3387,37 +3167,88 @@
   .sm-dot-line { width: 22px; height: 0; border-top: 2px solid; display: inline-block; flex-shrink: 0; }
   .sm-leg-zoom { margin-left: auto; }
   .sm-reset-btn {
-    padding: 5px 12px; border-radius: 6px;
-    font-size: 12px; font-weight: 600;
-    border: 1px solid var(--border);
-    background: var(--white); color: var(--mid);
-    cursor: pointer;
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--white); color: var(--mid); cursor: pointer;
   }
   .sm-reset-btn:hover { background: var(--bg); }
 
-  .sm-outer {
+  .sm-hint { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+
+  .sm-canvas {
+    position: relative;
     width: 100%;
+    height: 760px;
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: 16px;
     background: #F8F8F6;
+    background-image: radial-gradient(circle, #E6E6E4 1px, transparent 1px);
+    background-size: 24px 24px;
     cursor: grab;
-    user-select: none;
     margin-bottom: 20px;
   }
-  .sm-outer:active { cursor: grabbing; }
-  .sm-inner {
-    transform-origin: 0 0;
-    will-change: transform;
-    display: inline-block;
+  .sm-canvas.panning { cursor: grabbing; }
+  .sm-inner { position: absolute; top: 0; left: 0; width: 1320px; height: 770px; }
+  .sm-links { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; }
+
+  .sm-node {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 14px;
+    padding: 10px 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.15s;
   }
+  .sm-node:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.14); z-index: 5; }
+  .sm-node:active { cursor: grabbing; }
+  .sm-node .sm-ic { font-size: 18px; line-height: 1; margin-bottom: 4px; }
+  .sm-node .sm-nt { font-size: 12px; font-weight: 700; line-height: 1.2; }
+  .sm-node .sm-ns { font-size: 9px; opacity: 0.7; margin-top: 2px; line-height: 1.3; }
+
+  .sm-node.actor { background: #1A1A1A; color: #fff; border-radius: 50%; }
+  .sm-node.supply { background: #F5F3FF; border: 1.5px solid #DDD6FE; color: #5B21B6; }
+  .sm-node.supply .sm-ns { color: #7C3AED; }
+  .sm-node.store { background: #FFF7ED; border: 1.5px solid #FED7AA; color: #9A3412; }
+  .sm-node.store .sm-ns { color: #C2410C; }
+  .sm-node.system { background: #EFF6FF; border: 1.5px solid #BFDBFE; color: #1E3A5F; }
+  .sm-node.system .sm-ns { color: #2563EB; }
+  .sm-node.comms { background: #FFFBEB; border: 1.5px solid #FDE68A; color: #92400E; }
+  .sm-node.comms .sm-ns { color: #B45309; }
+  .sm-node.hub {
+    background: #E8460A; color: #fff;
+    box-shadow: 0 4px 20px rgba(232,70,10,0.35);
+    border: 3px solid #fff;
+    outline: 2px solid rgba(232,70,10,0.25);
+  }
+  .sm-node.hub .sm-nt { font-size: 14px; }
+  .sm-node.hub .sm-ns { opacity: 0.8; }
+  .sm-node.ai {
+    background: #1A1A1A; color: #fff; border: 2px solid #E8460A;
+    box-shadow: 0 4px 20px rgba(232,70,10,0.25);
+  }
+  .sm-node.ai .sm-nt { color: #E8460A; font-size: 13px; }
+
+  .sm-llabel {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 9px; font-weight: 600;
+    padding: 2px 7px; border-radius: 5px;
+    background: #fff; border: 1px solid var(--border);
+    color: var(--muted); white-space: nowrap;
+    pointer-events: none;
+  }
+  .sm-llabel.pain { background: #FEF2F2; border-color: #FECACA; color: #DC2626; }
+  .sm-llabel.ai { background: #FFF0EB; border-color: #FED7AA; color: #E8460A; }
+  .sm-llabel.data { background: #EFF6FF; border-color: #BFDBFE; color: #2563EB; }
 
   .sm-callouts {
     display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 8px;
   }
-  .sm-callout {
-    display: flex; gap: 12px; padding: 18px; border-radius: 12px; align-items: flex-start;
-  }
+  .sm-callout { display: flex; gap: 12px; padding: 18px; border-radius: 12px; align-items: flex-start; }
   .sm-callout.red { background: var(--red-pale); border: 1px solid #FECACA; }
   .sm-callout.orange { background: var(--orange-pale); border: 1px solid #FED7AA; }
   .sm-callout.green { background: var(--green-pale); border: 1px solid #BBF7D0; }
@@ -3430,53 +3261,262 @@
 </style>
 
 <script>
+  let smInitialised = false;
+
   function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     event.target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'sysmap' && !smInitialised) { smInitialised = true; initSysMap(); }
   }
-  // Set overview active on load (nav tab)
+
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.nav-tab').classList.add('active');
-    initZoom();
   });
 
-  function initZoom() {
-    const outer = document.getElementById('smOuter');
-    const inner = document.getElementById('smInner');
-    if (!outer || !inner) return;
-    let scale = 1, tx = 0, ty = 0;
-    let dragging = false, startX, startY, startTx, startTy;
-    function apply() { inner.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`; }
-    function clamp() {
-      const w = outer.clientWidth, h = outer.clientHeight;
-      const sw = 1100 * scale, sh = 860 * scale;
-      tx = Math.min(w * 0.5, Math.max(tx, w - sw - w * 0.1));
-      ty = Math.min(h * 0.4, Math.max(ty, h - sh - h * 0.1));
+  // ─── SYSTEM MAP ────────────────────────────────────────────────
+  const SM_NODES = [
+    // Management row (top)
+    { id:'hq',      x:520,  y:28,  w:158, h:72, cls:'actor',  ic:'🏢', title:'HQ & Category',    sub:'Targets · Promos · Planograms' },
+    { id:'vikram',  x:140,  y:28,  w:152, h:72, cls:'actor',  ic:'👨‍💼', title:'Vikram',             sub:'Area Manager · 8 stores' },
+    { id:'cust',    x:960,  y:28,  w:152, h:72, cls:'actor',  ic:'🛒', title:'Customers',          sub:'Peak 9–11am · 5–8pm' },
+
+    // Supply side (left column)
+    { id:'vendor',  x:30,   y:210, w:148, h:72, cls:'supply', ic:'🚛', title:'Vendors',            sub:'Fresh · FMCG · Staples' },
+    { id:'dc',      x:30,   y:350, w:148, h:72, cls:'supply', ic:'🏭', title:'DC / Warehouse',     sub:'Replenishment 1–2× daily' },
+
+    // Store dock (gateway)
+    { id:'dock',    x:250,  y:260, w:148, h:72, cls:'store',  ic:'📥', title:'Delivery Dock',      sub:'GRN · Quality check · Manual' },
+
+    // RADHIKA — hero center
+    { id:'radhika', x:490,  y:230, w:174, h:96, cls:'hub',    ic:'👩', title:'Radhika',            sub:'Store Ops Manager\nAll decisions pass through her' },
+
+    // Store entities
+    { id:'floor',   x:730,  y:180, w:144, h:68, cls:'store',  ic:'🏪', title:'Store Floor',        sub:'Fresh · Dry goods · Promo' },
+    { id:'billing', x:870,  y:300, w:144, h:68, cls:'store',  ic:'🖥', title:'Billing Counter',    sub:'3–5 counters · peak bottleneck' },
+    { id:'staff',   x:730,  y:360, w:144, h:68, cls:'actor',  ic:'👨', title:'Suresh (Staff)',     sub:'Floor · Stockroom · Billing' },
+
+    // Demand side (right column)
+    { id:'amazon',  x:1090, y:210, w:158, h:72, cls:'supply', ic:'📦', title:'Amazon Fresh/Now',   sub:'Online orders · Q-Comm\nFulfilled from same store' },
+
+    // Systems row
+    { id:'erp',     x:40,   y:530, w:150, h:76, cls:'system', ic:'🗄', title:'Oracle ERP',         sub:'Indent · PO · GRN · GST\nData exists · not surfaced' },
+    { id:'pos',     x:245,  y:530, w:150, h:76, cls:'system', ic:'💳', title:'POS / Billing',      sub:'Sales · Transactions\nBatch · not real-time' },
+    { id:'wa',      x:450,  y:530, w:150, h:76, cls:'comms',  ic:'💬', title:'WhatsApp + Excel',   sub:'Daily HQ reporting tool\nManual · 60 min nightly' },
+    { id:'inv',     x:655,  y:530, w:150, h:76, cls:'system', ic:'📦', title:'Inventory System',   sub:'Stock · Expiry · Batches\nManual · disconnected' },
+
+    // ROZ — AI layer
+    { id:'roz',     x:430,  y:665, w:220, h:90, cls:'ai',     ic:'✦', title:'रोज़ · Roz',          sub:'AI Ops Assistant\n📦 Smart Order  📊 Auto Report  🔔 Alerts' },
+  ];
+
+  const SM_LINKS = [
+    // Management
+    { from:'hq',      to:'vikram',  label:'Targets',          style:'normal' },
+    { from:'hq',      to:'radhika', label:'Planograms',       style:'normal' },
+    { from:'vikram',  to:'radhika', label:'Audit · Direction', style:'normal' },
+    { from:'radhika', to:'vikram',  label:'⚠ Manual report 60min', style:'pain' },
+
+    // Supply flow LEFT → CENTER
+    { from:'vendor',  to:'dock',    label:'Fresh produce',    style:'normal' },
+    { from:'dc',      to:'dock',    label:'Bulk replenishment', style:'normal' },
+    { from:'dock',    to:'radhika', label:'Stock received',   style:'normal' },
+
+    // Store operations
+    { from:'radhika', to:'floor',   label:'Display setup',    style:'normal' },
+    { from:'radhika', to:'staff',   label:'Tasks · Direction',style:'normal' },
+    { from:'floor',   to:'billing', label:'Customer pick',    style:'normal' },
+    { from:'billing', to:'cust',    label:'Purchase',         style:'normal' },
+
+    // Demand side
+    { from:'amazon',  to:'radhika', label:'Online orders',    style:'normal' },
+    { from:'cust',    to:'amazon',  label:'App order',        style:'normal' },
+
+    // System ↔ Radhika (all painful today)
+    { from:'erp',     to:'radhika', label:'⚠ Manual indent',  style:'pain' },
+    { from:'pos',     to:'radhika', label:'⚠ Not surfaced',   style:'pain' },
+    { from:'wa',      to:'radhika', label:'⚠ Manual input',   style:'pain' },
+    { from:'inv',     to:'radhika', label:'⚠ Not visible',    style:'pain' },
+
+    // Systems → Roz (data reads)
+    { from:'erp',     to:'roz',     label:'reads data',       style:'ai' },
+    { from:'pos',     to:'roz',     label:'reads data',       style:'ai' },
+    { from:'wa',      to:'roz',     label:'reads data',       style:'ai' },
+    { from:'inv',     to:'roz',     label:'reads data',       style:'ai' },
+
+    // ROZ → RADHIKA (the key AI upflow)
+    { from:'roz',     to:'radhika', label:'AI recommendation ↑', style:'ai-main' },
+  ];
+
+  function initSysMap() {
+    const canvas  = document.getElementById('smCanvas');
+    const inner   = document.getElementById('smInner');
+    const svgEl   = document.getElementById('smLinks');
+    if (!canvas || !inner || !svgEl) return;
+
+    // ── Build node positions map
+    const pos = {};
+    SM_NODES.forEach(n => { pos[n.id] = { x: n.x, y: n.y, w: n.w, h: n.h }; });
+
+    // ── Render node divs
+    SM_NODES.forEach(n => {
+      const div = document.createElement('div');
+      div.className = 'sm-node ' + n.cls;
+      div.id = 'smn-' + n.id;
+      div.style.cssText = `left:${n.x}px;top:${n.y}px;width:${n.w}px;height:${n.h}px;`;
+      const lines = n.sub.split('\n');
+      div.innerHTML = `<div class="sm-ic">${n.ic}</div>
+        <div class="sm-nt">${n.title}</div>
+        ${lines.map(l => `<div class="sm-ns">${l}</div>`).join('')}`;
+      inner.appendChild(div);
+      makeDraggable(div, n.id, pos, redraw);
+    });
+
+    // ── SVG defs
+    svgEl.innerHTML = `<defs>
+      <marker id="sm-arr"      markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#94A3B8"/></marker>
+      <marker id="sm-arr-red"  markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#DC2626"/></marker>
+      <marker id="sm-arr-ora"  markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#E8460A"/></marker>
+    </defs>`;
+
+    function redraw() {
+      // Remove old paths/labels
+      svgEl.querySelectorAll('.sm-path, .sm-plabel').forEach(e => e.remove());
+
+      SM_LINKS.forEach(lk => {
+        const a = pos[lk.from], b = pos[lk.to];
+        if (!a || !b) return;
+
+        const ax = a.x + a.w / 2, ay = a.y + a.h / 2;
+        const bx = b.x + b.w / 2, by = b.y + b.h / 2;
+
+        // Edge clipping — find where line exits source rect and enters target rect
+        const [sx, sy] = rectEdge(a, bx, by);
+        const [ex, ey] = rectEdge(b, ax, ay);
+
+        // Bezier control points
+        const dx = ex - sx, dy = ey - sy;
+        const cx1 = sx + dx * 0.45, cy1 = sy;
+        const cx2 = sx + dx * 0.55, cy2 = ey;
+
+        let stroke, dash, marker, width;
+        if (lk.style === 'pain')    { stroke='#DC2626'; dash='6,4'; marker='sm-arr-red'; width=1.5; }
+        else if (lk.style === 'ai') { stroke='#E8460A'; dash='5,3'; marker='sm-arr-ora'; width=1.5; }
+        else if (lk.style === 'ai-main') { stroke='#E8460A'; dash='none'; marker='sm-arr-ora'; width=3; }
+        else { stroke='#94A3B8'; dash='none'; marker='sm-arr'; width=1.5; }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('class','sm-path');
+        path.setAttribute('d', `M${sx},${sy} C${cx1},${cy1} ${cx2},${cy2} ${ex},${ey}`);
+        path.setAttribute('fill','none');
+        path.setAttribute('stroke', stroke);
+        path.setAttribute('stroke-width', width);
+        if (dash !== 'none') path.setAttribute('stroke-dasharray', dash);
+        path.setAttribute('marker-end', `url(#${marker})`);
+        path.setAttribute('opacity', lk.style === 'ai-main' ? '1' : '0.75');
+        svgEl.appendChild(path);
+
+        // Mid-label
+        const mx = (sx + ex) / 2, my = (sy + ey) / 2;
+        const fo = document.createElementNS('http://www.w3.org/2000/svg','foreignObject');
+        fo.setAttribute('class','sm-path sm-plabel');
+        fo.setAttribute('x', mx - 60); fo.setAttribute('y', my - 12);
+        fo.setAttribute('width','120'); fo.setAttribute('height','24');
+        const span = document.createElement('div');
+        span.style.cssText = `font-size:9px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;font-family:Inter,sans-serif;`;
+        if (lk.style === 'pain') { span.style.cssText += 'background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;'; }
+        else if (lk.style === 'ai' || lk.style === 'ai-main') { span.style.cssText += 'background:#FFF0EB;color:#E8460A;border:1px solid #FED7AA;'; }
+        else { span.style.cssText += 'background:#fff;color:#94A3B8;border:1px solid #E5E5E5;'; }
+        span.textContent = lk.label;
+        fo.appendChild(span);
+        svgEl.appendChild(fo);
+      });
     }
-    outer.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const ns = Math.min(3, Math.max(0.3, scale + (-e.deltaY * 0.001) * scale));
-      const rect = outer.getBoundingClientRect();
-      tx = (e.clientX - rect.left) - ((e.clientX - rect.left) - tx) * (ns / scale);
-      ty = (e.clientY - rect.top)  - ((e.clientY - rect.top)  - ty) * (ns / scale);
-      scale = ns; clamp(); apply();
-    }, { passive: false });
-    outer.addEventListener('mousedown', (e) => { dragging = true; startX = e.clientX; startY = e.clientY; startTx = tx; startTy = ty; outer.style.cursor='grabbing'; });
-    window.addEventListener('mousemove', (e) => { if (!dragging) return; tx = startTx+(e.clientX-startX); ty = startTy+(e.clientY-startY); clamp(); apply(); });
-    window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor='grab'; });
-    outer.addEventListener('dblclick', resetZoom);
-    setTimeout(() => { const w = outer.clientWidth; scale = Math.min(1, w/1100); tx=0; ty=0; apply(); }, 60);
+
+    redraw();
+
+    // ── Canvas pan (drag on background only)
+    let panning=false, px0, py0, ptx=0, pty=0;
+    canvas.addEventListener('mousedown', e => {
+      if (e.target !== canvas && e.target !== inner && e.target !== svgEl) return;
+      panning=true; px0=e.clientX-ptx; py0=e.clientY-pty;
+      canvas.classList.add('panning');
+    });
+    window.addEventListener('mousemove', e => {
+      if (!panning) return;
+      ptx=e.clientX-px0; pty=e.clientY-py0;
+      inner.style.transform=`translate(${ptx}px,${pty}px)`;
+    });
+    window.addEventListener('mouseup', () => { panning=false; canvas.classList.remove('panning'); });
+
+    window._smRedraw = redraw;
+    window._smPan = () => { ptx=0; pty=0; inner.style.transform=''; };
   }
 
-  function resetZoom() {
-    const outer = document.getElementById('smOuter');
+  // ── Rect edge helper — find the point on the rect boundary toward (tx,ty)
+  function rectEdge(r, tx, ty) {
+    const cx = r.x + r.w/2, cy = r.y + r.h/2;
+    const dx = tx-cx, dy = ty-cy;
+    if (dx===0 && dy===0) return [cx, cy];
+    const sx = r.w/2, sy = r.h/2;
+    if (Math.abs(dy/dx) < sy/sx) {
+      // hits left or right
+      const sign = dx > 0 ? 1 : -1;
+      return [cx + sign*sx, cy + dy*(sign*sx/dx)];
+    } else {
+      // hits top or bottom
+      const sign = dy > 0 ? 1 : -1;
+      return [cx + dx*(sign*sy/dy), cy + sign*sy];
+    }
+  }
+
+  // ── Node dragging
+  function makeDraggable(el, id, pos, onMove) {
+    let dragging=false, ox, oy;
+    el.addEventListener('mousedown', e => {
+      e.stopPropagation();
+      dragging=true;
+      ox = e.clientX - pos[id].x;
+      oy = e.clientY - pos[id].y;
+      el.style.zIndex=10; el.style.cursor='grabbing';
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      pos[id].x = Math.max(0, e.clientX - ox);
+      pos[id].y = Math.max(0, e.clientY - oy);
+      el.style.left = pos[id].x + 'px';
+      el.style.top  = pos[id].y + 'px';
+      onMove();
+    });
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging=false; el.style.zIndex=''; el.style.cursor='';
+    });
+  }
+
+  function smReset() {
+    // Reset pan
     const inner = document.getElementById('smInner');
-    if (!outer || !inner) return;
-    const s = Math.min(1, outer.clientWidth / 1100);
-    inner.style.transform = `translate(0,0) scale(${s})`;
+    if (inner) inner.style.transform = '';
+    if (window._smPan) window._smPan();
+
+    // Reset all node positions
+    const defaultPos = {
+      hq:{x:520,y:28},vikram:{x:140,y:28},cust:{x:960,y:28},
+      vendor:{x:30,y:210},dc:{x:30,y:350},dock:{x:250,y:260},
+      radhika:{x:490,y:230},floor:{x:730,y:180},billing:{x:870,y:300},
+      staff:{x:730,y:360},amazon:{x:1090,y:210},
+      erp:{x:40,y:530},pos:{x:245,y:530},wa:{x:450,y:530},inv:{x:655,y:530},
+      roz:{x:430,y:665}
+    };
+    SM_NODES.forEach(n => {
+      const d = defaultPos[n.id]; if (!d) return;
+      n.x = d.x; n.y = d.y;
+      const el = document.getElementById('smn-'+n.id);
+      if (el) { el.style.left=d.x+'px'; el.style.top=d.y+'px'; }
+    });
+    if (window._smRedraw) window._smRedraw();
   }
 </script>
 </body>
