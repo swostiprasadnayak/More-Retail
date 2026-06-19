@@ -81,7 +81,8 @@
   .nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
 
   /* MAIN */
-  main { padding: 48px; max-width: 1400px; margin: 0 auto; }
+  main { padding: 40px 40px; max-width: 1440px; margin: 0 auto; }
+  .section { padding: 0; }
 
   .section { display: none; }
   .section.active { display: block; }
@@ -452,6 +453,7 @@
     <div class="nav-tab" onclick="showSection('screens')">04 · Screen Specs</div>
     <div class="nav-tab" onclick="showSection('blueprint')">05 · Service Blueprint</div>
     <div class="nav-tab" onclick="showSection('personas')">06 · User Personas</div>
+    <div class="nav-tab" onclick="showSection('usecases')">07 · Use Cases</div>
   </div>
 </nav>
 
@@ -1843,7 +1845,7 @@
   .sb-leg-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mid); }
   .sb-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-  .sb-scroll { overflow-x: auto; }
+  .sb-scroll { overflow-x: auto; margin: 0 -40px; padding: 0 40px; }
 
   .sb-table {
     min-width: 1100px;
@@ -2284,7 +2286,613 @@
 
   </div><!-- end personas section -->
 
+  <!-- ==================== SECTION 7: USE CASES ==================== -->
+  <div class="section" id="usecases">
+    <div class="page-header">
+      <h1>All Use Cases</h1>
+      <p>Every scenario where Roz intervenes in Radhika's day — trigger, AI action, what she sees, what she does, and the outcome. These map directly to screens and prototype flows.</p>
+    </div>
+
+    <!-- Priority legend -->
+    <div class="uc-legend">
+      <div class="uc-leg"><span class="uc-badge p1">P1 · Ship</span> Core — must exist in V1. Maps to the 2 screens.</div>
+      <div class="uc-leg"><span class="uc-badge p2">P2 · Next</span> High value — V2 roadmap.</div>
+      <div class="uc-leg"><span class="uc-badge p3">P3 · Later</span> Vision — V3 or beyond.</div>
+    </div>
+
+    <!-- USE CASE CARDS -->
+    <div class="uc-list">
+
+      <!-- UC-01 -->
+      <div class="uc-card p1-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-01</div>
+          <div class="uc-badge p1">P1 · Ship</div>
+          <div class="uc-screen-tag">→ Screen 1</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">AI-Generated Fresh Produce Order</div>
+          <div class="uc-subtitle">The highest-ROI decision in the store, replaced from gut feel to 1-tap approval</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Every day at 11:30 AM. Roz pulls previous 30-day sales by SKU from POS, checks current stock from inventory system, flags tomorrow's local holiday or weather anomaly, computes quantile order quantities (p40 conservative / p50 expected / p60 buffer).</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">A push notification: "आज का ऑर्डर तैयार है — 24 items, ₹18,400". She taps → sees the order list sorted by confidence. Each item shows: name, recommended qty, current stock, yesterday's sales, trend arrow. Low-confidence items are flagged with the reason.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Reviews in 2 minutes. Adjusts 1–2 items based on local knowledge (e.g. she knows a nearby wedding will spike onion demand). Taps "Approve" — order pushes directly to Oracle ERP indent flow.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Order placed in 2 min vs 60 min. Forecast accuracy 76% vs 24%. Fresh wastage down 20–30%. Gross profit impact: +25% (More Retail's own validated result).</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">📵 Offline: order recommendation cached locally, submits when connectivity returns</div>
+            <div class="uc-edge-item">✏️ Override: Radhika can adjust any qty — her change is logged and fed back to improve the model</div>
+            <div class="uc-edge-item">⚠️ ERP down: shows "ERP unavailable — save draft and submit later" with 1-tap retry</div>
+            <div class="uc-edge-item">🗓 Festival detected: banner says "Diwali in 3 days — order quantities increased 20% automatically. Adjust?"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-02 -->
+      <div class="uc-card p1-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-02</div>
+          <div class="uc-badge p1">P1 · Ship</div>
+          <div class="uc-screen-tag">→ Screen 2</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Auto-Generated Daily HQ Report</div>
+          <div class="uc-subtitle">45-minute manual task → 2-minute review and send</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">At 7:30 PM every evening, Roz pulls EOD sales from POS, inventory snapshot from ERP, wastage log, cash reconciliation status, and any open anomalies from the day. It compiles and formats a report in the template Vikram (Area Manager) expects.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">Push notification: "आज की रिपोर्ट तैयार है". She opens Roz → sees 3 KPI numbers (sales vs target, wastage kg, in-stock %), 1–3 auto-flagged anomalies, and a 3-line summary in Hindi. Everything pre-filled. One text field to add a note.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Reads the summary (30 sec). Adds a voice note if she wants to add context. Taps "Send to Vikram sir" — report shares via WhatsApp in the exact format he expects, plus a clean PDF link.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">58 minutes saved daily. Report is consistent, data-accurate, and always on time. Vikram gets reliable data across all 8 stores — enabling real cross-store comparison without "scoring drift".</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">📊 Anomaly detected: "Sales 35% below yesterday for Tomatoes — possible quality/stockout issue. Flag to Vikram?" with Yes/No tap</div>
+            <div class="uc-edge-item">✏️ Editable: all auto-filled text is tappable and editable before sending</div>
+            <div class="uc-edge-item">📵 Offline: report is compiled and queued — sends the moment connectivity returns</div>
+            <div class="uc-edge-item">⏰ Late submission: if not sent by 9pm, Roz sends a gentle nudge notification</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-03 -->
+      <div class="uc-card p1-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-03</div>
+          <div class="uc-badge p1">P1 · Ship</div>
+          <div class="uc-screen-tag">→ Alert layer</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Near-Expiry Alert + Markdown Recommendation</div>
+          <div class="uc-subtitle">Radhika used to find expiring items on her afternoon walk — too late for effective markdown</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Every morning at 8:00 AM, Roz scans the inventory batch table for items with expiry within 24 hours. It cross-references current stock qty and average hourly sales velocity to estimate if the item will sell out naturally or needs a markdown.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">A card on the Roz home screen: "⚠ 6 items expiring today". Tapping expands the list — each item shows: name, qty, expiry time, AI-suggested markdown %, and projected units cleared at that price. E.g. "Spinach 12 bunches · Expires 6pm · Mark down 30% → likely clears by 4pm".</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Reviews the list (takes 2 min). Approves markdown % per item or adjusts. Taps confirm → Roz notifies Suresh (floor staff) via a simple WhatsApp message with the items and new prices to label. POS price updated automatically.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Items marked down at 9am instead of 4pm → 7 more hours to sell. Fewer write-offs. Recovery rate tracked and fed back into next day's markdown model. Over time, markdown % recommendations improve per-SKU.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">🏷 Batch data missing: "Expiry date not found for 2 items — please check manually" with item names highlighted</div>
+            <div class="uc-edge-item">✅ Already cleared: if item sells out before Radhika acts, alert auto-dismisses</div>
+            <div class="uc-edge-item">📉 Deep markdown needed: if item won't sell even at 50% off, Roz flags "Consider donation or write-off" to reduce guilt of discarding</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-04 -->
+      <div class="uc-card p2-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-04</div>
+          <div class="uc-badge p2">P2 · Next</div>
+          <div class="uc-screen-tag">→ Alert layer</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Pre-Peak Staff Alert</div>
+          <div class="uc-subtitle">Radhika currently notices billing queues building and reacts — by then, customers are already frustrated</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Roz compares real-time transaction rate from POS (transactions per 15-min window) against the historical average for that day-of-week and time slot. When current rate is tracking 40%+ above baseline, alert fires 20–30 minutes before the queue builds.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">Push notification: "🔔 भारी भीड़ आने वाली है — 20 मिनट में. बिलिंग के लिए 1 और staff लगाएं?" with two taps: "Got it" or "Assign Suresh to billing".</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">One tap to reassign staff pre-emptively. She's already positioned before the queue forms. If she taps "Assign Suresh", Roz sends Suresh a WhatsApp: "Radhika ma'am — please move to billing counter from 5pm".</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Proactive management replaces reactive firefighting. Shorter queues = better customer experience = higher basket completion. Staff are in position before the rush, not pulled mid-transaction.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">🤷 False positive: if Radhika ignores 3 consecutive alerts that didn't materialise, alert threshold auto-adjusts upward</div>
+            <div class="uc-edge-item">👥 No staff available: "All staff already assigned — no one available to move. Consider calling backup?"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-05 -->
+      <div class="uc-card p2-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-05</div>
+          <div class="uc-badge p2">P2 · Next</div>
+          <div class="uc-screen-tag">→ Alert layer</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Real-Time Stockout Alert</div>
+          <div class="uc-subtitle">From "customer tells Radhika shelf is empty" → "Roz alerts before the shelf empties"</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Roz monitors inventory levels continuously. When an SKU drops below a reorder threshold (calculated from average daily sales velocity × lead time from DC), and no DC replenishment is in transit, alert fires. Threshold is store-specific and auto-calibrates weekly.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">Alert card: "⚠ Atta (Fortune 5kg) — stock for ~2 hrs left. DC delivery not scheduled. Chase DC?" with one-tap "Call DC" that dials the DC coordinator number directly.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Taps "Call DC" or "Transfer from stockroom" (if backup stock exists). If she does nothing, Roz auto-escalates to Vikram (Area Manager) after 30 min — so Radhika is incentivised to act quickly.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Stockouts addressed before shelf empties. Lost-sales events reduced. Every stockout event is logged — patterns (e.g. Fortune Atta always runs out on Sundays) feed back into UC-01 order recommendations.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">📦 Stockroom backup found: Roz checks stockroom inventory first — "6 units in stockroom. Ask Suresh to refill shelf?"</div>
+            <div class="uc-edge-item">🔁 Repeat stockout: if same SKU stocks out 3× in 2 weeks, Roz flags it in next week's order recommendation with higher buffer qty</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-06 -->
+      <div class="uc-card p2-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-06</div>
+          <div class="uc-badge p2">P2 · Next</div>
+          <div class="uc-screen-tag">→ Scheduling</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">AI Staff Roster Suggestion</div>
+          <div class="uc-subtitle">Weekly roster currently done from memory the evening before — absenteeism creates morning chaos</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Every Thursday evening, Roz generates a draft roster for the following week. It uses: historical footfall by day-and-hour, upcoming local holidays or events, staff leave requests (submitted via WhatsApp to Roz), and historical absenteeism patterns per staff member.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">A week-view roster grid — each day shows shift assignments by staff name, section, and hours. Colour-coded: green = confirmed, yellow = Roz-suggested, red = gap (no one assigned). She can drag-swap assignments.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Reviews draft (5 min). Makes any manual adjustments. Approves → Roz sends each staff member their shift for the week via WhatsApp. Staff can acknowledge or raise a conflict, which shows in Radhika's view.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Staff get schedules 5–6 days in advance vs 12 hours. Absenteeism pre-flagged (Roz notes "Ravi has been absent 3 Mondays — consider backup"). Radhika saves ~2 hours/week of mental scheduling overhead.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">🤒 Last-minute absence: staff messages Roz "बीमार हूँ" → Roz alerts Radhika with suggested replacement from available staff</div>
+            <div class="uc-edge-item">📅 Public holiday: Roz auto-boosts staffing for the day and flags it in the roster view</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-07 -->
+      <div class="uc-card p2-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-07</div>
+          <div class="uc-badge p2">P2 · Next</div>
+          <div class="uc-screen-tag">→ Audit</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Mobile Store Audit (Area Manager)</div>
+          <div class="uc-subtitle">Vikram currently does paper checklists on store visits — slow, inconsistent, manual to write up</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Vikram arrives at a store. He opens Roz → selects "Start Audit". Roz pre-fills the checklist with this store's latest data: last audit score, open corrective actions from previous visit, today's sales vs target, flagged anomalies from Radhika's daily reports.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Vikram Sees</div>
+              <div class="uc-flow-content">A section-by-section checklist: Front-of-house → Back-of-house → Loss prevention → People. Each item is a tap (Pass / Fail / N-A) + optional photo. Fails auto-create corrective action tasks assigned to Radhika.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">His Action</div>
+              <div class="uc-flow-content">Walks the store tapping through the checklist with photos. Takes 20 min vs 45 min on paper. When done, taps "Complete Audit" → auto-scored report generates, is emailed to Regional Manager, and corrective tasks appear in Radhika's Roz task list.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Consistent scoring across all 8 stores eliminates "scoring drift". Post-visit report writes itself. Radhika knows exactly what to fix without a follow-up call. Engagement: mobile audit → 80–90% compliance vs ~30% for paper (YOOBIC/Michaels benchmark).</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">📵 Offline audit: checklist works fully offline, syncs when Vikram leaves the store</div>
+            <div class="uc-edge-item">📸 Photo required: certain fail items require a photo before they can be marked complete</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-08 -->
+      <div class="uc-card p2-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-08</div>
+          <div class="uc-badge p2">P2 · Next</div>
+          <div class="uc-screen-tag">→ Delivery</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Delivery Cross-Check (GRN Assist)</div>
+          <div class="uc-subtitle">Morning dock check is currently done against a paper delivery note — discrepancies discovered hours later</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">When a DC delivery arrives, Roz pulls the expected indent from Oracle ERP and displays it as a checklist. As Radhika (or stockroom staff) counts crates at the dock, they tap quantities received per SKU.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">A side-by-side: "Expected: 20 kg Tomatoes" vs "Received: ___". Taps in actual received qty. Short deliveries instantly flag in red: "Short 6 kg Tomatoes — raise discrepancy with DC?"</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">One tap to raise a formal discrepancy note (auto-sent to DC coordinator with the shortfall details). GRN is digitally signed in the app — no paper required. Inventory updated in real-time.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Discrepancies caught at the dock, not 6 hours later. Vendor accountability improves. Inventory accuracy increases from day 1, which makes UC-01 order recommendations more accurate.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases handled</div>
+            <div class="uc-edge-item">📦 Unordered item arrives: "Aloo (extra, not in indent) — accept or return?" with 1-tap decision</div>
+            <div class="uc-edge-item">🌡 Quality rejection: if produce is substandard, Radhika taps "Reject" + photo → auto-logged against vendor quality score</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-09 -->
+      <div class="uc-card p3-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-09</div>
+          <div class="uc-badge p3">P3 · Later</div>
+          <div class="uc-screen-tag">→ Computer Vision</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Shelf Photo Audit (Planogram Compliance)</div>
+          <div class="uc-subtitle">Floor staff take a phone photo of a shelf → AI scores it against the planogram in 60 seconds</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">Radhika (or Suresh) opens Roz → "Shelf Check" → points camera at a shelf section. Roz captures the image and sends to the CV model (Infilect InfiViz-style) which identifies SKUs, checks against planogram, and flags gaps or misplacements.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">Results in ~60 seconds: "Shelf score: 78/100. Issues: 3 facings of Maggi missing, Promo display not set up in zone 2". Each issue is a tap to dismiss (if fixed) or assign to staff.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">Reviews issues. Taps to assign to Suresh. Suresh gets a WhatsApp: "Maggi facing in row 3 — please refill". Once done, Suresh taps confirm in Roz. Compliance score updates in Vikram's area-level view.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Planogram compliance improves without Vikram having to visit. Promo execution tracked digitally. Over time, AI model accuracy improves with each photo — learns this specific store's layout and SKU set.</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases / constraints</div>
+            <div class="uc-edge-item">📶 Requires data connection to process image — show "queued" state if offline</div>
+            <div class="uc-edge-item">💡 Lighting: poor store lighting can reduce accuracy — prompt user to turn on flash</div>
+            <div class="uc-edge-item">🏗 India-specific: cluttered shelf layouts and high SKU count reduce accuracy vs Western supermarkets — build in "uncertain" state rather than wrong confidence</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC-10 -->
+      <div class="uc-card p3-card">
+        <div class="uc-card-left">
+          <div class="uc-number">UC-10</div>
+          <div class="uc-badge p3">P3 · Later</div>
+          <div class="uc-screen-tag">→ IoT / Cold Chain</div>
+        </div>
+        <div class="uc-card-body">
+          <div class="uc-title">Refrigeration Temperature Alert</div>
+          <div class="uc-subtitle">Cold chain failure is invisible until damage is done — product ruined, wastage spikes, food safety risk</div>
+          <div class="uc-flow-grid">
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Trigger</div>
+              <div class="uc-flow-content">IoT temperature sensors on refrigeration units send readings every 5 minutes. If any unit exceeds safe threshold (>4°C for dairy, >-18°C for frozen) for more than 15 consecutive minutes, Roz fires an alert — even at 3am.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">What Radhika Sees</div>
+              <div class="uc-flow-content">High-priority push: "🚨 Dairy fridge 2 — temperature 8°C (safe: <4°C). Action needed now." Alert includes: current temp, duration above threshold, estimated time to unsafe zone, and emergency contact for the refrigeration vendor.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Her Action</div>
+              <div class="uc-flow-content">One-tap to call the maintenance vendor. One-tap to flag the unit for a technician visit tomorrow if it self-corrected. If she's not available (e.g. off-shift), alert auto-escalates to Vikram after 30 minutes.</div>
+            </div>
+            <div class="uc-flow-col">
+              <div class="uc-flow-label">Outcome</div>
+              <div class="uc-flow-content">Cold chain failures caught in minutes vs discovered at opening. Product loss prevented or minimised. Temperature logs stored automatically for food safety compliance audits. Predictive maintenance: recurring patterns flagged before failure ("Unit 2 has had 4 temp spikes this month — service recommended").</div>
+            </div>
+          </div>
+          <div class="uc-edge-cases">
+            <div class="uc-edge-label">Edge cases / constraints</div>
+            <div class="uc-edge-item">💰 Cost: IoT sensors require upfront hardware investment — start with 1–2 critical units (dairy, frozen) not all fridges</div>
+            <div class="uc-edge-item">📡 Connectivity: sensors need local gateway device to buffer readings if internet drops</div>
+            <div class="uc-edge-item">🔔 Alert fatigue: minor temp fluctuations (door left open) should not fire alerts — use sustained-threshold logic, not single-reading spikes</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end uc-list -->
+
+    <!-- Summary table -->
+    <div style="margin-top:40px">
+      <div class="page-header" style="margin-bottom:16px">
+        <h1>Use Case Summary</h1>
+        <p>All 10 use cases ranked by priority, effort, and impact.</p>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--dark);color:white">
+              <th style="padding:12px 16px;text-align:left;font-weight:600">ID</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">Use Case</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">User</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">Priority</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">Time Saved</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">Business Impact</th>
+              <th style="padding:12px 16px;text-align:left;font-weight:600">Maps To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);background:#FFF7F5">
+              <td style="padding:12px 16px;font-weight:700;color:var(--orange)">UC-01</td>
+              <td style="padding:12px 16px;font-weight:600">AI Fresh Produce Order</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p1" style="font-size:10px">P1</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">58 min/day</td>
+              <td style="padding:12px 16px">Wastage −30% · In-stock +10pp · Profit +25%</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Screen 1</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:#FFF7F5">
+              <td style="padding:12px 16px;font-weight:700;color:var(--orange)">UC-02</td>
+              <td style="padding:12px 16px;font-weight:600">Auto HQ Report</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika + Vikram</td>
+              <td style="padding:12px 16px"><span class="uc-badge p1" style="font-size:10px">P1</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">58 min/day</td>
+              <td style="padding:12px 16px">Consistent data · Area mgr trust · 30%+ admin reduction</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Screen 2</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:#FFF7F5">
+              <td style="padding:12px 16px;font-weight:700;color:var(--orange)">UC-03</td>
+              <td style="padding:12px 16px;font-weight:600">Expiry + Markdown Alert</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p1" style="font-size:10px">P1</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">20 min/day</td>
+              <td style="padding:12px 16px">Fewer write-offs · Better markdown recovery</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Alert layer</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--blue)">UC-04</td>
+              <td style="padding:12px 16px;font-weight:600">Pre-Peak Staff Alert</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p2" style="font-size:10px">P2</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">Saves lost sales</td>
+              <td style="padding:12px 16px">Better queue mgmt · Higher basket completion</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Alert layer</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--blue)">UC-05</td>
+              <td style="padding:12px 16px;font-weight:600">Stockout Alert</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p2" style="font-size:10px">P2</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">Saves lost sales</td>
+              <td style="padding:12px 16px">In-stock rate improvement · Feeds UC-01</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Alert layer</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--blue)">UC-06</td>
+              <td style="padding:12px 16px;font-weight:600">AI Staff Roster</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika + Staff</td>
+              <td style="padding:12px 16px"><span class="uc-badge p2" style="font-size:10px">P2</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">2 hrs/week</td>
+              <td style="padding:12px 16px">Lower absenteeism · Better staff satisfaction</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Scheduling screen</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--blue)">UC-07</td>
+              <td style="padding:12px 16px;font-weight:600">Mobile Store Audit</td>
+              <td style="padding:12px 16px;color:var(--muted)">Vikram</td>
+              <td style="padding:12px 16px"><span class="uc-badge p2" style="font-size:10px">P2</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">25 min/visit</td>
+              <td style="padding:12px 16px">Consistent scoring · No drift · Auto corrective tasks</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Audit screen</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--blue)">UC-08</td>
+              <td style="padding:12px 16px;font-weight:600">GRN Delivery Cross-Check</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p2" style="font-size:10px">P2</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">15 min/delivery</td>
+              <td style="padding:12px 16px">Inventory accuracy · Vendor accountability</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">Delivery screen</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:12px 16px;font-weight:700;color:var(--purple)">UC-09</td>
+              <td style="padding:12px 16px;font-weight:600">Shelf Photo Audit (CV)</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika / Suresh</td>
+              <td style="padding:12px 16px"><span class="uc-badge p3" style="font-size:10px">P3</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">Floor walk time</td>
+              <td style="padding:12px 16px">Planogram compliance · Promo execution</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">CV feature</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 16px;font-weight:700;color:var(--purple)">UC-10</td>
+              <td style="padding:12px 16px;font-weight:600">Refrigeration IoT Alert</td>
+              <td style="padding:12px 16px;color:var(--muted)">Radhika</td>
+              <td style="padding:12px 16px"><span class="uc-badge p3" style="font-size:10px">P3</span></td>
+              <td style="padding:12px 16px;color:var(--green);font-weight:600">Prevents loss events</td>
+              <td style="padding:12px 16px">Cold chain integrity · Food safety compliance</td>
+              <td style="padding:12px 16px;color:var(--blue);font-weight:500">IoT dashboard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end usecases -->
+
 <style>
+  /* ============================================
+     USE CASE STYLES
+  ============================================ */
+  .uc-legend {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    padding: 14px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    font-size: 13px; color: var(--mid);
+    align-items: center;
+  }
+  .uc-leg { display: flex; align-items: center; gap: 8px; }
+
+  .uc-badge {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .p1 { background: var(--orange); color: white; }
+  .p2 { background: var(--blue); color: white; }
+  .p3 { background: var(--purple); color: white; }
+
+  .uc-list { display: flex; flex-direction: column; gap: 16px; }
+
+  .uc-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .p1-card { border-left: 4px solid var(--orange); }
+  .p2-card { border-left: 4px solid var(--blue); }
+  .p3-card { border-left: 4px solid var(--purple); }
+
+  .uc-card-left {
+    background: var(--bg);
+    padding: 24px 16px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .uc-number {
+    font-size: 13px; font-weight: 800;
+    color: var(--dark); letter-spacing: -0.3px;
+  }
+
+  .uc-screen-tag {
+    font-size: 10px; color: var(--blue);
+    font-weight: 600; background: var(--blue-pale);
+    padding: 3px 8px; border-radius: 4px;
+    margin-top: 4px;
+  }
+
+  .uc-card-body { padding: 24px 28px; }
+
+  .uc-title { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+  .uc-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+
+  .uc-flow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .uc-flow-col { }
+  .uc-flow-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--orange); margin-bottom: 8px;
+  }
+  .uc-flow-content {
+    font-size: 12px; color: var(--mid); line-height: 1.6;
+    background: var(--bg); padding: 12px;
+    border-radius: 8px; height: 100%;
+    box-sizing: border-box;
+  }
+
+  .uc-edge-cases {
+    background: var(--blue-pale);
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .uc-edge-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--blue); margin-bottom: 8px;
+  }
+  .uc-edge-item {
+    font-size: 12px; color: #1E3A5F;
+    padding: 4px 0; line-height: 1.5;
+    border-bottom: 1px solid rgba(37,99,235,0.1);
+  }
+  .uc-edge-item:last-child { border-bottom: none; }
+
   /* ============================================
      PERSONA STYLES
   ============================================ */
@@ -2303,7 +2911,7 @@
     background: var(--dark);
     padding: 28px 32px;
     display: grid;
-    grid-template-columns: 72px 1fr 1fr;
+    grid-template-columns: 80px minmax(220px, 1fr) minmax(260px, 1.2fr);
     gap: 24px;
     align-items: start;
   }
