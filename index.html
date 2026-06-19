@@ -454,6 +454,7 @@
     <div class="nav-tab" onclick="showSection('blueprint')">05 · Service Blueprint</div>
     <div class="nav-tab" onclick="showSection('personas')">06 · User Personas</div>
     <div class="nav-tab" onclick="showSection('usecases')">07 · Use Cases</div>
+    <div class="nav-tab" onclick="showSection('sysmap')">08 · System Map</div>
   </div>
 </nav>
 
@@ -3096,6 +3097,425 @@
   }
   .imp-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.3; }
   .imp-body { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+</style>
+
+  <!-- ==================== SECTION 8: SYSTEM MAP VISUAL ==================== -->
+  <div class="section" id="sysmap">
+    <div class="page-header">
+      <h1>End-to-End System Map</h1>
+      <p>Visual map of all actors, systems, data flows, and where Roz intervenes in the current more. store operations.</p>
+    </div>
+
+    <!-- Legend -->
+    <div class="sm-legend">
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#1A1A1A"></span>People / Actors</div>
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#2563EB"></span>Systems / Tools</div>
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#7C3AED"></span>External Partners</div>
+      <div class="sm-leg-item"><span class="sm-dot" style="background:#E8460A"></span>Roz AI Layer</div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#E8460A"></span>AI-assisted flow</div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#DC2626;border-style:dashed"></span>Pain point / Manual</div>
+      <div class="sm-leg-item"><span class="sm-dot-line" style="border-color:#94A3B8"></span>Data / Info flow</div>
+    </div>
+
+    <div class="sm-wrap">
+      <svg viewBox="0 0 1300 860" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+        <defs>
+          <!-- Arrowhead markers -->
+          <marker id="arrow-dark" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#94A3B8"/>
+          </marker>
+          <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#E8460A"/>
+          </marker>
+          <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#DC2626"/>
+          </marker>
+          <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#2563EB"/>
+          </marker>
+          <!-- Drop shadow -->
+          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.12)"/>
+          </filter>
+          <filter id="shadow-sm" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.1)"/>
+          </filter>
+          <!-- Orange glow for Roz -->
+          <filter id="glow-orange">
+            <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Grid pattern -->
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <!-- Background -->
+        <rect width="1300" height="860" fill="#FAFAFA"/>
+        <rect width="1300" height="860" fill="url(#grid)"/>
+
+        <!-- ═══════════════════════════════════════
+             SECTION LABELS (swim lane hints)
+        ═══════════════════════════════════════ -->
+        <text x="30" y="48" font-size="10" font-weight="700" fill="#CBD5E1" font-family="Inter,sans-serif" text-transform="uppercase" letter-spacing="2">EXTERNAL</text>
+        <line x1="20" y1="58" x2="1280" y2="58" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <text x="30" y="210" font-size="10" font-weight="700" fill="#CBD5E1" font-family="Inter,sans-serif">MANAGEMENT</text>
+        <line x1="20" y1="220" x2="1280" y2="220" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <text x="30" y="370" font-size="10" font-weight="700" fill="#CBD5E1" font-family="Inter,sans-serif">STORE OPS</text>
+        <line x1="20" y1="380" x2="1280" y2="380" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <text x="30" y="620" font-size="10" font-weight="700" fill="#CBD5E1" font-family="Inter,sans-serif">AI LAYER</text>
+        <line x1="20" y1="630" x2="1280" y2="630" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <text x="30" y="780" font-size="10" font-weight="700" fill="#CBD5E1" font-family="Inter,sans-serif">SUPPLY</text>
+
+        <!-- ═══════════════════════════════════════
+             FLOW LINES (draw first, nodes on top)
+        ═══════════════════════════════════════ -->
+
+        <!-- HQ → Area Manager -->
+        <path d="M 650,105 L 310,168" stroke="#64748B" stroke-width="1.5" fill="none" marker-end="url(#arrow-dark)"/>
+        <!-- HQ → Area Manager label -->
+        <rect x="438" y="118" width="90" height="18" rx="4" fill="white"/>
+        <text x="483" y="131" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Targets · Planograms</text>
+
+        <!-- HQ → Customers (promo signals) -->
+        <path d="M 700,100 L 990,105" stroke="#CBD5E1" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-dark)"/>
+        <rect x="820" y="88" width="60" height="16" rx="4" fill="white"/>
+        <text x="850" y="100" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Promos</text>
+
+        <!-- Area Manager ↔ Radhika -->
+        <path d="M 275,205 L 490,340" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow-dark)"/>
+        <path d="M 480,345 L 265,210" stroke="#DC2626" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
+        <!-- Pain label: manual report -->
+        <rect x="298" y="258" width="115" height="32" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="355" y="271" text-anchor="middle" font-size="9" font-weight="600" fill="#DC2626" font-family="Inter,sans-serif">⚠ Manual report</text>
+        <text x="355" y="283" text-anchor="middle" font-size="9" fill="#DC2626" font-family="Inter,sans-serif">60 min/day · error-prone</text>
+
+        <!-- Radhika ↔ Oracle ERP -->
+        <path d="M 500,400 L 390,430" stroke="#DC2626" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
+        <path d="M 390,445 L 500,415" stroke="#2563EB" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+        <rect x="390" y="392" width="108" height="30" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="444" y="404" text-anchor="middle" font-size="9" font-weight="600" fill="#DC2626" font-family="Inter,sans-serif">⚠ Manual indent</text>
+        <text x="444" y="416" text-anchor="middle" font-size="9" fill="#DC2626" font-family="Inter,sans-serif">45 min · gut feel</text>
+
+        <!-- Radhika ↔ POS -->
+        <path d="M 760,400 L 880,435" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arrow-dark)"/>
+        <path d="M 885,450 L 765,415" stroke="#DC2626" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
+        <rect x="782" y="395" width="112" height="30" rx="6" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="838" y="407" text-anchor="middle" font-size="9" font-weight="600" fill="#DC2626" font-family="Inter,sans-serif">⚠ Sales data not</text>
+        <text x="838" y="419" text-anchor="middle" font-size="9" fill="#DC2626" font-family="Inter,sans-serif">surfaced in real-time</text>
+
+        <!-- Radhika ↔ WhatsApp/Excel -->
+        <path d="M 530,490 L 420,525" stroke="#DC2626" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
+        <rect x="408" y="497" width="112" height="18" rx="4" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="464" y="509" text-anchor="middle" font-size="9" font-weight="600" fill="#DC2626" font-family="Inter,sans-serif">⚠ Manual reporting</text>
+
+        <!-- Radhika ↔ Inventory -->
+        <path d="M 760,490 L 870,525" stroke="#DC2626" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-red)"/>
+        <rect x="778" y="497" width="112" height="18" rx="4" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="834" y="509" text-anchor="middle" font-size="9" font-weight="600" fill="#DC2626" font-family="Inter,sans-serif">⚠ No live visibility</text>
+
+        <!-- Radhika → Store Staff -->
+        <path d="M 710,465 L 950,520" stroke="#64748B" stroke-width="1.5" fill="none" marker-end="url(#arrow-dark)"/>
+        <rect x="790" y="476" width="86" height="16" rx="4" fill="white"/>
+        <text x="833" y="488" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Tasks · Direction</text>
+
+        <!-- Customers → POS -->
+        <path d="M 1020,175 L 975,390" stroke="#64748B" stroke-width="1.5" fill="none" marker-end="url(#arrow-dark)"/>
+        <rect x="985" y="265" width="70" height="16" rx="4" fill="white"/>
+        <text x="1020" y="277" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Purchases</text>
+
+        <!-- Amazon → Store -->
+        <path d="M 1150,310 L 800,445" stroke="#7C3AED" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-dark)"/>
+        <rect x="950" y="348" width="88" height="16" rx="4" fill="white"/>
+        <text x="994" y="360" text-anchor="middle" font-size="9" fill="#7C3AED" font-family="Inter,sans-serif">Online orders</text>
+
+        <!-- Vendors → Store -->
+        <path d="M 175,680 L 510,480" stroke="#7C3AED" stroke-width="1.5" fill="none" marker-end="url(#arrow-dark)"/>
+        <rect x="258" y="548" width="100" height="16" rx="4" fill="white"/>
+        <text x="308" y="560" text-anchor="middle" font-size="9" fill="#7C3AED" font-family="Inter,sans-serif">Fresh produce</text>
+
+        <!-- DC → Store -->
+        <path d="M 650,770 L 650,510" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-dark)"/>
+        <rect x="584" y="650" width="132" height="16" rx="4" fill="white"/>
+        <text x="650" y="662" text-anchor="middle" font-size="9" fill="#7C3AED" font-family="Inter,sans-serif">Bulk replenishment 1–2x/day</text>
+
+        <!-- Oracle ERP → DC -->
+        <path d="M 300,475 L 570,780" stroke="#2563EB" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-blue)"/>
+        <rect x="370" y="608" width="72" height="16" rx="4" fill="white"/>
+        <text x="406" y="620" text-anchor="middle" font-size="9" fill="#2563EB" font-family="Inter,sans-serif">Indent / PO</text>
+
+        <!-- POS → Oracle ERP (data sync) -->
+        <path d="M 895,460 C 720,470 600,470 390,465" stroke="#2563EB" stroke-width="1" fill="none" stroke-dasharray="3,3" marker-end="url(#arrow-blue)"/>
+
+        <!-- ═══════════════════════════════════════
+             ROZ AI LAYER — orange glowing paths
+        ═══════════════════════════════════════ -->
+
+        <!-- Roz Smart Order: between ERP and Radhika -->
+        <path d="M 570,680 C 490,620 420,550 350,480" stroke="#E8460A" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-orange)" opacity="0.8"/>
+        <path d="M 570,680 C 560,600 555,550 535,490" stroke="#E8460A" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-orange)" opacity="0.8"/>
+        <path d="M 730,680 C 740,600 745,550 765,490" stroke="#E8460A" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-orange)" opacity="0.8"/>
+        <path d="M 730,680 C 800,620 880,560 940,490" stroke="#E8460A" stroke-width="2.5" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-orange)" opacity="0.8"/>
+
+        <!-- Roz → Radhika (central connection) -->
+        <path d="M 650,660 L 650,510" stroke="#E8460A" stroke-width="3" fill="none" marker-end="url(#arrow-orange)" filter="url(#glow-orange)" opacity="0.9"/>
+        <rect x="580" y="578" width="140" height="18" rx="9" fill="#E8460A"/>
+        <text x="650" y="591" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Inter,sans-serif">Roz surfaces decision</text>
+
+        <!-- Roz → Area Manager (auto report) -->
+        <path d="M 570,645 C 450,640 380,450 295,220" stroke="#E8460A" stroke-width="2" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-orange)" opacity="0.7"/>
+        <rect x="368" y="408" width="80" height="16" rx="4" fill="#FFF0EB" stroke="#E8460A" stroke-width="1"/>
+        <text x="408" y="420" text-anchor="middle" font-size="9" font-weight="600" fill="#E8460A" font-family="Inter,sans-serif">Auto report ✦</text>
+
+        <!-- ═══════════════════════════════════════
+             NODES — External (top)
+        ═══════════════════════════════════════ -->
+
+        <!-- HQ / Category Team -->
+        <g filter="url(#shadow)">
+          <circle cx="650" cy="90" r="46" fill="#1A1A1A"/>
+          <text x="650" y="85" text-anchor="middle" font-size="20" font-family="Inter,sans-serif">🏢</text>
+          <text x="650" y="102" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">HQ &amp; Category</text>
+          <text x="650" y="115" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">Targets · Promos · Planograms</text>
+        </g>
+
+        <!-- Customers -->
+        <g filter="url(#shadow)">
+          <circle cx="1020" cy="140" r="44" fill="#1A1A1A"/>
+          <text x="1020" y="133" text-anchor="middle" font-size="20" font-family="Inter,sans-serif">🛒</text>
+          <text x="1020" y="150" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">Customers</text>
+          <text x="1020" y="163" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">Peak: 9–11am · 5–8pm</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════
+             MANAGEMENT LAYER
+        ═══════════════════════════════════════ -->
+
+        <!-- Area Manager -->
+        <g filter="url(#shadow)">
+          <circle cx="270" cy="190" r="50" fill="#1A1A1A"/>
+          <text x="270" y="183" text-anchor="middle" font-size="22" font-family="Inter,sans-serif">👨‍💼</text>
+          <text x="270" y="200" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">Vikram</text>
+          <text x="270" y="213" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">Area Manager · 8 stores</text>
+        </g>
+
+        <!-- Amazon Fresh/Now -->
+        <g filter="url(#shadow)">
+          <rect x="1110" y="258" width="148" height="72" rx="14" fill="#7C3AED"/>
+          <text x="1184" y="282" text-anchor="middle" font-size="11" font-weight="700" fill="white" font-family="Inter,sans-serif">Amazon Fresh</text>
+          <text x="1184" y="296" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">325 Hybrid Stores</text>
+          <text x="1184" y="310" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">+ Amazon Now (Q-Comm)</text>
+          <text x="1184" y="322" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">Online orders fulfilled from store</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════
+             STORE OPS LAYER — Center
+        ═══════════════════════════════════════ -->
+
+        <!-- Store background zone -->
+        <rect x="200" y="290" width="900" height="280" rx="20" fill="rgba(232,70,10,0.04)" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="8,5"/>
+        <text x="232" y="314" font-size="10" font-weight="700" fill="#E8460A" font-family="Inter,sans-serif" letter-spacing="1">MORE. STORE — NAGPUR</text>
+
+        <!-- Oracle ERP -->
+        <g filter="url(#shadow-sm)">
+          <rect x="195" y="398" width="136" height="72" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+          <text x="263" y="422" text-anchor="middle" font-size="12" font-family="Inter,sans-serif">🗄</text>
+          <text x="263" y="438" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F" font-family="Inter,sans-serif">Oracle ERP</text>
+          <text x="263" y="452" text-anchor="middle" font-size="9" fill="#2563EB" font-family="Inter,sans-serif">Indent · PO · GRN · GST</text>
+          <text x="263" y="464" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Data exists · not surfaced</text>
+        </g>
+
+        <!-- POS System -->
+        <g filter="url(#shadow-sm)">
+          <rect x="968" y="398" width="136" height="72" rx="12" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+          <text x="1036" y="422" text-anchor="middle" font-size="12" font-family="Inter,sans-serif">🖥</text>
+          <text x="1036" y="438" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F" font-family="Inter,sans-serif">POS / Billing</text>
+          <text x="1036" y="452" text-anchor="middle" font-size="9" fill="#2563EB" font-family="Inter,sans-serif">Sales data · Transactions</text>
+          <text x="1036" y="464" text-anchor="middle" font-size="9" fill="#94A3B8" font-family="Inter,sans-serif">Batch · not real-time</text>
+        </g>
+
+        <!-- WhatsApp + Excel -->
+        <g filter="url(#shadow-sm)">
+          <rect x="215" y="508" width="136" height="66" rx="12" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
+          <text x="283" y="530" text-anchor="middle" font-size="12" font-family="Inter,sans-serif">💬</text>
+          <text x="283" y="546" text-anchor="middle" font-size="11" font-weight="700" fill="#9A3412" font-family="Inter,sans-serif">WhatsApp + Excel</text>
+          <text x="283" y="560" text-anchor="middle" font-size="9" fill="#C2410C" font-family="Inter,sans-serif">Daily reporting to HQ</text>
+          <text x="283" y="572" text-anchor="middle" font-size="9" fill="#9A3412" font-family="Inter,sans-serif">The actual work tool</text>
+        </g>
+
+        <!-- Inventory System -->
+        <g filter="url(#shadow-sm)">
+          <rect x="948" y="508" width="136" height="66" rx="12" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.5"/>
+          <text x="1016" y="530" text-anchor="middle" font-size="12" font-family="Inter,sans-serif">📦</text>
+          <text x="1016" y="546" text-anchor="middle" font-size="11" font-weight="700" fill="#9A3412" font-family="Inter,sans-serif">Inventory System</text>
+          <text x="1016" y="560" text-anchor="middle" font-size="9" fill="#C2410C" font-family="Inter,sans-serif">Stock · Expiry · Batches</text>
+          <text x="1016" y="572" text-anchor="middle" font-size="9" fill="#9A3412" font-family="Inter,sans-serif">Manual · disconnected</text>
+        </g>
+
+        <!-- Store Staff -->
+        <g filter="url(#shadow-sm)">
+          <circle cx="900" cy="545" r="38" fill="#374151"/>
+          <text x="900" y="538" text-anchor="middle" font-size="18" font-family="Inter,sans-serif">👨</text>
+          <text x="900" y="554" text-anchor="middle" font-size="10" font-weight="700" fill="white" font-family="Inter,sans-serif">Suresh</text>
+          <text x="900" y="566" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">Floor · Billing · Stock</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════
+             RADHIKA — Central Node (BIGGEST)
+        ═══════════════════════════════════════ -->
+        <circle cx="650" cy="435" r="85" fill="rgba(232,70,10,0.08)" stroke="#E8460A" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <g filter="url(#shadow)">
+          <circle cx="650" cy="435" r="64" fill="#E8460A"/>
+          <text x="650" y="422" text-anchor="middle" font-size="28" font-family="Inter,sans-serif">👩</text>
+          <text x="650" y="445" text-anchor="middle" font-size="13" font-weight="800" fill="white" font-family="Inter,sans-serif">Radhika</text>
+          <text x="650" y="460" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.75)" font-family="Inter,sans-serif">Store Ops Manager</text>
+          <text x="650" y="474" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.55)" font-family="Inter,sans-serif">All decisions flow through her</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════
+             ROZ AI LAYER — nodes
+        ═══════════════════════════════════════ -->
+
+        <!-- Roz central node -->
+        <g filter="url(#glow-orange)">
+          <rect x="582" y="648" width="136" height="92" rx="16" fill="#1A1A1A" stroke="#E8460A" stroke-width="2.5"/>
+          <text x="650" y="672" text-anchor="middle" font-size="15" font-weight="900" fill="#E8460A" font-family="Inter,sans-serif">रोज़ · Roz</text>
+          <text x="650" y="688" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)" font-family="Inter,sans-serif">AI Ops Assistant</text>
+          <line x1="600" y1="697" x2="700" y2="697" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <text x="650" y="710" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">📦 Smart Order</text>
+          <text x="650" y="724" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">📊 Auto Report</text>
+          <text x="650" y="738" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">🔔 Exception Alerts</text>
+        </g>
+
+        <!-- Roz feeds from ERP + Inventory -->
+        <path d="M 330,450 C 430,520 510,580 590,660" stroke="#E8460A" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-orange)" opacity="0.6"/>
+        <path d="M 948,530 C 880,560 800,590 720,655" stroke="#E8460A" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow-orange)" opacity="0.6"/>
+
+        <!-- Small annotation: data in -->
+        <rect x="388" y="515" width="74" height="15" rx="4" fill="rgba(232,70,10,0.1)" stroke="#E8460A" stroke-width="1" opacity="0.8"/>
+        <text x="425" y="526" text-anchor="middle" font-size="8" fill="#E8460A" font-family="Inter,sans-serif">Reads ERP data</text>
+        <rect x="836" y="545" width="80" height="15" rx="4" fill="rgba(232,70,10,0.1)" stroke="#E8460A" stroke-width="1" opacity="0.8"/>
+        <text x="876" y="556" text-anchor="middle" font-size="8" fill="#E8460A" font-family="Inter,sans-serif">Reads inventory data</text>
+
+        <!-- ═══════════════════════════════════════
+             SUPPLY LAYER (bottom)
+        ═══════════════════════════════════════ -->
+
+        <!-- Vendors -->
+        <g filter="url(#shadow-sm)">
+          <rect x="80" y="660" width="130" height="68" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
+          <text x="145" y="683" text-anchor="middle" font-size="13" font-family="Inter,sans-serif">🚛</text>
+          <text x="145" y="700" text-anchor="middle" font-size="11" font-weight="700" fill="#5B21B6" font-family="Inter,sans-serif">Vendors</text>
+          <text x="145" y="714" text-anchor="middle" font-size="9" fill="#7C3AED" font-family="Inter,sans-serif">Fresh · FMCG · Staples</text>
+          <text x="145" y="726" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="Inter,sans-serif">Manual GRN at dock</text>
+        </g>
+
+        <!-- DC / Warehouse -->
+        <g filter="url(#shadow-sm)">
+          <rect x="570" y="778" width="160" height="68" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1.5"/>
+          <text x="650" y="800" text-anchor="middle" font-size="13" font-family="Inter,sans-serif">🏭</text>
+          <text x="650" y="816" text-anchor="middle" font-size="11" font-weight="700" fill="#5B21B6" font-family="Inter,sans-serif">DC / Warehouse</text>
+          <text x="650" y="830" text-anchor="middle" font-size="9" fill="#7C3AED" font-family="Inter,sans-serif">Replenishment 1–2× daily</text>
+          <text x="650" y="843" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="Inter,sans-serif">Triggered by ERP indent</text>
+        </g>
+
+        <!-- Vendors → DC -->
+        <path d="M 210,700 L 570,810" stroke="#C4B5FD" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrow-dark)"/>
+
+        <!-- ═══════════════════════════════════════
+             LEGEND ANNOTATIONS
+        ═══════════════════════════════════════ -->
+
+        <!-- Key insight box -->
+        <rect x="1080" y="640" width="200" height="140" rx="12" fill="#1A1A1A"/>
+        <text x="1180" y="663" text-anchor="middle" font-size="10" font-weight="700" fill="#E8460A" font-family="Inter,sans-serif">KEY INSIGHT</text>
+        <line x1="1098" y1="670" x2="1262" y2="670" stroke="rgba(255,255,255,0.08)"/>
+        <text x="1180" y="687" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">All the data to make</text>
+        <text x="1180" y="700" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">perfect decisions already</text>
+        <text x="1180" y="713" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">exists in ERP + POS.</text>
+        <line x1="1098" y1="721" x2="1262" y2="721" stroke="rgba(255,255,255,0.08)"/>
+        <text x="1180" y="738" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)" font-family="Inter,sans-serif">Radhika just can't see it.</text>
+        <line x1="1098" y1="746" x2="1262" y2="746" stroke="rgba(255,255,255,0.08)"/>
+        <text x="1180" y="762" text-anchor="middle" font-size="10" font-weight="700" fill="#E8460A" font-family="Inter,sans-serif">Roz bridges this gap.</text>
+      </svg>
+    </div>
+
+    <!-- Callout cards below map -->
+    <div class="sm-callouts">
+      <div class="sm-callout red">
+        <div class="sm-callout-icon">⚠</div>
+        <div>
+          <div class="sm-callout-title">3 critical manual decisions daily</div>
+          <div class="sm-callout-body">Fresh order (noon) · Markdown calls (4pm) · HQ report (8pm) — each takes 45–60 min with zero data support. Total: ~2.5 hrs of drudgery every day.</div>
+        </div>
+      </div>
+      <div class="sm-callout orange">
+        <div class="sm-callout-icon">✦</div>
+        <div>
+          <div class="sm-callout-title">Data exists — it's just not connected</div>
+          <div class="sm-callout-body">Oracle ERP holds 30-day sales history. POS has real-time transactions. Inventory has batch expiry dates. None of it reaches Radhika without manual effort.</div>
+        </div>
+      </div>
+      <div class="sm-callout green">
+        <div class="sm-callout-icon">→</div>
+        <div>
+          <div class="sm-callout-title">Roz is the missing connector</div>
+          <div class="sm-callout-body">Roz reads ERP + POS + Inventory → generates a single daily recommendation → Radhika approves in 2 minutes. The AI doesn't replace her judgment — it does the data gathering so she can judge faster.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end sysmap -->
+
+<style>
+  .sm-legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    padding: 12px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 24px;
+    font-size: 12px; color: var(--mid);
+    align-items: center;
+  }
+  .sm-leg-item { display: flex; align-items: center; gap: 6px; }
+  .sm-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .sm-dot-line { width: 24px; height: 0; border-top: 2px solid; display: inline-block; flex-shrink: 0; }
+
+  .sm-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .sm-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .sm-callout {
+    display: flex; gap: 14px;
+    padding: 20px;
+    border-radius: 14px;
+    align-items: flex-start;
+  }
+  .sm-callout.red { background: var(--red-pale); border: 1px solid #FECACA; }
+  .sm-callout.orange { background: var(--orange-pale); border: 1px solid #FED7AA; }
+  .sm-callout.green { background: var(--green-pale); border: 1px solid #BBF7D0; }
+  .sm-callout-icon { font-size: 20px; flex-shrink: 0; font-weight: 700; }
+  .sm-callout.red .sm-callout-icon { color: var(--red); }
+  .sm-callout.orange .sm-callout-icon { color: var(--orange); }
+  .sm-callout.green .sm-callout-icon { color: var(--green); }
+  .sm-callout-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .sm-callout-body { font-size: 12px; color: var(--mid); line-height: 1.6; }
 </style>
 
 <script>
