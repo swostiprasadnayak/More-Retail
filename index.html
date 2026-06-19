@@ -451,6 +451,7 @@
     <div class="nav-tab" onclick="showSection('interventions')">03 · AI Interventions</div>
     <div class="nav-tab" onclick="showSection('screens')">04 · Screen Specs</div>
     <div class="nav-tab" onclick="showSection('blueprint')">05 · Service Blueprint</div>
+    <div class="nav-tab" onclick="showSection('personas')">06 · User Personas</div>
   </div>
 </nav>
 
@@ -1982,6 +1983,511 @@
   .sb-impact { text-align: center; padding: 8px; }
   .sb-impact-num { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
   .sb-impact-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+</style>
+
+  <!-- ==================== SECTION 6: PERSONAS ==================== -->
+  <div class="section" id="personas">
+    <div class="page-header">
+      <h1>User Personas</h1>
+      <p>Three people in the more. operations chain — their world, frustrations, goals, and relationship with technology. Roz is designed primarily for Radhika, but must work for the whole chain.</p>
+    </div>
+
+    <div class="persona-grid">
+
+      <!-- PERSONA 1: STORE MANAGER -->
+      <div class="persona-card primary-persona">
+        <div class="persona-header">
+          <div class="persona-avatar">👩</div>
+          <div class="persona-meta">
+            <div class="persona-tag primary-tag">PRIMARY USER</div>
+            <div class="persona-name">Radhika Sharma</div>
+            <div class="persona-role">Store Operations Manager</div>
+            <div class="persona-details-row">
+              <span>34 years old</span>
+              <span>·</span>
+              <span>Nagpur, Maharashtra</span>
+              <span>·</span>
+              <span>8 yrs experience</span>
+            </div>
+          </div>
+          <div class="persona-quote">"I know my store better than any system. But I'm always running — I never have time to think."</div>
+        </div>
+
+        <div class="persona-body">
+          <div class="persona-col">
+            <div class="persona-section-label">Her World</div>
+            <p class="persona-prose">Radhika manages a 2,800 sqft more. store with 11 staff. She's been in retail ops since her early 20s — started as a billing staff, worked her way up. She's sharp, floor-smart, and deeply trusted by her team. Her store consistently hits 90%+ of sales targets.</p>
+            <p class="persona-prose">But she works 12–14 hours daily. She's on her feet from 7am dock inspection to 9pm close. Every decision — from how many tomatoes to order to which staff to move to billing during rush — runs through her.</p>
+            <p class="persona-prose">She uses a mid-range Redmi phone. WhatsApp is her primary work tool. She's never used a "work app" — everything goes through WhatsApp groups and Excel files her area manager sends.</p>
+
+            <div class="persona-section-label" style="margin-top:20px">Goals</div>
+            <div class="persona-goals">
+              <div class="goal-item">
+                <div class="goal-icon">🎯</div>
+                <div>Hit the monthly sales target — her bonus depends on it</div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-icon">📦</div>
+                <div>Reduce fresh wastage — it's the biggest margin leak she can control</div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-icon">⏱</div>
+                <div>Get home before 9:30pm — she has two kids</div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-icon">📈</div>
+                <div>Get promoted to Area Manager within 2 years</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="persona-col">
+            <div class="persona-section-label">Frustrations</div>
+            <div class="persona-frustrations">
+              <div class="frustration-item">
+                <div class="f-pill high">🔴 HIGH</div>
+                <div class="f-text"><strong>The ordering guess.</strong> Every noon she decides tomorrow's fresh order with no data. Over-order = wastage that comes out of her numbers. Under-order = stockout = lost sales and an angry area manager call.</div>
+              </div>
+              <div class="frustration-item">
+                <div class="f-pill high">🔴 HIGH</div>
+                <div class="f-text"><strong>The daily report.</strong> After a 13-hour day she spends another hour manually copying POS printout numbers into Excel and writing a WhatsApp message. "I'm writing what the computer already knows."</div>
+              </div>
+              <div class="frustration-item">
+                <div class="f-pill med">🟡 MED</div>
+                <div class="f-text"><strong>Staff absences.</strong> Two people call in sick, she finds out at 8am. Now she's re-doing the entire floor plan in her head while the store is opening.</div>
+              </div>
+              <div class="frustration-item">
+                <div class="f-pill med">🟡 MED</div>
+                <div class="f-text"><strong>Near-expiry discovery.</strong> She finds items about to expire during her afternoon walk — too late to mark them down properly before the evening rush.</div>
+              </div>
+              <div class="frustration-item">
+                <div class="f-pill low">🟢 LOW</div>
+                <div class="f-text"><strong>ERP complexity.</strong> The Oracle indent form takes 20 minutes to navigate. She half-guesses some fields just to get it done.</div>
+              </div>
+            </div>
+
+            <div class="persona-section-label" style="margin-top:20px">Tech Relationship</div>
+            <div class="tech-bars">
+              <div class="tech-bar-row">
+                <div class="tech-label">WhatsApp</div>
+                <div class="tech-track"><div class="tech-fill" style="width:95%;background:var(--green)"></div></div>
+                <div class="tech-val">Expert</div>
+              </div>
+              <div class="tech-bar-row">
+                <div class="tech-label">Excel (basic)</div>
+                <div class="tech-track"><div class="tech-fill" style="width:60%;background:var(--yellow)"></div></div>
+                <div class="tech-val">Moderate</div>
+              </div>
+              <div class="tech-bar-row">
+                <div class="tech-label">Oracle ERP</div>
+                <div class="tech-track"><div class="tech-fill" style="width:35%;background:var(--red)"></div></div>
+                <div class="tech-val">Reluctant</div>
+              </div>
+              <div class="tech-bar-row">
+                <div class="tech-label">New apps</div>
+                <div class="tech-track"><div class="tech-fill" style="width:40%;background:var(--yellow)"></div></div>
+                <div class="tech-val">Cautious</div>
+              </div>
+            </div>
+
+            <div class="persona-insight">
+              <div class="insight-icon">💡</div>
+              <div><strong>Design implication:</strong> Roz must feel as familiar as WhatsApp. No login screens. No navigation menus. One screen, one decision, one tap. If it takes longer than 2 minutes she won't use it.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day snapshot -->
+        <div class="persona-day">
+          <div class="persona-section-label">A Typical Day (Emotional Snapshot)</div>
+          <div class="day-timeline">
+            <div class="day-point" style="left:0%">
+              <div class="day-dot" style="background:var(--yellow)"></div>
+              <div class="day-time">7am</div>
+              <div class="day-note">Dock check — nervous about fresh quality</div>
+            </div>
+            <div class="day-point" style="left:20%">
+              <div class="day-dot" style="background:var(--orange)"></div>
+              <div class="day-time">9am</div>
+              <div class="day-note">Rush hits — firefighting</div>
+            </div>
+            <div class="day-point" style="left:38%">
+              <div class="day-dot" style="background:var(--red)"></div>
+              <div class="day-time">12pm</div>
+              <div class="day-note">🔴 Order decision — peak anxiety</div>
+            </div>
+            <div class="day-point" style="left:55%">
+              <div class="day-dot" style="background:var(--yellow)"></div>
+              <div class="day-time">4pm</div>
+              <div class="day-note">Markdown walk — uncertain</div>
+            </div>
+            <div class="day-point" style="left:72%">
+              <div class="day-dot" style="background:var(--red)"></div>
+              <div class="day-time">8pm</div>
+              <div class="day-note">🔴 HQ report — exhausted, error-prone</div>
+            </div>
+            <div class="day-point" style="left:95%">
+              <div class="day-dot" style="background:var(--green)"></div>
+              <div class="day-time">9:30pm</div>
+              <div class="day-note">Finally home</div>
+            </div>
+            <div class="day-line"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSONA 2 + 3 side by side -->
+      <div class="persona-secondary-grid">
+
+        <!-- PERSONA 2: AREA MANAGER -->
+        <div class="persona-card">
+          <div class="persona-header">
+            <div class="persona-avatar">👨‍💼</div>
+            <div class="persona-meta">
+              <div class="persona-tag secondary-tag">SECONDARY USER</div>
+              <div class="persona-name">Vikram Nair</div>
+              <div class="persona-role">Area Manager · 8 stores</div>
+              <div class="persona-details-row">
+                <span>41 years old</span>
+                <span>·</span>
+                <span>Pune region</span>
+                <span>·</span>
+                <span>14 yrs retail</span>
+              </div>
+            </div>
+            <div class="persona-quote">"I visit 2 stores a day. By the time I reach a store something has already gone wrong."</div>
+          </div>
+
+          <div class="persona-body" style="grid-template-columns:1fr">
+            <div class="persona-col">
+              <div class="persona-section-label">His World</div>
+              <p class="persona-prose">Vikram oversees 8 stores across Pune. He spends his day driving between stores, doing audits against a standardised checklist — sales vs target, front-of-house execution, stockroom, cash, people. He's measured on aggregate store performance: wastage, in-stock, sales, compliance scores.</p>
+              <p class="persona-prose">His biggest problem: he can't trust the data Radhika sends him. It's manually compiled, inconsistently formatted, and sometimes wrong. He makes strategic decisions (which store to visit, where to escalate) based on information that's 12–18 hours old and error-prone.</p>
+
+              <div class="persona-section-label" style="margin-top:16px">Goals</div>
+              <div class="persona-goals">
+                <div class="goal-item"><div class="goal-icon">📊</div><div>See accurate, real-time data across all 8 stores without visiting</div></div>
+                <div class="goal-item"><div class="goal-icon">🚨</div><div>Know which store needs attention before he drives there</div></div>
+                <div class="goal-item"><div class="goal-icon">📋</div><div>Audit reports that write themselves — consistent, photo-backed</div></div>
+              </div>
+
+              <div class="persona-section-label" style="margin-top:16px">Frustrations</div>
+              <div class="persona-frustrations">
+                <div class="frustration-item">
+                  <div class="f-pill high">🔴 HIGH</div>
+                  <div class="f-text"><strong>Data reliability.</strong> "Scoring drift" — he can't compare Radhika's store to another manager's store because each one reports differently. 15–20 point variance between equivalent stores on the same metric.</div>
+                </div>
+                <div class="frustration-item">
+                  <div class="f-pill high">🔴 HIGH</div>
+                  <div class="f-text"><strong>Reactive visits.</strong> He drives 45 min to a store because yesterday's report looked bad. Half the time the issue is already resolved — or was reported wrong.</div>
+                </div>
+                <div class="frustration-item">
+                  <div class="f-pill med">🟡 MED</div>
+                  <div class="f-text"><strong>Post-audit reporting.</strong> After each store visit he spends 30–40 min typing up findings, photos, corrective actions. All manual.</div>
+                </div>
+              </div>
+
+              <div class="persona-insight" style="margin-top:16px">
+                <div class="insight-icon">💡</div>
+                <div><strong>Design implication:</strong> Roz's auto-generated daily report is as valuable to Vikram as to Radhika. Consistent format, same data source, anomaly-flagged = he can manage 8 stores from his car instead of reacting to bad data.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONA 3: FLOOR STAFF -->
+        <div class="persona-card">
+          <div class="persona-header">
+            <div class="persona-avatar">👨</div>
+            <div class="persona-meta">
+              <div class="persona-tag tertiary-tag">AFFECTED USER</div>
+              <div class="persona-name">Suresh Kumar</div>
+              <div class="persona-role">Floor Staff · Produce section</div>
+              <div class="persona-details-row">
+                <span>23 years old</span>
+                <span>·</span>
+                <span>Nagpur (same store)</span>
+                <span>·</span>
+                <span>1.5 yrs at more.</span>
+              </div>
+            </div>
+            <div class="persona-quote">"Radhika bhai tells me what to do. I just wish she didn't always look so stressed."</div>
+          </div>
+
+          <div class="persona-body" style="grid-template-columns:1fr">
+            <div class="persona-col">
+              <div class="persona-section-label">His World</div>
+              <p class="persona-prose">Suresh handles the fresh produce section. He restocks shelves, helps customers pick vegetables, and does the manual markdown re-labelling when Radhika tells him to. He earns ₹12,000/month. He has a basic Android phone — uses WhatsApp and YouTube daily. No email, no "apps" beyond consumer ones.</p>
+              <p class="persona-prose">He's reliable and wants to do a good job, but he has no visibility into what's going wrong or why. He finds out a shelf is short when a customer asks — not before.</p>
+
+              <div class="persona-section-label" style="margin-top:16px">Goals</div>
+              <div class="persona-goals">
+                <div class="goal-item"><div class="goal-icon">✅</div><div>Know what to do next without having to ask Radhika (she's always busy)</div></div>
+                <div class="goal-item"><div class="goal-icon">🕐</div><div>Leave on time — his shift is 9am–7pm but often runs over</div></div>
+                <div class="goal-item"><div class="goal-icon">📱</div><div>Get his roster earlier so he can plan personal life</div></div>
+              </div>
+
+              <div class="persona-section-label" style="margin-top:16px">Frustrations</div>
+              <div class="persona-frustrations">
+                <div class="frustration-item">
+                  <div class="f-pill med">🟡 MED</div>
+                  <div class="f-text"><strong>No task visibility.</strong> He doesn't know which items are near-expiry unless Radhika tells him. She's often too busy. Items expire quietly.</div>
+                </div>
+                <div class="frustration-item">
+                  <div class="f-pill med">🟡 MED</div>
+                  <div class="f-text"><strong>Reactive restocking.</strong> Customer asks for something → he checks → empty shelf → tells Radhika → she chases DC. 30 min wasted per incident.</div>
+                </div>
+                <div class="frustration-item">
+                  <div class="f-pill low">🟢 LOW</div>
+                  <div class="f-text"><strong>Roster uncertainty.</strong> Gets his schedule via WhatsApp the evening before. Hard to plan anything.</div>
+                </div>
+              </div>
+
+              <div class="persona-insight" style="margin-top:16px">
+                <div class="insight-icon">💡</div>
+                <div><strong>Design implication:</strong> Suresh doesn't use Roz directly — but Roz's expiry alerts and stockout warnings flow to him via Radhika's direction. A future "staff view" could give him a simple task list. For now, keep Roz manager-focused. Don't overengineer.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end secondary grid -->
+
+    </div><!-- end persona-grid -->
+
+    <!-- Design implications summary -->
+    <div class="persona-implications">
+      <div class="persona-section-label">What the personas tell us about Roz</div>
+      <div class="implications-grid">
+        <div class="implication-card">
+          <div class="imp-num">01</div>
+          <div class="imp-title">Design for Radhika, not for Vikram</div>
+          <div class="imp-body">Radhika is the primary user. Every interaction must work on a mid-range Android, take under 2 minutes, and feel like WhatsApp. Vikram benefits passively through better data — he doesn't need a separate interface in V1.</div>
+        </div>
+        <div class="implication-card">
+          <div class="imp-num">02</div>
+          <div class="imp-title">Trust is earned through accuracy, not features</div>
+          <div class="imp-body">Radhika has 8 years of gut-feel expertise. If Roz's first order recommendation is wrong, she'll never use it again. The AI must explain its reasoning ("Based on last Tuesday's sales + tomorrow's local holiday") so she can verify it matches her instinct.</div>
+        </div>
+        <div class="implication-card">
+          <div class="imp-num">03</div>
+          <div class="imp-title">She must stay in control</div>
+          <div class="imp-body">Radhika doesn't want an AI that orders for her — she wants one that does the research and hands her a recommendation to approve. The approve/adjust model is critical. "AI suggests, I decide" is the mental model that will get adoption.</div>
+        </div>
+        <div class="implication-card">
+          <div class="imp-num">04</div>
+          <div class="imp-title">Hindi first, features second</div>
+          <div class="imp-body">Radhika thinks in Marathi, switches to Hindi, uses English numbers. The interface must lead in Hindi (or her regional language) with English numbers/units. Voice input is a natural extension — she's already using voice messages on WhatsApp.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end personas section -->
+
+<style>
+  /* ============================================
+     PERSONA STYLES
+  ============================================ */
+  .persona-grid { display: flex; flex-direction: column; gap: 24px; }
+
+  .persona-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .primary-persona { border-color: var(--orange); border-width: 2px; }
+
+  .persona-header {
+    background: var(--dark);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 72px 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .persona-avatar {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .persona-tag {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    padding: 3px 10px; border-radius: 999px;
+    display: inline-block; margin-bottom: 8px;
+  }
+  .primary-tag { background: var(--orange); color: white; }
+  .secondary-tag { background: var(--blue); color: white; }
+  .tertiary-tag { background: var(--purple); color: white; }
+
+  .persona-name { font-size: 22px; font-weight: 800; color: white; letter-spacing: -0.5px; margin-bottom: 2px; }
+  .persona-role { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 8px; }
+  .persona-details-row { display: flex; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.4); align-items: center; }
+
+  .persona-quote {
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    align-self: center;
+  }
+
+  .persona-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .persona-col {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .persona-col:last-child { border-right: none; }
+
+  .persona-section-label {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--orange); margin-bottom: 12px;
+  }
+
+  .persona-prose {
+    font-size: 13px; color: var(--mid);
+    line-height: 1.7; margin-bottom: 12px;
+  }
+
+  .persona-goals { display: flex; flex-direction: column; gap: 8px; }
+  .goal-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 13px; color: var(--mid); line-height: 1.4;
+  }
+  .goal-icon { font-size: 16px; flex-shrink: 0; }
+
+  .persona-frustrations { display: flex; flex-direction: column; gap: 8px; }
+  .frustration-item { display: flex; gap: 10px; align-items: flex-start; }
+  .f-pill {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px;
+    flex-shrink: 0; margin-top: 2px;
+    white-space: nowrap;
+  }
+  .f-pill.high { background: var(--red-pale); color: var(--red); }
+  .f-pill.med { background: var(--yellow-pale); color: var(--yellow); }
+  .f-pill.low { background: var(--green-pale); color: var(--green); }
+  .f-text { font-size: 12px; color: var(--mid); line-height: 1.5; }
+  .f-text strong { color: var(--dark); }
+
+  /* Tech bars */
+  .tech-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .tech-bar-row { display: grid; grid-template-columns: 100px 1fr 60px; gap: 10px; align-items: center; }
+  .tech-label { font-size: 12px; color: var(--mid); }
+  .tech-track { background: var(--bg); border-radius: 999px; height: 6px; overflow: hidden; }
+  .tech-fill { height: 100%; border-radius: 999px; }
+  .tech-val { font-size: 11px; color: var(--muted); }
+
+  .persona-insight {
+    display: flex; gap: 10px;
+    background: var(--orange-pale);
+    border: 1px solid #FED7AA;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px; color: #9A3412; line-height: 1.5;
+  }
+  .insight-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* Day timeline */
+  .persona-day {
+    padding: 24px 32px 28px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .day-timeline {
+    position: relative;
+    height: 80px;
+    margin-top: 16px;
+  }
+
+  .day-line {
+    position: absolute;
+    top: 16px;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+
+  .day-point {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 1;
+  }
+
+  .day-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+
+  .day-time { font-size: 11px; font-weight: 700; color: var(--dark); }
+  .day-note { font-size: 10px; color: var(--muted); text-align: center; max-width: 90px; line-height: 1.3; }
+
+  /* Secondary personas grid */
+  .persona-secondary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* Implications */
+  .persona-implications {
+    margin-top: 32px;
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  .persona-implications .persona-section-label { color: var(--orange-light); margin-bottom: 20px; }
+
+  .implications-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .implication-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .imp-num {
+    font-size: 28px; font-weight: 900;
+    color: var(--orange); letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .imp-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.3; }
+  .imp-body { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
 </style>
 
 <script>
