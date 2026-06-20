@@ -456,6 +456,7 @@
     <div class="nav-tab" onclick="showSection('usecases')">07 · Use Cases</div>
     <div class="nav-tab" onclick="showSection('sysmap')">08 · System Map</div>
     <div class="nav-tab" onclick="showSection('loop')">09 · Operational Loop</div>
+    <div class="nav-tab" onclick="showSection('competitive')">10 · Competitive Landscape</div>
   </div>
 </nav>
 
@@ -651,6 +652,13 @@
         <div class="ov-nav-content">
           <div class="ov-nav-tab-name">Operational Loop</div>
           <div class="ov-nav-tab-desc">The 10-stage circular flow showing exactly which stages Radhika is and isn't involved in — and why her order decision calibrates the entire upstream supply chain.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">10</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">Competitive Landscape</div>
+          <div class="ov-nav-tab-desc">Deep dive into who's already solving this — Hyperpure, Udaan, Walmart, Domino's, Reflexis, BeatRoute, Infilect and more. Feature matrix + a 2×2 quadrant showing the empty space where Roz lives. Use this to defend product positioning in your deck.</div>
         </div>
       </div>
     </div>
@@ -3494,6 +3502,872 @@
       </div>
     </div>
   </div><!-- end loop -->
+
+  <!-- ==================== SECTION 10: COMPETITIVE LANDSCAPE ==================== -->
+  <div class="section" id="competitive">
+    <div class="page-header">
+      <h1>Competitive Landscape — Operations &amp; AI in Retail Supply Chain</h1>
+      <p>Who is already solving pieces of this problem — and how. Mapped across four arenas: India B2B supply chain, global retail AI, store-ops platforms, and analogous frontline AI plays we can borrow from.</p>
+    </div>
+
+    <!-- Quick navigation -->
+    <div class="cl-nav">
+      <a href="#cl-india" class="cl-nav-chip">🇮🇳 India B2B Supply</a>
+      <a href="#cl-global" class="cl-nav-chip">🌍 Global Retail AI</a>
+      <a href="#cl-ops" class="cl-nav-chip">🛠 Store-Ops Tools</a>
+      <a href="#cl-analog" class="cl-nav-chip">🔄 Analogous Plays</a>
+      <a href="#cl-matrix" class="cl-nav-chip">📊 Feature Matrix</a>
+      <a href="#cl-gap" class="cl-nav-chip">🎯 The Gap = Roz</a>
+    </div>
+
+    <!-- ═══════════ ARENA 1: INDIA B2B SUPPLY CHAIN ═══════════ -->
+    <div class="cl-arena" id="cl-india">
+      <div class="cl-arena-head">
+        <div class="cl-arena-eyebrow">ARENA 01</div>
+        <h2>🇮🇳 India B2B Supply Chain Platforms</h2>
+        <p>These don't compete with Roz directly — they upstream of it. But they're shaping the supply environment Radhika orders from, and several are layering on intelligence that Roz can either integrate with or be threatened by.</p>
+      </div>
+
+      <div class="cl-cards-3">
+
+        <!-- Hyperpure -->
+        <div class="cl-card hero-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">🥬 Hyperpure</div>
+            <div class="cl-meta">Zomato · B2B supply to restaurants</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">What they do</div>
+              <p>Farm-to-restaurant supply chain. Sources fresh produce, dairy, meat, seafood, groceries directly from farmers and processors, delivers next-morning to restaurants. Active in 8+ Indian cities. ₹3,000+ Cr ARR by FY24.</p>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">AI &amp; Operations features</div>
+              <ul>
+                <li><strong>Demand forecasting</strong> per restaurant based on order history + seasonality — drives upstream procurement</li>
+                <li><strong>Quality grading</strong> with photo evidence at fulfillment, sent with each delivery</li>
+                <li><strong>Cold chain tracking</strong> end-to-end with temperature logs</li>
+                <li><strong>App-based ordering</strong> with next-day delivery slots — beats traditional mandi by ~24 hours</li>
+                <li><strong>Private label products</strong> (sauces, sliced veg, ready-to-cook) — reduces customer prep time</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Why it matters for more.</div>
+              <p>Hyperpure proves Indian buyers will switch from informal supply (mandi, distributors) to app-driven B2B when quality + reliability is consistent. A future Hyperpure-for-supermarkets is plausible — more. should treat consistent, transparent supply as table stakes, not a feature.</p>
+            </div>
+            <div class="cl-tag-row">
+              <span class="cl-tag green">✓ Strong supply ops</span>
+              <span class="cl-tag yellow">○ Limited store-side AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Udaan -->
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">📦 Udaan</div>
+            <div class="cl-meta">Lightspeed-backed · B2B marketplace</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">What they do</div>
+              <p>India's largest B2B e-commerce platform connecting manufacturers/wholesalers to ~3M+ retailers (kiranas, pharmacies, hotels). FMCG, staples, electronics, pharma.</p>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">AI features</div>
+              <ul>
+                <li>Personalized product feed per retailer based on category mix &amp; buying pattern</li>
+                <li>Credit underwriting model — Udaan Capital extends BNPL credit based on buying behavior</li>
+                <li>Route optimization for last-mile delivery</li>
+                <li>Dynamic pricing on slow-moving SKUs</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Relevance</div>
+              <p>Their <strong>data on millions of small-retailer ordering patterns</strong> is the moat. more. has structured store data — but Udaan has unstructured kirana behavior at scale. Future demand-forecast SaaS plays will use this kind of dataset.</p>
+            </div>
+            <div class="cl-tag-row">
+              <span class="cl-tag green">✓ AI credit scoring</span>
+              <span class="cl-tag yellow">○ No store-floor tools</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ElasticRun -->
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">🚚 ElasticRun</div>
+            <div class="cl-meta">Prosus/SoftBank-backed</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">What they do</div>
+              <p>Asset-light rural logistics + B2B distribution for FMCG to ~400K kirana stores across India.</p>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">AI features</div>
+              <ul>
+                <li>Route &amp; load optimization using gig-economy fleet</li>
+                <li>Demand sensing per village based on prior month draws</li>
+                <li>Replenishment scheduling for individual stores</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Relevance</div>
+              <p>Shows that <strong>per-store replenishment AI works at small-format scale</strong> in rural India — exactly the upcountry markets more. is targeting. The signal: forecasting works even when input data is messy.</p>
+            </div>
+            <div class="cl-tag-row">
+              <span class="cl-tag green">✓ Rural scale</span>
+              <span class="cl-tag yellow">○ Distribution-only</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════ ARENA 2: GLOBAL RETAIL AI ═══════════ -->
+    <div class="cl-arena" id="cl-global">
+      <div class="cl-arena-head">
+        <div class="cl-arena-eyebrow">ARENA 02</div>
+        <h2>🌍 Global Retail AI Deployments</h2>
+        <p>What Walmart, Kroger, Tesco, Carrefour have actually deployed at chain scale. These are the proof points your deck can lean on — but built for Western enterprise budgets and infrastructure.</p>
+      </div>
+
+      <div class="cl-cards-2">
+
+        <!-- Walmart -->
+        <div class="cl-card">
+          <div class="cl-card-head dark">
+            <div class="cl-brand">🛒 Walmart</div>
+            <div class="cl-meta">$3.5B tech investment · 4,700+ US stores</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">AI deployments</div>
+              <ul>
+                <li><strong>Focal Systems CV (Canada-wide):</strong> camera-based out-of-stock detection across 11 departments. Real-time alerts to floor staff for replenishment.</li>
+                <li><strong>Element AI demand forecasting:</strong> tested across 4,700 stores for produce + perishables</li>
+                <li><strong>GenAI assistant "My Assistant"</strong> for associate scheduling, communications, training</li>
+                <li><strong>Symbotic robotics</strong> in 42 regional DCs for automated case handling</li>
+                <li><strong>RetailLink:</strong> shared sales/inventory data with vendors → vendor-managed inventory</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Reported outcomes</div>
+              <p>"Real-time, automated alerts for replenishment in key priority areas" (Robin DeMers, Director Store Optimization). CV stockout claims often cited at ~90% reduction but unverified in Walmart's own announcements.</p>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">India lesson</div>
+              <p>CV cameras are capital-intensive — Walmart spent ~$3.5B on tech over 3 years. India needs the same outcomes from a phone camera + AI cloud (Infilect/ParallelDots approach), not fixed cameras.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kroger -->
+        <div class="cl-card">
+          <div class="cl-card-head dark">
+            <div class="cl-brand">🛍 Kroger</div>
+            <div class="cl-meta">2,700+ US stores · 84.51° data subsidiary</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">AI deployments</div>
+              <ul>
+                <li><strong>EDGE smart shelves</strong> — digital price tags + weight sensors detect shelf-empty in real-time</li>
+                <li><strong>84.51° personalization engine</strong> — customer-level offers, ~98% data coverage of US households</li>
+                <li><strong>Dynamic pricing</strong> on perishables based on remaining shelf life</li>
+                <li><strong>Computer vision at self-checkout</strong> for theft prevention</li>
+                <li><strong>Ocado robotic fulfillment centers</strong> for online grocery</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Reported outcomes</div>
+              <p>Dynamic markdown engine reportedly recovered 15–25% more value on near-expiry perishables vs flat-percentage markdowns. 84.51° has driven majority of Kroger's digital growth.</p>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">India lesson</div>
+              <p>The <strong>markdown optimization model</strong> is directly transferable — Roz's UC-03 (markdown rec) is exactly this, simplified for an Android phone. Don't need EDGE shelves to do it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tesco -->
+        <div class="cl-card">
+          <div class="cl-card-head dark">
+            <div class="cl-brand">🛒 Tesco</div>
+            <div class="cl-meta">UK · Clubcard data backbone</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">AI deployments</div>
+              <ul>
+                <li><strong>Dunnhumby (their data arm):</strong> customer segmentation + demand sensing for replenishment</li>
+                <li><strong>Yellow-label dynamic markdowns</strong> — algorithmic discounts on near-expiry items, reportedly reduced waste 30%+</li>
+                <li><strong>Drone-and-camera shelf audits</strong> in pilot</li>
+                <li><strong>Whoosh rapid delivery</strong> from store backrooms (~30 min)</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">India lesson</div>
+              <p>Tesco's "yellow stickers" markdown model is the gold standard for fresh waste management. Roz's expiry alert + markdown rec (UC-03) is a direct echo of this for the Indian context.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carrefour -->
+        <div class="cl-card">
+          <div class="cl-card-head dark">
+            <div class="cl-brand">🛒 Carrefour</div>
+            <div class="cl-meta">France/EU · Google Cloud partnership</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">AI deployments</div>
+              <ul>
+                <li><strong>Hopper.ai integration</strong> — chatbot for customer recommendations</li>
+                <li><strong>Google Cloud Vertex AI</strong> for inventory and supply chain optimization</li>
+                <li><strong>Blockchain food traceability</strong> on private label items</li>
+                <li><strong>RFID inventory</strong> across some categories</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">India lesson</div>
+              <p>Carrefour has invested heavily in <strong>tech partnerships rather than build</strong> — more. already has the Amazon partnership; this validates that strategy. Don't reinvent forecasting — wire into existing AWS + Ganit setup.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════ ARENA 3: STORE-OPS PLATFORMS ═══════════ -->
+    <div class="cl-arena" id="cl-ops">
+      <div class="cl-arena-head">
+        <div class="cl-arena-eyebrow">ARENA 03</div>
+        <h2>🛠 Store-Ops &amp; Frontline Platforms</h2>
+        <p>Direct functional competitors to Roz — these are SaaS tools sold to retailers to do tasks/audit/scheduling/communication on the store floor. Most are priced + architected for Western enterprise, leaving an India-shaped gap.</p>
+      </div>
+
+      <div class="cl-cards-3">
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">⚡ Zebra Reflexis</div>
+            <div class="cl-meta">Reflexis ONE · 275+ retailers</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>Real-time task prioritization on store-floor mobile/tablet</li>
+                <li>AI workforce scheduling + execution</li>
+                <li>Alerts from loss-prevention, supply-chain, IoT systems</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Weaknesses</div>
+              <ul>
+                <li>Heavy implementation cost (~$50K+ per store)</li>
+                <li>Built for English-first enterprise context</li>
+                <li>Complex training; steep learning curve</li>
+              </ul>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag red">⚠ Too enterprise for India</span></div>
+          </div>
+        </div>
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">👥 Legion WFM</div>
+            <div class="cl-meta">AI-native workforce mgmt</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>Demand-driven shift scheduling</li>
+                <li>Employee mobile self-service for shift swaps</li>
+                <li>Time savings for managers (claims ~3 hrs/week)</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Gap for India</div>
+              <p>Built for hourly-wage US/EU labor markets with formal HRIS. Indian frontline workers have no email, no payroll integration, and need WhatsApp delivery.</p>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag yellow">○ Scheduling only</span></div>
+          </div>
+        </div>
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">📋 SafetyCulture</div>
+            <div class="cl-meta">Audit + checklist platform · Aus/global</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>Mobile checklist + geo-stamped photos</li>
+                <li>Auto-scoring + corrective action assignment</li>
+                <li>Used by India Family Mart, others for store audits</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Lesson</div>
+              <p><strong>Mobile-first audit lifted engagement from ~30% (paper) to 80–90%.</strong> Validates Roz's bias toward exception-based mobile tasks vs. dashboards.</p>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag yellow">○ Audit-only</span></div>
+          </div>
+        </div>
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">🎯 YOOBIC</div>
+            <div class="cl-meta">Frontline execution + comms</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>Task management, learning, comms in one app</li>
+                <li>Used by Lacoste, Sephora, Boots for store standards</li>
+                <li>AI shelf-image scoring (added 2023)</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Gap</div>
+              <p>Premium pricing. Western retail visual language. No vernacular India support.</p>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag red">⚠ Premium tier</span></div>
+          </div>
+        </div>
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">🇮🇳 BeatRoute</div>
+            <div class="cl-meta">India · Field execution &amp; SFA</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>AI agent that scores shelf photos &amp; routes issues into rep beat plan</li>
+                <li>India-built, vernacular support</li>
+                <li>Used by Dabur, Marico, ITC, Cadbury</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Relevance</div>
+              <p>Closest Indian analog to Roz's audit + alert layer — but built for FMCG salesreps doing kirana visits, not the store manager inside an organized retail outlet.</p>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag green">✓ Indian context</span></div>
+          </div>
+        </div>
+
+        <div class="cl-card">
+          <div class="cl-card-head">
+            <div class="cl-brand">📸 Infilect</div>
+            <div class="cl-meta">India · CV shelf intelligence</div>
+          </div>
+          <div class="cl-body">
+            <div class="cl-section">
+              <div class="cl-section-label">Strengths</div>
+              <ul>
+                <li>InfiViz — phone-photo shelf audits, ~97% claimed accuracy</li>
+                <li>Deployed across 400K+ stores in 16+ countries</li>
+                <li>Clients: P&amp;G, Nestlé, ITC</li>
+                <li>60-second insight delivery</li>
+              </ul>
+            </div>
+            <div class="cl-section">
+              <div class="cl-section-label">Relevance</div>
+              <p>Direct vendor for Roz's UC-09 (Shelf Photo Audit). Don't build CV in-house — partner.</p>
+            </div>
+            <div class="cl-tag-row"><span class="cl-tag green">✓ India-native CV</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════ ARENA 4: ANALOGOUS AI PLAYS ═══════════ -->
+    <div class="cl-arena" id="cl-analog">
+      <div class="cl-arena-head">
+        <div class="cl-arena-eyebrow">ARENA 04</div>
+        <h2>🔄 Analogous AI Plays (Borrowable Patterns)</h2>
+        <p>Not retail — but adjacent industries that have already solved "AI assistant for the frontline manager." These prove the design pattern works and shape what good looks like.</p>
+      </div>
+
+      <div class="cl-cards-2">
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">🍕 Domino's + Microsoft</div>
+            <div class="cl-meta">5-year Azure OpenAI alliance · Oct 2023</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> GenAI assistant for store managers powered by Azure OpenAI. Helps with inventory, ingredient ordering, staff scheduling. Goal stated by CTO Kelly Garcia: <em>"free store managers to dedicate more time to team member experience and customer service."</em></p>
+            <p><strong>Borrow:</strong> The mental model — <strong>AI ops assistant as a co-pilot, not a control system.</strong> Manager stays in charge. This is exactly Roz's positioning.</p>
+          </div>
+        </div>
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">🍟 McDonald's ABC</div>
+            <div class="cl-meta">Automated Business-Day Cutover</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> Automated the entire end-of-day close — sales reconciliation, cash count, inventory snapshot, shift handover. Managers complete close in minutes via a short checklist.</p>
+            <p><strong>Outcome:</strong> Managers reportedly become "more present on the floor." Direct mirror of Roz's UC-02 (Auto HQ Report) and UC-12 (Close + Leave nudge).</p>
+            <p><strong>Borrow:</strong> Automate the rituals — open, close, report — that consume time but require no judgment.</p>
+          </div>
+        </div>
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">🏥 Cleveland Clinic + Palantir</div>
+            <div class="cl-meta">Virtual Command Center</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> Single real-time view of hospital capacity/staffing with ML forecasting. Anomalies flagged centrally so leaders see issues before they cascade.</p>
+            <p><strong>Borrow:</strong> The single-pane <strong>command center for Vikram (Area Manager)</strong> — one screen showing all 8 stores with anomalies surfaced, not raw data. This is the natural V2 evolution of Roz beyond the single-store manager.</p>
+          </div>
+        </div>
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">🏥 Apollo Hospitals</div>
+            <div class="cl-meta">India · ~3.5% digital budget on AI</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> AI agents to handle routine inventory, paperwork, and scheduling tasks for nursing staff. Stated goal: free <em>"two to three hours of time per day"</em> for clinical work.</p>
+            <p><strong>Borrow:</strong> The framing — <strong>not "AI replaces the human" but "AI buys the human time back."</strong> Radhika's pitch should sound exactly like this.</p>
+          </div>
+        </div>
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">💼 WorkJam · Blink · Flip</div>
+            <div class="cl-meta">Frontline super-apps</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> Mobile-first super-apps combining task, schedule, learning, comms. Explicitly designed to replace <em>"scattered WhatsApp groups and breakroom posters."</em> Offline-capable. Passwordless login for workers without corporate email.</p>
+            <p><strong>Borrow:</strong> The UX architecture — <strong>consumer-grade simplicity + offline-first + phone-number login.</strong> This is Roz's frontend pattern.</p>
+          </div>
+        </div>
+
+        <div class="cl-card analog">
+          <div class="cl-card-head">
+            <div class="cl-brand">🚚 Flexport · project44</div>
+            <div class="cl-meta">Logistics AI · Global</div>
+          </div>
+          <div class="cl-body">
+            <p><strong>What they built:</strong> Real-time supply visibility + exception-based alerting. Their famous design principle: <em>"focus on the exception versus the expected."</em></p>
+            <p><strong>Borrow:</strong> The interaction model. <strong>Roz speaks only when something needs attention.</strong> No dashboards, no daily summary emails. Push notifications gated on anomalies.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════ FEATURE MATRIX ═══════════ -->
+    <div class="cl-arena" id="cl-matrix">
+      <div class="cl-arena-head">
+        <div class="cl-arena-eyebrow">ARENA 05</div>
+        <h2>📊 Feature Matrix — Where Roz Sits</h2>
+        <p>Direct comparison of where existing solutions land on the 8 dimensions that matter for Indian store ops.</p>
+      </div>
+
+      <div class="cl-matrix-wrap">
+        <table class="cl-matrix">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Reflexis</th>
+              <th>Legion</th>
+              <th>YOOBIC</th>
+              <th>BeatRoute</th>
+              <th>Infilect</th>
+              <th>Hyperpure</th>
+              <th class="hero">Roz (us)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Fresh demand forecasting</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="ok">✓ Upstream</td><td class="hero ok">✓✓ Per SKU</td></tr>
+            <tr><td>Auto HQ reporting</td><td class="part">~ Task report</td><td class="x">—</td><td class="part">~ Audit only</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="hero ok">✓✓ Full</td></tr>
+            <tr><td>Expiry / markdown opt.</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="hero ok">✓✓ Per batch</td></tr>
+            <tr><td>Predictive staff alerts</td><td class="ok">✓</td><td class="ok">✓✓</td><td class="part">~</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="hero ok">✓</td></tr>
+            <tr><td>Mobile audit + CV</td><td class="part">~</td><td class="x">—</td><td class="ok">✓✓</td><td class="ok">✓</td><td class="ok">✓✓</td><td class="x">—</td><td class="hero ok">✓ Via Infilect</td></tr>
+            <tr><td>Vernacular (Hindi+)</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="ok">✓</td><td class="part">~</td><td class="ok">✓</td><td class="hero ok">✓✓ Native</td></tr>
+            <tr><td>Offline-first</td><td class="part">~</td><td class="x">—</td><td class="ok">✓</td><td class="ok">✓</td><td class="x">—</td><td class="x">—</td><td class="hero ok">✓✓ Required</td></tr>
+            <tr><td>WhatsApp-grade UX</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="part">~</td><td class="x">—</td><td class="part">~</td><td class="hero ok">✓✓ Native</td></tr>
+            <tr><td>Indian unit economics</td><td class="x">$$$ Heavy</td><td class="x">$$$ Heavy</td><td class="x">$$$ Heavy</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td><td class="hero ok">✓✓ Built for</td></tr>
+            <tr><td>Oracle ERP integration</td><td class="ok">✓</td><td class="part">~</td><td class="part">~</td><td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="hero ok">✓✓ Required</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cl-matrix-legend">
+        <span class="cl-leg-item"><span class="cl-leg-mark ok">✓</span> Has it</span>
+        <span class="cl-leg-item"><span class="cl-leg-mark part">~</span> Partial / weak</span>
+        <span class="cl-leg-item"><span class="cl-leg-mark x">—</span> Doesn't have it</span>
+        <span class="cl-leg-item"><span class="cl-leg-mark hero">✓✓</span> Core strength</span>
+      </div>
+    </div>
+
+    <!-- ═══════════ THE GAP / POSITIONING ═══════════ -->
+    <div class="cl-gap" id="cl-gap">
+      <div class="cl-gap-eyebrow">🎯 THE OPPORTUNITY</div>
+      <h2 class="cl-gap-title">The empty quadrant: India · Store-Ops · GenAI Assistant</h2>
+      <p class="cl-gap-sub">Plot every competitor on two axes and a clear gap appears — exactly where Roz lives.</p>
+
+      <div class="cl-quad-wrap">
+        <div class="cl-axis-label-y">
+          <div>Built for India</div>
+          <div class="muted">(Vernacular · Offline · Phone-first)</div>
+        </div>
+        <div class="cl-quad">
+          <div class="cl-quad-tl">Q1<br><span>Western Ops Tools</span></div>
+          <div class="cl-quad-tr">Q2<br><span>India Ops Tools</span></div>
+          <div class="cl-quad-bl">Q3<br><span>Western Supply</span></div>
+          <div class="cl-quad-br">Q4<br><span>India Supply</span></div>
+
+          <div class="cl-axis-x-pos">→ STORE-OPS / FRONTLINE</div>
+          <div class="cl-axis-x-neg">SUPPLY CHAIN ←</div>
+
+          <!-- Plotted dots -->
+          <div class="cl-dot" style="left:18%;top:18%;background:#94A3B8" title="Reflexis"><span>Reflexis</span></div>
+          <div class="cl-dot" style="left:28%;top:14%;background:#94A3B8" title="Legion"><span>Legion</span></div>
+          <div class="cl-dot" style="left:22%;top:30%;background:#94A3B8" title="YOOBIC"><span>YOOBIC</span></div>
+          <div class="cl-dot" style="left:32%;top:38%;background:#94A3B8" title="SafetyCulture"><span>SafetyCulture</span></div>
+
+          <div class="cl-dot" style="left:72%;top:30%;background:#7C3AED" title="BeatRoute"><span>BeatRoute</span></div>
+          <div class="cl-dot" style="left:65%;top:36%;background:#7C3AED" title="Infilect"><span>Infilect</span></div>
+
+          <div class="cl-dot" style="left:14%;top:65%;background:#94A3B8" title="Walmart RetailLink"><span>Walmart</span></div>
+          <div class="cl-dot" style="left:22%;top:72%;background:#94A3B8" title="project44"><span>project44</span></div>
+
+          <div class="cl-dot" style="left:70%;top:65%;background:#7C3AED" title="Hyperpure"><span>Hyperpure</span></div>
+          <div class="cl-dot" style="left:80%;top:72%;background:#7C3AED" title="Udaan"><span>Udaan</span></div>
+          <div class="cl-dot" style="left:75%;top:80%;background:#7C3AED" title="ElasticRun"><span>ElasticRun</span></div>
+
+          <!-- ROZ HERO MARKER -->
+          <div class="cl-dot hero-dot" style="left:78%;top:20%" title="Roz"><span>रोज़ Roz</span></div>
+          <div class="cl-arrow-roz">★ Empty quadrant</div>
+        </div>
+      </div>
+
+      <div class="cl-axis-label-x">
+        ↑ Supply Chain &nbsp;&nbsp;&nbsp;&nbsp; Store-Ops / Frontline ↑
+      </div>
+
+      <div class="cl-gap-takeaways">
+        <div class="cl-gap-card">
+          <div class="cl-gap-num">01</div>
+          <div class="cl-gap-h">Q1 is crowded</div>
+          <div class="cl-gap-b">Reflexis, Legion, YOOBIC fight for Western enterprise dollars. They're not coming to India profitably any time soon.</div>
+        </div>
+        <div class="cl-gap-card">
+          <div class="cl-gap-num">02</div>
+          <div class="cl-gap-h">Q4 is heating up</div>
+          <div class="cl-gap-b">Hyperpure, Udaan, ElasticRun fight upstream of the store. Their AI is in supply, not in the store manager's hands.</div>
+        </div>
+        <div class="cl-gap-card highlight">
+          <div class="cl-gap-num">03</div>
+          <div class="cl-gap-h">Q2 is wide open</div>
+          <div class="cl-gap-b">BeatRoute &amp; Infilect are circling — but built for FMCG salesreps, not the store manager. Roz fits exactly here.</div>
+        </div>
+        <div class="cl-gap-card">
+          <div class="cl-gap-num">04</div>
+          <div class="cl-gap-h">Defensible moat</div>
+          <div class="cl-gap-b">Vernacular + WhatsApp UX + Oracle integration + Indian unit economics is a 3+ year head-start over any Western entrant.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ BOTTOM-LINE TAKEAWAY ═══════════ -->
+    <div class="cl-bottom">
+      <div class="cl-bottom-eyebrow">BOTTOM LINE</div>
+      <h3>Roz's competitive position in 3 lines</h3>
+      <ol class="cl-bottom-list">
+        <li><strong>Don't compete with Hyperpure or Udaan</strong> — they own the supply layer. Wire into the data they generate. Roz lives downstream, inside the store.</li>
+        <li><strong>Beat Reflexis/Legion/YOOBIC on India fit</strong> — vernacular, offline, WhatsApp-grade UX, mid-range Android. They can't reach this market without rebuilding their product. We start native.</li>
+        <li><strong>Partner with Infilect for CV</strong> when ready. Don't build computer vision in-house. The market already has the right vendor — use them as a layer in Roz's V3 roadmap.</li>
+      </ol>
+    </div>
+  </div><!-- end competitive -->
+
+<style>
+  /* ============================================
+     COMPETITIVE LANDSCAPE STYLES
+  ============================================ */
+  .cl-nav {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    padding: 12px; background: var(--white);
+    border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 32px;
+    position: sticky; top: 60px; z-index: 50;
+    backdrop-filter: blur(8px);
+  }
+  .cl-nav-chip {
+    padding: 7px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    background: var(--bg); color: var(--mid);
+    text-decoration: none; transition: all 0.15s;
+    border: 1px solid var(--border);
+  }
+  .cl-nav-chip:hover { background: var(--orange); color: white; border-color: var(--orange); }
+
+  .cl-arena { margin-bottom: 56px; scroll-margin-top: 140px; }
+  .cl-arena-head { margin-bottom: 24px; }
+  .cl-arena-eyebrow {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+    color: var(--orange); margin-bottom: 8px;
+  }
+  .cl-arena-head h2 {
+    font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .cl-arena-head p { font-size: 14px; color: var(--muted); max-width: 760px; line-height: 1.6; }
+
+  .cl-cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cl-cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .cl-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .cl-card.hero-card { border-color: var(--orange); border-width: 2px; box-shadow: 0 4px 20px rgba(232,70,10,0.1); }
+  .cl-card.analog { background: linear-gradient(135deg, #FAFAFA, #F0F0EE); }
+
+  .cl-card-head {
+    padding: 16px 20px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .cl-card-head.dark { background: #1A1A1A; color: white; }
+  .cl-card-head.dark .cl-meta { color: rgba(255,255,255,0.6); }
+
+  .cl-brand { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .cl-meta { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+  .cl-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .cl-section { }
+  .cl-section-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--orange); margin-bottom: 6px;
+  }
+  .cl-section p, .cl-section ul { font-size: 12px; color: var(--mid); line-height: 1.6; }
+  .cl-section ul { list-style: none; padding: 0; }
+  .cl-section ul li {
+    padding: 4px 0 4px 14px; position: relative;
+  }
+  .cl-section ul li::before {
+    content: '→'; position: absolute; left: 0; top: 4px; color: var(--orange); font-weight: 700;
+  }
+  .cl-section strong { color: var(--dark); }
+
+  .cl-tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+  .cl-tag {
+    font-size: 10px; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .cl-tag.green { background: var(--green-pale); color: var(--green); }
+  .cl-tag.yellow { background: var(--yellow-pale); color: var(--yellow); }
+  .cl-tag.red { background: var(--red-pale); color: var(--red); }
+
+  /* MATRIX */
+  .cl-matrix-wrap { overflow-x: auto; border-radius: 14px; background: var(--white); border: 1px solid var(--border); }
+  .cl-matrix {
+    width: 100%; min-width: 900px; border-collapse: collapse; font-size: 12px;
+  }
+  .cl-matrix th {
+    text-align: left; padding: 12px 14px;
+    background: var(--dark); color: white;
+    font-size: 11px; font-weight: 700;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .cl-matrix th.hero { background: var(--orange); }
+  .cl-matrix td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .cl-matrix td:first-child { font-weight: 600; color: var(--dark); }
+  .cl-matrix td.ok { background: #F0FDF4; color: var(--green); font-weight: 700; }
+  .cl-matrix td.part { background: #FFFBEB; color: var(--yellow); font-weight: 600; }
+  .cl-matrix td.x { background: #FEF2F2; color: var(--red); font-weight: 600; text-align: center; }
+  .cl-matrix td.hero { background: rgba(232,70,10,0.08); }
+  .cl-matrix td.hero.ok { background: var(--orange); color: white; font-weight: 800; }
+  .cl-matrix tr:last-child td { border-bottom: none; }
+
+  .cl-matrix-legend {
+    display: flex; gap: 20px; padding: 14px 0;
+    font-size: 11px; color: var(--muted);
+  }
+  .cl-leg-item { display: flex; align-items: center; gap: 6px; }
+  .cl-leg-mark {
+    width: 22px; height: 22px; border-radius: 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+  }
+  .cl-leg-mark.ok { background: #F0FDF4; color: var(--green); }
+  .cl-leg-mark.part { background: #FFFBEB; color: var(--yellow); }
+  .cl-leg-mark.x { background: #FEF2F2; color: var(--red); }
+  .cl-leg-mark.hero { background: var(--orange); color: white; }
+
+  /* QUADRANT */
+  .cl-gap {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEFE3 100%);
+    border: 1px solid #FED7AA;
+    border-radius: 20px;
+    padding: 36px;
+    margin-bottom: 32px;
+    scroll-margin-top: 140px;
+  }
+  .cl-gap-eyebrow {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+    color: var(--orange); margin-bottom: 10px;
+  }
+  .cl-gap-title { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; color: #1A1A1A; }
+  .cl-gap-sub { font-size: 14px; color: #7C2D12; margin-bottom: 28px; }
+
+  .cl-quad-wrap {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .cl-axis-label-y {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .cl-axis-label-y .muted { font-weight: 500; color: var(--muted); font-size: 10px; }
+
+  .cl-quad {
+    position: relative;
+    aspect-ratio: 1.4 / 1;
+    background: white;
+    border: 2px solid var(--orange);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .cl-quad::before, .cl-quad::after {
+    content: ''; position: absolute; background: rgba(232,70,10,0.2);
+  }
+  .cl-quad::before { left: 0; right: 0; top: 50%; height: 1.5px; }
+  .cl-quad::after { top: 0; bottom: 0; left: 50%; width: 1.5px; }
+
+  .cl-quad-tl, .cl-quad-tr, .cl-quad-bl, .cl-quad-br {
+    position: absolute;
+    font-size: 11px; font-weight: 800;
+    color: rgba(0,0,0,0.15);
+    text-align: center; line-height: 1.3;
+  }
+  .cl-quad-tl span, .cl-quad-tr span, .cl-quad-bl span, .cl-quad-br span {
+    font-size: 9px; font-weight: 500; color: rgba(0,0,0,0.25);
+  }
+  .cl-quad-tl { top: 10px; left: 14px; }
+  .cl-quad-tr { top: 10px; right: 14px; text-align: right; }
+  .cl-quad-bl { bottom: 10px; left: 14px; }
+  .cl-quad-br { bottom: 10px; right: 14px; text-align: right; }
+
+  .cl-axis-x-pos, .cl-axis-x-neg {
+    position: absolute;
+    font-size: 10px; font-weight: 700; color: var(--orange);
+    pointer-events: none;
+  }
+  .cl-axis-x-pos { right: 50%; top: 50%; transform: translate(-8px, -16px); }
+  .cl-axis-x-neg { left: 50%; top: 50%; transform: translate(8px, 4px); }
+
+  .cl-dot {
+    position: absolute;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .cl-dot span {
+    position: absolute;
+    top: 16px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; font-weight: 600; color: #1A1A1A;
+    background: white; padding: 1px 6px; border-radius: 4px;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+  }
+  .cl-dot.hero-dot {
+    width: 24px; height: 24px;
+    background: #E8460A;
+    box-shadow: 0 0 0 6px rgba(232,70,10,0.2), 0 0 0 12px rgba(232,70,10,0.08);
+    animation: rozPulse 2s ease-in-out infinite;
+  }
+  .cl-dot.hero-dot span {
+    background: var(--orange); color: white;
+    font-weight: 800; padding: 3px 10px;
+    border-color: var(--orange);
+  }
+  @keyframes rozPulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(232,70,10,0.2), 0 0 0 12px rgba(232,70,10,0.08); }
+    50%      { box-shadow: 0 0 0 10px rgba(232,70,10,0.3), 0 0 0 20px rgba(232,70,10,0.05); }
+  }
+  .cl-arrow-roz {
+    position: absolute;
+    top: 14%; left: 60%;
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    background: white; padding: 4px 10px; border-radius: 6px;
+    border: 1px solid var(--orange);
+    transform: translateY(-12px);
+  }
+
+  .cl-axis-label-x {
+    text-align: center;
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    margin-bottom: 28px; padding-left: 100px;
+  }
+
+  .cl-gap-takeaways {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .cl-gap-card {
+    background: white;
+    border: 1px solid #FED7AA;
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .cl-gap-card.highlight {
+    background: #1A1A1A; border-color: #1A1A1A;
+  }
+  .cl-gap-card.highlight .cl-gap-h { color: white; }
+  .cl-gap-card.highlight .cl-gap-b { color: rgba(255,255,255,0.7); }
+  .cl-gap-card.highlight .cl-gap-num { color: var(--orange); }
+  .cl-gap-num { font-size: 22px; font-weight: 900; color: var(--orange); margin-bottom: 6px; }
+  .cl-gap-h { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--dark); }
+  .cl-gap-b { font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+  /* BOTTOM LINE */
+  .cl-bottom {
+    background: #1A1A1A;
+    color: white;
+    border-radius: 20px;
+    padding: 36px;
+  }
+  .cl-bottom-eyebrow {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+    color: var(--orange); margin-bottom: 10px;
+  }
+  .cl-bottom h3 { font-size: 22px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.3px; }
+  .cl-bottom-list { padding-left: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .cl-bottom-list li { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.75); }
+  .cl-bottom-list strong { color: var(--orange); }
+</style>
 
 <style>
   .lp-legend {
