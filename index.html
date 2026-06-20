@@ -449,13 +449,14 @@
     <div class="nav-tab active" onclick="showSection('overview')">00 · Overview</div>
     <div class="nav-tab" onclick="showSection('ecosystem')">01 · Ecosystem Blueprint</div>
     <div class="nav-tab" onclick="showSection('journey')">02 · As-Is Journey</div>
-    <div class="nav-tab" onclick="showSection('interventions')">03 · AI Interventions</div>
-    <div class="nav-tab" onclick="showSection('screens')">04 · Screen Specs</div>
-    <div class="nav-tab" onclick="showSection('blueprint')">05 · Service Blueprint</div>
-    <div class="nav-tab" onclick="showSection('personas')">06 · User Personas</div>
-    <div class="nav-tab" onclick="showSection('usecases')">07 · Use Cases</div>
-    <div class="nav-tab" onclick="showSection('sysmap')">08 · System Map</div>
-    <div class="nav-tab" onclick="showSection('loop')">09 · Operational Loop</div>
+    <div class="nav-tab" onclick="showSection('behavior')">03 · Floor Behavior Deep-Dive</div>
+    <div class="nav-tab" onclick="showSection('interventions')">04 · AI Interventions</div>
+    <div class="nav-tab" onclick="showSection('screens')">05 · Screen Specs</div>
+    <div class="nav-tab" onclick="showSection('blueprint')">06 · Service Blueprint</div>
+    <div class="nav-tab" onclick="showSection('personas')">07 · User Personas</div>
+    <div class="nav-tab" onclick="showSection('usecases')">08 · Use Cases</div>
+    <div class="nav-tab" onclick="showSection('sysmap')">09 · System Map</div>
+    <div class="nav-tab" onclick="showSection('loop')">10 · Operational Loop</div>
   </div>
 </nav>
 
@@ -607,22 +608,57 @@
       <div class="ov-nav-step">
         <div class="ov-nav-num">03</div>
         <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">Floor Behavior Deep-Dive</div>
+          <div class="ov-nav-tab-desc">The continuous, ambient behavior underneath the journey — behaviors, touchpoints, requirements, pain points, and "How Might We" prompts, each tagged to the exact journey moment (9am, 11am, 2pm, 5pm) where it surfaces. Use this for the nuance behind UC-04/UC-05 and your core design principle.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">04</div>
+        <div class="ov-nav-content">
           <div class="ov-nav-tab-name">AI Interventions</div>
           <div class="ov-nav-tab-desc">The 3 moments where AI steps in — before/after comparison, real proof stats from More Retail's own deployment, and the 6 non-negotiable design constraints for the Indian market (mobile-first, Hindi, offline, WhatsApp-grade UX). Use this to justify your product decisions in the deck.</div>
         </div>
       </div>
       <div class="ov-nav-step">
-        <div class="ov-nav-num">04</div>
+        <div class="ov-nav-num">05</div>
         <div class="ov-nav-content">
           <div class="ov-nav-tab-name">Screen Specs</div>
           <div class="ov-nav-tab-desc">Exact element-by-element spec for Screen 1 (Smart Order) and Screen 2 (Daily Briefing). Also contains the 5-slide deck story arc — what each slide should say. Use this when you sit down in Figma.</div>
         </div>
       </div>
       <div class="ov-nav-step">
-        <div class="ov-nav-num">05</div>
+        <div class="ov-nav-num">06</div>
         <div class="ov-nav-content">
           <div class="ov-nav-tab-name">Service Blueprint</div>
           <div class="ov-nav-tab-desc">The formal service design view — 6 swim lanes (physical evidence → manager actions → line of visibility → frontstage systems → backstage actions → support processes) across 5 key moments. Shows exactly what Roz does behind the scenes vs. what the manager sees. Use this as the system map deliverable or as reference for it.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">07</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">User Personas</div>
+          <div class="ov-nav-tab-desc">Radhika (primary), Vikram (secondary), Suresh (affected) — their goals, frustrations, and tech proficiency. Use this to justify who you designed for and why.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">08</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">Use Cases</div>
+          <div class="ov-nav-tab-desc">All 10 use cases, P1/P2/P3 prioritized, each with trigger → what she sees → her action → outcome → edge cases. Screens 1 and 2 map directly to UC-01 and UC-02.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">09</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">System Map</div>
+          <div class="ov-nav-tab-desc">Visual, draggable node map of every actor and system end-to-end — drag to rearrange, drag background to pan. Use this as your literal system map deliverable.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">10</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">Operational Loop</div>
+          <div class="ov-nav-tab-desc">The 10-stage circular flow showing exactly which stages Radhika is and isn't involved in — and why her order decision calibrates the entire upstream supply chain.</div>
         </div>
       </div>
     </div>
@@ -959,7 +995,265 @@
     </div>
   </div>
 
-  <!-- ==================== SECTION 3: AI INTERVENTIONS ==================== -->
+  <!-- ==================== SECTION 2B: FLOOR BEHAVIOR DEEP-DIVE ==================== -->
+  <div class="section" id="behavior">
+    <div class="page-header">
+      <h1>Deep-Dive: Floor Operations Behavior</h1>
+      <p>Not every part of Radhika's day is a single decision like the order or the report. This is the continuous, ambient behavior that runs underneath the entire day — most visible in the journey's reactive, high-stress moments.</p>
+    </div>
+
+    <!-- Journey anchor strip -->
+    <div class="bh-anchor">
+      <div class="bh-anchor-label">This behavior is continuous all day, but peaks at 4 points already mapped in the As-Is Journey →</div>
+      <div class="bh-anchor-chips">
+        <button class="bh-chip" onclick="showSection('journey')">📍 9:00 AM<span>Morning Rush</span></button>
+        <button class="bh-chip" onclick="showSection('journey')">📍 11:00 AM<span>Stockout Chase</span></button>
+        <button class="bh-chip" onclick="showSection('journey')">📍 2:00 PM<span>Floor Walk</span></button>
+        <button class="bh-chip" onclick="showSection('journey')">📍 5:00 PM<span>Evening Rush</span></button>
+      </div>
+    </div>
+
+    <!-- BEHAVIORS -->
+    <div class="bh-section-title">Behaviors — what she actually does, moment to moment</div>
+    <div class="bh-grid">
+      <div class="bh-card">
+        <div class="bh-time">📍 All day · peaks 9am &amp; 5pm</div>
+        <div class="bh-ic">🚶‍♀️</div>
+        <div class="bh-t">Continuous floor-walking</div>
+        <div class="bh-d">Rarely stays in one place more than a few minutes during open hours. Not a desk job.</div>
+      </div>
+      <div class="bh-card">
+        <div class="bh-time">📍 2:00 PM · Floor Walk</div>
+        <div class="bh-ic">👀</div>
+        <div class="bh-t">Peripheral scanning in motion</div>
+        <div class="bh-d">Eyes sweep shelves for gaps and untidy displays while walking somewhere else for a different reason.</div>
+      </div>
+      <div class="bh-card">
+        <div class="bh-time">📍 9:00 AM &amp; 5:00 PM · Rush</div>
+        <div class="bh-ic">🔄</div>
+        <div class="bh-t">Mode-switching on demand</div>
+        <div class="bh-d">Flips between "manager directing staff" and "associate doing the work herself" the instant there's a gap.</div>
+      </div>
+      <div class="bh-card">
+        <div class="bh-time">📍 9:00 AM · Rush begins</div>
+        <div class="bh-ic">🧠</div>
+        <div class="bh-t">Pattern-matching from memory</div>
+        <div class="bh-d">Senses "today feels busier than a normal Tuesday" through accumulated experience — no number on a screen tells her this.</div>
+      </div>
+      <div class="bh-card">
+        <div class="bh-time">📍 All day · continuous</div>
+        <div class="bh-ic">🤝</div>
+        <div class="bh-t">Relationship-based management</div>
+        <div class="bh-d">Manages by walking up and talking — not by sending a message or checking a dashboard.</div>
+      </div>
+      <div class="bh-card">
+        <div class="bh-time">📍 7:30 AM &amp; 2:00 PM</div>
+        <div class="bh-ic">🥬</div>
+        <div class="bh-t">Disproportionate attention to fresh</div>
+        <div class="bh-d">Physically gravitates to the produce section more than any other — it's where her anxiety (quality, shrink) is highest.</div>
+      </div>
+    </div>
+
+    <!-- TOUCHPOINTS -->
+    <div class="bh-section-title">Touchpoints</div>
+    <div class="bh-touch-grid">
+      <div class="bh-touch-col">
+        <div class="bh-touch-label">🧱 Physical</div>
+        <div class="bh-touch-item">Shelf labels &amp; price gun</div>
+        <div class="bh-touch-item">Planogram (memory, not a tool)</div>
+        <div class="bh-touch-item">Stockroom door</div>
+        <div class="bh-touch-item">Billing counters</div>
+        <div class="bh-touch-item">The queue itself</div>
+      </div>
+      <div class="bh-touch-col">
+        <div class="bh-touch-label">👥 People</div>
+        <div class="bh-touch-item">Floor staff — verbal, in-person</div>
+        <div class="bh-touch-item">Billing staff — visual monitoring</div>
+        <div class="bh-touch-item">Customers — direct, for complaints</div>
+      </div>
+      <div class="bh-touch-col">
+        <div class="bh-touch-label">💻 Systems</div>
+        <div class="bh-touch-item">POS terminal — glances at totals only</div>
+        <div class="bh-touch-item">WhatsApp — staff coordination</div>
+        <div class="bh-touch-item pain">⚠ Nothing else exists</div>
+      </div>
+      <div class="bh-touch-col">
+        <div class="bh-touch-label">👁 Sensory</div>
+        <div class="bh-touch-item">Sound — queue chatter, register beeps</div>
+        <div class="bh-touch-item">Sight — visual shelf &amp; queue scans</div>
+        <div class="bh-touch-item pain">⚠ She herself is the sensor</div>
+      </div>
+    </div>
+
+    <!-- REQUIREMENTS + PAIN side by side -->
+    <div class="bh-two-col">
+      <div>
+        <div class="bh-section-title">Requirements — what she needs to do this well</div>
+        <div class="bh-req-list">
+          <div class="bh-req">Know <strong>where to be</strong> at any given moment — which fire is biggest right now</div>
+          <div class="bh-req"><strong>Early warning</strong>, not confirmation — a queue is about to build, not already built</div>
+          <div class="bh-req">Know about a <strong>stock gap before a customer</strong> points it out</div>
+          <div class="bh-req">A way to <strong>delegate without abandoning</strong> what she's currently doing</div>
+          <div class="bh-req"><strong>Confirmation that delegation worked</strong> — not just hope</div>
+          <div class="bh-req"><strong>Continuity across locations</strong> she can't physically be in at once</div>
+        </div>
+      </div>
+      <div>
+        <div class="bh-section-title">Pain Points</div>
+        <div class="bh-pain-list">
+          <div class="bh-pain">
+            <div class="bh-pain-time">📍 9am · 11am · 5pm</div>
+            <div class="bh-pain-t">She is the human sensor network</div>
+            <div class="bh-pain-d">If she isn't looking at something, nothing is watching it. Zero passive monitoring exists in the store.</div>
+          </div>
+          <div class="bh-pain">
+            <div class="bh-pain-time">📍 9am Rush · 11am Stockout</div>
+            <div class="bh-pain-t">Always reactive, never predictive</div>
+            <div class="bh-pain-d">By the time she notices a queue, customers are already annoyed. By the time she finds an empty shelf, the sale is already lost.</div>
+          </div>
+          <div class="bh-pain">
+            <div class="bh-pain-time">📍 9am · 11am · 5pm</div>
+            <div class="bh-pain-t">Constant task-switching cost</div>
+            <div class="bh-pain-d">Every interruption abandons whatever she was doing — unfinished, not resumed.</div>
+          </div>
+          <div class="bh-pain">
+            <div class="bh-pain-time">📍 Surfaces at 8pm report</div>
+            <div class="bh-pain-t">Invisible labor</div>
+            <div class="bh-pain-d">50 micro-interventions a day, and none of it shows up anywhere. HQ only ever sees the EOD numbers.</div>
+          </div>
+          <div class="bh-pain">
+            <div class="bh-pain-time">📍 Systemic — no single time</div>
+            <div class="bh-pain-t">No feedback loop on her own judgment</div>
+            <div class="bh-pain-d">She moves staff to billing on a "feel" — never finds out afterward if the call was right. She can't get better at this.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW MIGHT WE -->
+    <div class="bh-section-title">How Might We — with AI</div>
+    <div class="bh-hmw-grid">
+      <div class="bh-hmw-card">
+        <div class="bh-hmw-q">HMW</div>
+        <div class="bh-hmw-t">Give predictive signals before she has to notice?</div>
+        <div class="bh-hmw-d">Queue about to build, shelf about to gap, footfall about to surge — shift her from reactive firefighting to proactive positioning.</div>
+        <div class="bh-hmw-tag">→ UC-04, UC-05</div>
+      </div>
+      <div class="bh-hmw-card">
+        <div class="bh-hmw-q">HMW</div>
+        <div class="bh-hmw-t">Close the delegation loop?</div>
+        <div class="bh-hmw-d">When she tells Suresh to do something, she gets a confirmation signal instead of having to physically check or just hope.</div>
+        <div class="bh-hmw-tag">→ Task system</div>
+      </div>
+      <div class="bh-hmw-card">
+        <div class="bh-hmw-q">HMW</div>
+        <div class="bh-hmw-t">Make invisible floor labor visible to HQ?</div>
+        <div class="bh-hmw-d">Without adding a single extra reporting task — so Vikram stops assuming the EOD report is the whole story.</div>
+        <div class="bh-hmw-tag">→ UC-02 extension</div>
+      </div>
+      <div class="bh-hmw-card">
+        <div class="bh-hmw-q">HMW</div>
+        <div class="bh-hmw-t">Watch the things she can't be present for?</div>
+        <div class="bh-hmw-d">A system covers queue length and shelf gaps in sections she's not standing in — backup for her ambient vigilance.</div>
+        <div class="bh-hmw-tag">→ UC-09 (CV)</div>
+      </div>
+      <div class="bh-hmw-card accent">
+        <div class="bh-hmw-q">HMW</div>
+        <div class="bh-hmw-t">Protect the part of her job that's actually valuable?</div>
+        <div class="bh-hmw-d">AI absorbs the mechanical vigilance — watching a queue, scanning a shelf. Her relationship-based judgment and floor-craft stay hers entirely.</div>
+        <div class="bh-hmw-tag">→ Core design principle</div>
+      </div>
+    </div>
+
+    <!-- Key design line -->
+    <div class="bh-keyline">
+      <div class="bh-keyline-icon">✦</div>
+      <div>
+        <div class="bh-keyline-title">AI should absorb the sensing, not the judging.</div>
+        <div class="bh-keyline-body">She doesn't need an AI that tells her how to manage people — she needs a second set of eyes on what she physically can't watch every second, so her actual judgment gets spent on moments that need it instead of being burned on 12 hours of ambient vigilance.</div>
+      </div>
+    </div>
+  </div><!-- end behavior -->
+
+<style>
+  .bh-anchor {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 20px; margin-bottom: 32px;
+  }
+  .bh-anchor-label { font-size: 13px; color: var(--muted); max-width: 280px; line-height: 1.5; }
+  .bh-anchor-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bh-chip {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+    background: var(--orange-pale); border: 1px solid #FED7AA; color: var(--orange);
+    padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .bh-chip:hover { background: var(--orange); color: white; }
+  .bh-chip span { font-size: 10px; font-weight: 500; opacity: 0.8; }
+
+  .bh-section-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--mid); margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+
+  .bh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bh-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .bh-time {
+    display: inline-block; font-size: 10px; font-weight: 700; color: var(--orange);
+    background: var(--orange-pale); padding: 3px 9px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .bh-ic { font-size: 22px; margin-bottom: 8px; }
+  .bh-t { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .bh-d { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  .bh-touch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .bh-touch-col { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .bh-touch-label { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+  .bh-touch-item { font-size: 12px; color: var(--mid); padding: 7px 0; border-top: 1px solid var(--border); line-height: 1.4; }
+  .bh-touch-item:first-of-type { border-top: none; }
+  .bh-touch-item.pain { color: var(--red); font-weight: 600; }
+
+  .bh-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  .bh-req-list { display: flex; flex-direction: column; gap: 10px; }
+  .bh-req {
+    font-size: 13px; color: var(--mid); line-height: 1.6;
+    background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px;
+  }
+  .bh-req strong { color: var(--dark); }
+
+  .bh-pain-list { display: flex; flex-direction: column; gap: 10px; }
+  .bh-pain {
+    background: var(--red-pale); border: 1px solid #FECACA; border-radius: 10px; padding: 12px 16px;
+  }
+  .bh-pain-time { font-size: 10px; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+  .bh-pain-t { font-size: 13px; font-weight: 700; color: #7F1D1D; margin-bottom: 4px; }
+  .bh-pain-d { font-size: 12px; color: #991B1B; line-height: 1.5; }
+
+  .bh-hmw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bh-hmw-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+  }
+  .bh-hmw-card.accent { background: #1A1A1A; border-color: #1A1A1A; grid-column: span 1; }
+  .bh-hmw-q { font-size: 10px; font-weight: 800; letter-spacing: 1px; color: var(--orange); margin-bottom: 8px; }
+  .bh-hmw-t { font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.35; }
+  .bh-hmw-card.accent .bh-hmw-t { color: white; }
+  .bh-hmw-d { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+  .bh-hmw-card.accent .bh-hmw-d { color: rgba(255,255,255,0.6); }
+  .bh-hmw-tag { font-size: 10px; font-weight: 700; color: var(--blue); background: var(--blue-pale); padding: 3px 9px; border-radius: 999px; display: inline-block; }
+
+  .bh-keyline {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: linear-gradient(135deg, #FFF7ED, #FFEFE3);
+    border: 1.5px solid #FED7AA; border-radius: 16px; padding: 24px; margin-top: 28px;
+  }
+  .bh-keyline-icon { font-size: 24px; color: var(--orange); flex-shrink: 0; }
+  .bh-keyline-title { font-size: 16px; font-weight: 800; color: #9A3412; margin-bottom: 8px; }
+  .bh-keyline-body { font-size: 13px; color: #7C2D12; line-height: 1.65; }
+</style>
+
+  <!-- ==================== SECTION 4: AI INTERVENTIONS ==================== -->
   <div class="section" id="interventions">
     <div class="page-header">
       <h1>3 AI Interventions That Matter</h1>
