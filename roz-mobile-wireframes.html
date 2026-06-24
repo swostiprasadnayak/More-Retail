@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roz — Mobile Wireframes (Editable)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --orange: #E8460A;
+    --orange-pale: #FFF0EB;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --muted: #8A8A8A;
+    --border: #E5E5E5;
+    --bg: #F8F8F6;
+    --white: #FFFFFF;
+    --red: #DC2626;
+    --green: #16A34A;
+    --blue: #2563EB;
+    --purple: #7C3AED;
+    --yellow: #D97706;
+    --teal: #0D9488;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); line-height: 1.5; }
+
+  /* ===== TOP BAR ===== */
+  .top-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-size: 20px; font-weight: 900; color: var(--orange); letter-spacing: -0.5px; }
+  .logo small { font-size: 9px; font-weight: 500; color: var(--muted); display: block; letter-spacing: 0.5px; }
+
+  .top-tools { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .top-btn {
+    padding: 7px 12px; font-size: 11px; font-weight: 700;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; cursor: pointer; color: var(--mid);
+    transition: all 0.15s;
+  }
+  .top-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .top-btn.primary { background: var(--orange); color: var(--white); border-color: var(--orange); }
+  .top-btn.primary:hover { background: var(--dark); border-color: var(--dark); color: var(--white); }
+  .top-btn.danger:hover { border-color: var(--red); color: var(--red); }
+  .back-link {
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-decoration: none; padding: 8px 12px; border-radius: 8px;
+  }
+  .back-link:hover { color: var(--orange); background: var(--orange-pale); }
+
+  /* ===== LAYOUT ===== */
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 60px); }
+  aside {
+    background: var(--white); border-right: 1px solid var(--border);
+    padding: 24px 12px; position: sticky; top: 60px;
+    height: calc(100vh - 60px); overflow-y: auto;
+  }
+  .side-head {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--muted);
+    padding: 6px 10px; margin-bottom: 4px;
+  }
+  .side-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; font-size: 12px; color: var(--mid);
+    border-radius: 8px; cursor: pointer; transition: all 0.12s;
+    text-decoration: none; font-weight: 500;
+  }
+  .side-link:hover { background: var(--bg); color: var(--dark); }
+  .side-link.active { background: var(--orange-pale); color: var(--orange); font-weight: 700; }
+  .side-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--muted); flex-shrink: 0;
+  }
+  .side-link[data-section="auth"] .side-dot { background: var(--purple); }
+  .side-link[data-section="today"] .side-dot { background: var(--orange); }
+  .side-link[data-section="order"] .side-dot { background: var(--blue); }
+  .side-link[data-section="floor"] .side-dot { background: var(--green); }
+  .side-link[data-section="reports"] .side-dot { background: var(--yellow); }
+  .side-link[data-section="menu"] .side-dot { background: var(--muted); }
+
+  main {
+    padding: 32px 40px 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .page-head { margin-bottom: 28px; }
+  .page-head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .page-head p { font-size: 13px; color: var(--muted); max-width: 720px; }
+
+  .help-strip {
+    background: var(--orange-pale);
+    border: 1px solid #FDBA74;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 28px;
+    font-size: 12px;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .help-strip strong { color: var(--orange); }
+
+  /* ===== SECTION HEADER ===== */
+  .section-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 36px; margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-tag {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; padding: 4px 10px; border-radius: 6px;
+  }
+  .section-tag.auth { background: #F5F3FF; color: var(--purple); }
+  .section-tag.today { background: var(--orange-pale); color: var(--orange); }
+  .section-tag.order { background: #EFF6FF; color: var(--blue); }
+  .section-tag.floor { background: #F0FDF4; color: var(--green); }
+  .section-tag.reports { background: #FFFBEB; color: var(--yellow); }
+  .section-tag.menu { background: #F5F5F5; color: var(--muted); }
+  .section-head h2 { font-size: 17px; font-weight: 800; }
+
+  /* ===== PHONE GRID ===== */
+  .phone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-wrap { position: relative; }
+  .phone {
+    width: 320px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 30px;
+    border: 8px solid var(--dark);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .phone-status {
+    background: var(--dark); color: var(--white);
+    height: 22px; display: flex; align-items: center;
+    justify-content: space-between; padding: 0 16px;
+    font-size: 9px; font-weight: 700;
+  }
+  .phone-notch {
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 18px;
+    background: var(--dark);
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+  .phone-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    min-height: 48px;
+  }
+  .phone-header .ph-back { font-size: 14px; color: var(--mid); }
+  .phone-header .ph-title { font-size: 13px; font-weight: 700; flex: 1; }
+  .phone-header .ph-icons { display: flex; gap: 8px; font-size: 13px; color: var(--mid); }
+
+  .phone-body {
+    background: var(--bg);
+    min-height: 460px;
+    padding: 12px;
+  }
+
+  /* ===== FEATURE BLOCK ===== */
+  .feat-list { display: flex; flex-direction: column; gap: 8px; }
+  .feat {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: var(--mid);
+    position: relative;
+    cursor: text;
+    transition: all 0.12s;
+  }
+  .feat:hover { border-color: var(--orange); }
+  .feat.editing { border-color: var(--orange); background: var(--orange-pale); }
+  .feat-type {
+    font-size: 8px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted);
+    margin-bottom: 3px; display: block;
+  }
+  .feat-label {
+    font-size: 12px; font-weight: 600; color: var(--dark);
+    outline: none;
+    word-break: break-word;
+  }
+  .feat-label[contenteditable="true"]:focus {
+    background: var(--white); padding: 2px 4px; border-radius: 3px;
+  }
+
+  /* Visual variants per type */
+  .feat[data-vtype="header"] { background: var(--dark); border-color: var(--dark); }
+  .feat[data-vtype="header"] .feat-type { color: rgba(255,255,255,0.5); }
+  .feat[data-vtype="header"] .feat-label { color: var(--white); }
+  .feat[data-vtype="primary-button"] {
+    background: var(--orange); border-color: var(--orange); text-align: center;
+  }
+  .feat[data-vtype="primary-button"] .feat-type { color: rgba(255,255,255,0.7); }
+  .feat[data-vtype="primary-button"] .feat-label { color: var(--white); }
+  .feat[data-vtype="card"] { background: var(--white); border-left: 3px solid var(--orange); }
+  .feat[data-vtype="alert"] { background: #FFFBEB; border-left: 3px solid var(--yellow); }
+  .feat[data-vtype="kpi"] { background: #F0FDFA; border-left: 3px solid var(--teal); }
+  .feat[data-vtype="input"] {
+    background: var(--bg); border: 1px dashed var(--border);
+    border-style: dashed;
+  }
+  .feat[data-vtype="bottomnav"] {
+    background: var(--white); border-top: 2px solid var(--orange);
+    text-align: center;
+  }
+  .feat[data-vtype="scan"] {
+    background: var(--dark); border-color: var(--dark); text-align: center;
+  }
+  .feat[data-vtype="scan"] .feat-type { color: rgba(255,255,255,0.5); }
+  .feat[data-vtype="scan"] .feat-label { color: var(--white); }
+  .feat[data-vtype="voice"] {
+    background: #F5F3FF; border-left: 3px solid var(--purple);
+  }
+  .feat[data-vtype="list-row"] { background: var(--white); }
+  .feat[data-vtype="success"] {
+    background: #F0FDF4; border-left: 3px solid var(--green);
+  }
+  .feat[data-vtype="danger"] {
+    background: #FEF2F2; border-left: 3px solid var(--red);
+  }
+
+  /* Edit controls */
+  .feat-ctrls {
+    position: absolute; top: 4px; right: 4px;
+    display: none; gap: 2px;
+  }
+  .phone-wrap:hover .feat-ctrls { display: flex; }
+  .feat-ctrl {
+    width: 18px; height: 18px;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 4px; cursor: pointer;
+    font-size: 9px; color: var(--mid);
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .feat-ctrl:hover { background: var(--orange); color: var(--white); border-color: var(--orange); }
+  .feat-ctrl.del:hover { background: var(--red); border-color: var(--red); }
+
+  .feat[data-vtype="header"] .feat-ctrl,
+  .feat[data-vtype="primary-button"] .feat-ctrl,
+  .feat[data-vtype="scan"] .feat-ctrl {
+    background: rgba(255,255,255,0.9);
+  }
+
+  /* ===== PHONE TOOLBAR ===== */
+  .phone-toolbar {
+    display: flex; gap: 6px; justify-content: center;
+    margin-top: 12px;
+  }
+  .ph-btn {
+    padding: 6px 10px; font-size: 10px; font-weight: 700;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; cursor: pointer; color: var(--mid);
+    transition: all 0.12s;
+  }
+  .ph-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .ph-btn.add { background: var(--orange); color: var(--white); border-color: var(--orange); }
+  .ph-btn.add:hover { background: var(--dark); border-color: var(--dark); }
+
+  /* Phone meta */
+  .phone-meta {
+    text-align: center; margin-top: 8px;
+  }
+  .phone-meta .pm-name {
+    font-size: 13px; font-weight: 700; color: var(--dark);
+  }
+  .phone-meta .pm-uc {
+    display: inline-block; margin-left: 6px;
+    font-size: 9px; font-weight: 800;
+    background: var(--orange-pale); color: var(--orange);
+    padding: 2px 6px; border-radius: 4px; letter-spacing: 0.3px;
+  }
+  .phone-meta .pm-id {
+    font-size: 10px; color: var(--muted); margin-top: 2px;
+  }
+
+  /* ===== MODALS ===== */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 500;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 14px;
+    padding: 24px; max-width: 480px; width: 90%;
+    max-height: 80vh; overflow-y: auto;
+  }
+  .modal h3 { font-size: 16px; font-weight: 800; margin-bottom: 14px; }
+  .modal label { font-size: 11px; font-weight: 700; color: var(--mid); display: block; margin-bottom: 4px; }
+  .modal input, .modal select {
+    width: 100%; padding: 9px 12px; font-size: 13px;
+    border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 14px; font-family: inherit;
+  }
+  .modal input:focus, .modal select:focus { outline: none; border-color: var(--orange); }
+  .modal textarea {
+    width: 100%; padding: 9px 12px; font-size: 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: 'SF Mono', Menlo, monospace; min-height: 200px;
+    resize: vertical; margin-bottom: 14px;
+  }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .modal-actions button {
+    padding: 8px 16px; font-size: 12px; font-weight: 700;
+    border-radius: 8px; cursor: pointer; border: 1px solid var(--border);
+    background: var(--white); color: var(--mid);
+  }
+  .modal-actions button.primary {
+    background: var(--orange); color: var(--white); border-color: var(--orange);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark); color: var(--white);
+    padding: 12px 18px; border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    z-index: 600; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .toast.show { opacity: 1; }
+  .toast button {
+    background: var(--orange); color: var(--white);
+    border: none; padding: 4px 10px; font-size: 11px;
+    border-radius: 6px; cursor: pointer; font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; }
+    .phone-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">रोज़ Roz<small>MOBILE WIREFRAMES</small></div>
+  <div class="top-tools">
+    <button class="top-btn" onclick="exportJSON()">Export JSON</button>
+    <button class="top-btn" onclick="openImport()">Import JSON</button>
+    <button class="top-btn danger" onclick="resetAll()">Reset All</button>
+    <a class="back-link" href="more-system-map.html">← Back to Research Doc</a>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside id="sidebar">
+    <div class="side-head">Jump to section</div>
+    <!-- Populated by JS -->
+  </aside>
+
+  <main>
+    <div class="page-head">
+      <h1>Mobile Wireframes (editable)</h1>
+      <p>Every screen as a low-fi phone mockup with features inside. Click any feature label to edit. Use ↑↓ to reorder, ✕ to delete, + Add to insert.</p>
+    </div>
+
+    <div class="help-strip">
+      <strong>How to edit:</strong>
+      &nbsp;<b>Click</b> a feature label to rename it
+      &nbsp;·&nbsp; <b>Hover</b> the phone, then use <b>↑↓✕</b> on any feature
+      &nbsp;·&nbsp; <b>+ Add</b> at the bottom of each phone inserts a new feature
+      &nbsp;·&nbsp; All edits auto-save to your browser (localStorage)
+      &nbsp;·&nbsp; <b>Export JSON</b> to copy state · paste it into Figma notes or share
+    </div>
+
+    <div id="wireframe-root"></div>
+  </main>
+</div>
+
+<!-- ADD FEATURE MODAL -->
+<div class="modal-backdrop" id="addModal">
+  <div class="modal">
+    <h3>Add Feature</h3>
+    <label>Component type</label>
+    <select id="addType">
+      <option value="header">Header / Title block</option>
+      <option value="card">Card</option>
+      <option value="kpi">KPI tile</option>
+      <option value="alert">Alert</option>
+      <option value="list-row">List row / SKU row</option>
+      <option value="primary-button">Primary button</option>
+      <option value="input">Input field</option>
+      <option value="scan">Scan camera</option>
+      <option value="voice">Voice block</option>
+      <option value="success">Success / confirmation</option>
+      <option value="danger">Error / warning</option>
+      <option value="bottomnav">Bottom nav</option>
+    </select>
+    <label>Label</label>
+    <input id="addLabel" placeholder="e.g. Approve all (1-tap)" />
+    <label>Component name (optional)</label>
+    <input id="addComp" placeholder="e.g. PrimaryButton" />
+    <div class="modal-actions">
+      <button onclick="closeModal('addModal')">Cancel</button>
+      <button class="primary" onclick="confirmAdd()">Add Feature</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT/EXPORT MODAL -->
+<div class="modal-backdrop" id="ioModal">
+  <div class="modal">
+    <h3 id="ioTitle">Export wireframe state</h3>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px;" id="ioHelp"></p>
+    <textarea id="ioField"></textarea>
+    <div class="modal-actions">
+      <button onclick="closeModal('ioModal')">Close</button>
+      <button class="primary" id="ioPrimary" onclick="confirmIO()">Copy</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DEFAULT WIREFRAME DATA =====
+const DEFAULT_DATA = {
+  sections: [
+    {
+      id: 'auth', name: 'Sign In & Onboarding',
+      screens: [
+        {
+          id: 'splash', name: 'Splash', uc: null,
+          features: [
+            { id: 's1f1', type: 'card', label: 'रोज़ Roz logo (centered)', comp: 'Logo' },
+            { id: 's1f2', type: 'card', label: '"AI ops assistant for your store"', comp: 'TagLine' },
+            { id: 's1f3', type: 'card', label: 'Loading spinner (auth check)', comp: 'Spinner' }
+          ]
+        },
+        {
+          id: 'signin', name: 'Sign In', uc: null,
+          features: [
+            { id: 's2f1', type: 'header', label: 'Welcome to Roz', comp: 'TitleHeader' },
+            { id: 's2f2', type: 'card', label: '"Sign in with your store phone"', comp: 'Subtitle' },
+            { id: 's2f3', type: 'input', label: '+91  •  Phone number', comp: 'PhoneInput' },
+            { id: 's2f4', type: 'card', label: '🇮🇳 हिंदी / English toggle', comp: 'LangToggle' },
+            { id: 's2f5', type: 'primary-button', label: 'Send OTP', comp: 'PrimaryButton' },
+            { id: 's2f6', type: 'card', label: 'Terms & privacy (footer link)', comp: 'FooterLink' }
+          ]
+        },
+        {
+          id: 'otp', name: 'OTP Verification', uc: null,
+          features: [
+            { id: 's3f1', type: 'header', label: 'Enter 6-digit code', comp: 'TitleHeader' },
+            { id: 's3f2', type: 'card', label: 'Sent to +91 98765 43210', comp: 'Subtitle' },
+            { id: 's3f3', type: 'input', label: '⎕ ⎕ ⎕ ⎕ ⎕ ⎕  (auto-fill)', comp: 'OTPField' },
+            { id: 's3f4', type: 'card', label: 'Resend in 0:24', comp: 'Timer' },
+            { id: 's3f5', type: 'primary-button', label: 'Verify & Continue', comp: 'PrimaryButton' }
+          ]
+        },
+        {
+          id: 'store', name: 'Store Confirm', uc: null,
+          features: [
+            { id: 's4f1', type: 'header', label: 'Confirm your store', comp: 'TitleHeader' },
+            { id: 's4f2', type: 'card', label: 'Auto-detected: more. Indiranagar #142', comp: 'StoreCard' },
+            { id: 's4f3', type: 'card', label: 'Role: Store Manager · 8 staff', comp: 'RoleBadge' },
+            { id: 's4f4', type: 'card', label: 'Edit store / Edit role (links)', comp: 'EditLinks' },
+            { id: 's4f5', type: 'primary-button', label: 'That\'s right — continue', comp: 'ConfirmButton' }
+          ]
+        },
+        {
+          id: 'perms', name: 'Permissions', uc: null,
+          features: [
+            { id: 's5f1', type: 'header', label: 'Roz needs 3 things', comp: 'TitleHeader' },
+            { id: 's5f2', type: 'card', label: '📷 Camera — to scan QR + barcodes', comp: 'PermissionCard' },
+            { id: 's5f3', type: 'card', label: '🔔 Notifications — peak + stockout alerts', comp: 'PermissionCard' },
+            { id: 's5f4', type: 'card', label: '🎙 Voice — voice notes on briefing', comp: 'PermissionCard' },
+            { id: 's5f5', type: 'primary-button', label: 'Allow All', comp: 'PrimaryButton' },
+            { id: 's5f6', type: 'card', label: 'Configure individually (link)', comp: 'TextLink' }
+          ]
+        },
+        {
+          id: 'intro', name: 'Intro Tour', uc: null,
+          features: [
+            { id: 's6f1', type: 'card', label: '● ○ ○  (carousel dots)', comp: 'DotIndicator' },
+            { id: 's6f2', type: 'header', label: 'Meet Roz, your daily ops partner', comp: 'TitleHeader' },
+            { id: 's6f3', type: 'card', label: 'Illustration (~3 lines context)', comp: 'IntroCard' },
+            { id: 's6f4', type: 'primary-button', label: 'Next →', comp: 'PrimaryButton' },
+            { id: 's6f5', type: 'card', label: 'Skip tour', comp: 'SkipLink' }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'today', name: 'Today / Home',
+      screens: [
+        {
+          id: 'today', name: 'Today Dashboard', uc: 'UC-11',
+          features: [
+            { id: 't1f1', type: 'header', label: 'सुप्रभात Radhika 🌅', comp: 'GreetingBar' },
+            { id: 't1f2', type: 'card', label: 'Roz briefing: 3-line summary auto-drafted', comp: 'BriefingCard' },
+            { id: 't1f3', type: 'kpi', label: 'Sales ₹1.2L · +8% vs yest', comp: 'KPITile' },
+            { id: 't1f4', type: 'kpi', label: 'Wastage 2.1kg · -22% vs yest', comp: 'KPITile' },
+            { id: 't1f5', type: 'header', label: 'What needs you (3)', comp: 'SectionLabel' },
+            { id: 't1f6', type: 'alert', label: '⏰ Peak in 22 min — move 2 staff to bill', comp: 'AlertCard' },
+            { id: 't1f7', type: 'alert', label: '🍅 Tomato low — 45 min to empty', comp: 'AlertCard' },
+            { id: 't1f8', type: 'alert', label: '🚛 Vendor delay — DC slip 11 AM', comp: 'AlertCard' },
+            { id: 't1f9', type: 'voice', label: '🎙 Tap to talk to Roz', comp: 'VoiceButton' },
+            { id: 't1f10', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'briefing-detail', name: 'Briefing Detail', uc: 'UC-11',
+          features: [
+            { id: 't2f1', type: 'header', label: '← Daily Briefing · Dec 23', comp: 'TopBar' },
+            { id: 't2f2', type: 'card', label: 'Today summary: 3-line auto-narrative', comp: 'BriefingBody' },
+            { id: 't2f3', type: 'kpi', label: 'Sales · Orders · Wastage · Footfall (grid)', comp: 'KPIGrid' },
+            { id: 't2f4', type: 'alert', label: '⚠ Anomaly: dairy sales -40% (cold storage?)', comp: 'AnomalyChip' },
+            { id: 't2f5', type: 'voice', label: '🎙 Add voice note — Hindi or English', comp: 'VoiceRecorder' },
+            { id: 't2f6', type: 'card', label: 'Transcript (editable)', comp: 'TranscriptBlock' },
+            { id: 't2f7', type: 'primary-button', label: 'Send to HQ + Area Mgr', comp: 'SendButton' }
+          ]
+        },
+        {
+          id: 'inbox', name: 'Inbox (Alerts)', uc: null,
+          features: [
+            { id: 't3f1', type: 'header', label: 'Inbox · 5 unread', comp: 'TopBar' },
+            { id: 't3f2', type: 'card', label: 'Filter chips: All / Critical / Unread', comp: 'FilterChips' },
+            { id: 't3f3', type: 'alert', label: '🔴 9:00 AM · Peak in 20 min', comp: 'AlertRow' },
+            { id: 't3f4', type: 'alert', label: '🟡 11:00 AM · Tomato stockout risk', comp: 'AlertRow' },
+            { id: 't3f5', type: 'alert', label: '🔵 11:30 AM · Order draft ready', comp: 'AlertRow' },
+            { id: 't3f6', type: 'alert', label: '🟡 1:45 PM · Vendor delay confirmed', comp: 'AlertRow' },
+            { id: 't3f7', type: 'alert', label: '🟢 2:00 PM · Expiry walk · 12 SKUs', comp: 'AlertRow' },
+            { id: 't3f8', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'alert-detail', name: 'Alert Detail', uc: 'UC-04 · UC-05',
+          features: [
+            { id: 't4f1', type: 'header', label: '← Peak Predictor', comp: 'TopBar' },
+            { id: 't4f2', type: 'alert', label: '⏰ Rush starting at 9:20 AM', comp: 'AlertHero' },
+            { id: 't4f3', type: 'card', label: 'Why: Saturday + festival eve + clear weather', comp: 'ContextBlock' },
+            { id: 't4f4', type: 'card', label: 'Suggested: move Suresh + Anita to billing', comp: 'SuggestionCard' },
+            { id: 't4f5', type: 'primary-button', label: 'Accept & notify staff', comp: 'AcceptButton' },
+            { id: 't4f6', type: 'card', label: 'Dismiss / Snooze 15 min', comp: 'SecondaryActions' }
+          ]
+        },
+        {
+          id: 'eod', name: 'EOD Confirmation', uc: 'UC-12',
+          features: [
+            { id: 't5f1', type: 'header', label: 'Day complete · 9:00 PM', comp: 'EODHeader' },
+            { id: 't5f2', type: 'success', label: '✓ Briefing sent · 8:14 PM', comp: 'CheckRow' },
+            { id: 't5f3', type: 'success', label: '✓ Cash reconciled · ₹0 variance', comp: 'CheckRow' },
+            { id: 't5f4', type: 'success', label: '✓ Tomorrow\'s order pre-staged', comp: 'CheckRow' },
+            { id: 't5f5', type: 'success', label: '✓ All alerts resolved', comp: 'CheckRow' },
+            { id: 't5f6', type: 'primary-button', label: 'Lock day & sign out', comp: 'CloseButton' }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'order', name: 'Smart Order',
+      screens: [
+        {
+          id: 'order-list', name: 'Order List', uc: 'UC-06 CORE',
+          features: [
+            { id: 'o1f1', type: 'header', label: 'Tomorrow\'s order · ready', comp: 'TopBar' },
+            { id: 'o1f2', type: 'card', label: 'Summary: 82 SKUs · ₹47,200 · vendor mix', comp: 'OrderSummary' },
+            { id: 'o1f3', type: 'card', label: 'Sort: Category ▾ · Filter: Fresh / Dry', comp: 'SortFilter' },
+            { id: 'o1f4', type: 'list-row', label: 'Tomato · 40kg · ↑ vs last week', comp: 'SKURow' },
+            { id: 'o1f5', type: 'list-row', label: 'Milk 500ml · 60 packs · festival surge', comp: 'SKURow' },
+            { id: 'o1f6', type: 'list-row', label: 'Rice 5kg · 12 bags · vendor delay risk', comp: 'SKURow' },
+            { id: 'o1f7', type: 'list-row', label: '+ 79 more SKUs (scroll)', comp: 'SKURow' },
+            { id: 'o1f8', type: 'primary-button', label: 'Approve all 82 (1-tap)', comp: 'BulkApproveButton' },
+            { id: 'o1f9', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'sku-detail', name: 'SKU Detail', uc: 'UC-06',
+          features: [
+            { id: 'o2f1', type: 'header', label: '← Tomato (1kg)', comp: 'TopBar' },
+            { id: 'o2f2', type: 'card', label: 'Roz suggests: 40kg', comp: 'SuggestedQty' },
+            { id: 'o2f3', type: 'card', label: '7-day trend sparkline ▁▂▃▅▇', comp: 'TrendChart' },
+            { id: 'o2f4', type: 'card', label: 'Why 40kg? Top 3 factors:', comp: 'FactorHeader' },
+            { id: 'o2f5', type: 'card', label: '• Day: Saturday (+15%)', comp: 'FactorRow' },
+            { id: 'o2f6', type: 'card', label: '• Weather: clear (+8%)', comp: 'FactorRow' },
+            { id: 'o2f7', type: 'card', label: '• Vendor reliability: 0.92 (steady)', comp: 'FactorRow' },
+            { id: 'o2f8', type: 'input', label: 'Edit quantity (− 40 +)', comp: 'QtyStepper' },
+            { id: 'o2f9', type: 'primary-button', label: 'Approve this SKU', comp: 'ApproveButton' }
+          ]
+        },
+        {
+          id: 'order-confirm', name: 'Order Confirmation', uc: 'UC-06',
+          features: [
+            { id: 'o3f1', type: 'success', label: '✓ Order sent to Oracle ERP', comp: 'SuccessHero' },
+            { id: 'o3f2', type: 'card', label: '82 SKUs · ₹47,200 · 4 vendors', comp: 'SummaryBlock' },
+            { id: 'o3f3', type: 'card', label: 'Delivery: tomorrow 7:00 AM', comp: 'DeliveryETA' },
+            { id: 'o3f4', type: 'card', label: 'View receipt / Track shipment', comp: 'LinksBlock' },
+            { id: 'o3f5', type: 'primary-button', label: 'Done', comp: 'PrimaryButton' }
+          ]
+        },
+        {
+          id: 'order-history', name: 'Order History', uc: null,
+          features: [
+            { id: 'o4f1', type: 'header', label: 'Past orders', comp: 'TopBar' },
+            { id: 'o4f2', type: 'list-row', label: 'Dec 22 · 78 SKUs · ✓ 94% accuracy', comp: 'OrderRow' },
+            { id: 'o4f3', type: 'list-row', label: 'Dec 21 · 81 SKUs · ✓ 91% accuracy', comp: 'OrderRow' },
+            { id: 'o4f4', type: 'list-row', label: 'Dec 20 · 65 SKUs · ⚠ vendor delay', comp: 'OrderRow' },
+            { id: 'o4f5', type: 'list-row', label: 'Dec 19 · 73 SKUs · ✓ 96% accuracy', comp: 'OrderRow' }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'floor', name: 'Floor Tools',
+      screens: [
+        {
+          id: 'floor-hub', name: 'Floor Hub', uc: null,
+          features: [
+            { id: 'f0f1', type: 'header', label: 'Floor tools', comp: 'TopBar' },
+            { id: 'f0f2', type: 'card', label: 'Now: 7:00 AM dock · open', comp: 'ContextStrip' },
+            { id: 'f0f3', type: 'list-row', label: '📥 Dock Receive', comp: 'ToolTile' },
+            { id: 'f0f4', type: 'list-row', label: '🔍 Quality Inspect', comp: 'ToolTile' },
+            { id: 'f0f5', type: 'list-row', label: '👥 Roster View', comp: 'ToolTile' },
+            { id: 'f0f6', type: 'list-row', label: '🕐 Expiry Scan', comp: 'ToolTile' },
+            { id: 'f0f7', type: 'list-row', label: '🏷 Markdown', comp: 'ToolTile' },
+            { id: 'f0f8', type: 'list-row', label: '🧾 Queue Monitor', comp: 'ToolTile' },
+            { id: 'f0f9', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'dock', name: 'Dock Receive', uc: 'UC-01',
+          features: [
+            { id: 'f1f1', type: 'header', label: '← Dock · Vendor: Reliance Fresh', comp: 'TopBar' },
+            { id: 'f1f2', type: 'scan', label: '📷 Scan vendor QR challan', comp: 'ScanCamera' },
+            { id: 'f1f3', type: 'card', label: 'Tally: 12 / 14 crates received', comp: 'TallyCounter' },
+            { id: 'f1f4', type: 'list-row', label: '✓ Tomato 40kg · matches indent', comp: 'TallyRow' },
+            { id: 'f1f5', type: 'danger', label: '⚠ Onion 30kg · indent was 50kg', comp: 'DiscrepancyRow' },
+            { id: 'f1f6', type: 'list-row', label: '✓ Coriander 5kg · matches', comp: 'TallyRow' },
+            { id: 'f1f7', type: 'primary-button', label: 'Close vendor · flag 1 issue', comp: 'CloseButton' }
+          ]
+        },
+        {
+          id: 'quality', name: 'Quality Inspect', uc: 'UC-02',
+          features: [
+            { id: 'f2f1', type: 'header', label: '← Quality · Crate 1 of 14', comp: 'TopBar' },
+            { id: 'f2f2', type: 'scan', label: '📷 Photo of crate', comp: 'PhotoCapture' },
+            { id: 'f2f3', type: 'card', label: 'Reject reason:', comp: 'ReasonHeader' },
+            { id: 'f2f4', type: 'card', label: '○ Bruised  ○ Spoiled  ○ Wrong SKU', comp: 'ReasonChips' },
+            { id: 'f2f5', type: 'input', label: 'Notes (optional)', comp: 'NotesInput' },
+            { id: 'f2f6', type: 'primary-button', label: 'Save & next crate', comp: 'PrimaryButton' },
+            { id: 'f2f7', type: 'card', label: 'Vendor score: 0.87 ▼ from 0.92', comp: 'VendorScoreLive' }
+          ]
+        },
+        {
+          id: 'roster', name: 'Roster View', uc: 'UC-03',
+          features: [
+            { id: 'f3f1', type: 'header', label: 'Today\'s shifts · 8 staff', comp: 'TopBar' },
+            { id: 'f3f2', type: 'card', label: 'Predicted footfall: peak 9-11 AM, 5-8 PM', comp: 'FootfallOverlay' },
+            { id: 'f3f3', type: 'list-row', label: '✓ Suresh · 7 AM-3 PM · Floor', comp: 'StaffRow' },
+            { id: 'f3f4', type: 'list-row', label: '✓ Anita · 9 AM-5 PM · Billing', comp: 'StaffRow' },
+            { id: 'f3f5', type: 'danger', label: '⚠ Ravi · absent (called sick)', comp: 'AbsenceRow' },
+            { id: 'f3f6', type: 'card', label: 'Roz suggests: redeploy Priya to billing', comp: 'SuggestionCard' },
+            { id: 'f3f7', type: 'primary-button', label: 'Apply suggestion', comp: 'ApplyButton' }
+          ]
+        },
+        {
+          id: 'expiry', name: 'Expiry Scan', uc: 'UC-07',
+          features: [
+            { id: 'f4f1', type: 'header', label: '← Expiry · 12 SKUs near-expiry', comp: 'TopBar' },
+            { id: 'f4f2', type: 'scan', label: '📷 Scan barcode', comp: 'ScanCamera' },
+            { id: 'f4f3', type: 'list-row', label: '🍅 Tomato · 18 hrs left · 8kg', comp: 'ExpiryRow' },
+            { id: 'f4f4', type: 'list-row', label: '🥛 Curd 200ml · 24 hrs · 12 packs', comp: 'ExpiryRow' },
+            { id: 'f4f5', type: 'card', label: 'No date? Use category default (Fresh 1-5d)', comp: 'FallbackChip' },
+            { id: 'f4f6', type: 'primary-button', label: 'Go to Markdown', comp: 'NextButton' }
+          ]
+        },
+        {
+          id: 'markdown', name: 'Markdown Optimizer', uc: 'UC-08',
+          features: [
+            { id: 'f5f1', type: 'header', label: '← Markdown · 12 SKUs', comp: 'TopBar' },
+            { id: 'f5f2', type: 'list-row', label: 'Tomato · 18h · suggest 30% off', comp: 'MarkdownRow' },
+            { id: 'f5f3', type: 'list-row', label: 'Curd 200ml · 24h · suggest 20% off', comp: 'MarkdownRow' },
+            { id: 'f5f4', type: 'list-row', label: 'Bread 400g · 6h · suggest 50% off', comp: 'MarkdownRow' },
+            { id: 'f5f5', type: 'card', label: 'Total recovery est: ₹2,340', comp: 'RecoveryEstimate' },
+            { id: 'f5f6', type: 'primary-button', label: 'Apply all & print labels', comp: 'PrintLabelButton' }
+          ]
+        },
+        {
+          id: 'queue', name: 'Queue Monitor', uc: 'UC-09',
+          features: [
+            { id: 'f6f1', type: 'header', label: 'Billing counters · live', comp: 'TopBar' },
+            { id: 'f6f2', type: 'kpi', label: 'Counter 1 · 4 min wait · 6 in queue', comp: 'CounterTile' },
+            { id: 'f6f3', type: 'kpi', label: 'Counter 2 · 7 min wait · 11 in queue', comp: 'CounterTile' },
+            { id: 'f6f4', type: 'alert', label: '⚠ Avg wait > 3 min — open Counter 3', comp: 'ThresholdAlert' },
+            { id: 'f6f5', type: 'primary-button', label: 'Open Counter 3 (notify Anita)', comp: 'OpenCounterButton' }
+          ]
+        },
+        {
+          id: 'transfer', name: 'Cross-Store Transfer', uc: 'UC-05',
+          features: [
+            { id: 'f7f1', type: 'header', label: '← Transfer · Tomato', comp: 'TopBar' },
+            { id: 'f7f2', type: 'alert', label: '🍅 Stockout in 45 min · DC delayed', comp: 'ContextAlert' },
+            { id: 'f7f3', type: 'list-row', label: 'Store B · 8 km · 40kg surplus', comp: 'StoreOption' },
+            { id: 'f7f4', type: 'list-row', label: 'Store C · 12 km · 25kg surplus', comp: 'StoreOption' },
+            { id: 'f7f5', type: 'input', label: 'Request: 30 kg', comp: 'QtyStepper' },
+            { id: 'f7f6', type: 'primary-button', label: 'Send WhatsApp to Store B mgr', comp: 'RequestButton' }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'reports', name: 'Reports',
+      screens: [
+        {
+          id: 'reports-hub', name: 'Reports Hub', uc: null,
+          features: [
+            { id: 'r1f1', type: 'header', label: 'Reports', comp: 'TopBar' },
+            { id: 'r1f2', type: 'card', label: 'Today status: briefing pending', comp: 'StatusStrip' },
+            { id: 'r1f3', type: 'list-row', label: '📝 EOD Brief Builder', comp: 'ReportTile' },
+            { id: 'r1f4', type: 'list-row', label: '💰 Cash Reconciliation', comp: 'ReportTile' },
+            { id: 'r1f5', type: 'list-row', label: '📈 7-Day Trends', comp: 'ReportTile' },
+            { id: 'r1f6', type: 'list-row', label: '📤 HQ Outbox', comp: 'ReportTile' },
+            { id: 'r1f7', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'eod-brief', name: 'EOD Brief Builder', uc: 'UC-11',
+          features: [
+            { id: 'r2f1', type: 'header', label: '← Daily Brief · drafted', comp: 'TopBar' },
+            { id: 'r2f2', type: 'card', label: '3-line auto-summary (editable)', comp: 'SummaryBlock' },
+            { id: 'r2f3', type: 'kpi', label: 'Sales ₹1.2L · Wastage 2.1kg · Footfall 412', comp: 'KPIStrip' },
+            { id: 'r2f4', type: 'alert', label: '⚠ Anomaly: dairy -40% sales', comp: 'AnomalyChip' },
+            { id: 'r2f5', type: 'voice', label: '🎙 Voice note (Hindi/English)', comp: 'VoiceRecorder' },
+            { id: 'r2f6', type: 'primary-button', label: 'Send to HQ', comp: 'SendButton' }
+          ]
+        },
+        {
+          id: 'cash', name: 'Cash Reconciliation', uc: 'UC-10',
+          features: [
+            { id: 'r3f1', type: 'header', label: '← Cash Recon · 7 PM', comp: 'TopBar' },
+            { id: 'r3f2', type: 'success', label: '✓ Counter 1 · ₹38,200 · matched', comp: 'MatchedRow' },
+            { id: 'r3f3', type: 'success', label: '✓ Counter 2 · ₹42,800 · matched', comp: 'MatchedRow' },
+            { id: 'r3f4', type: 'danger', label: '⚠ Counter 3 · ₹27,400 vs ₹27,250 · ₹150 short', comp: 'MismatchRow' },
+            { id: 'r3f5', type: 'input', label: 'Note (cashier explanation)', comp: 'NotesInput' },
+            { id: 'r3f6', type: 'primary-button', label: 'Resolve & log', comp: 'ResolveButton' }
+          ]
+        },
+        {
+          id: 'trends', name: '7-Day Trends', uc: null,
+          features: [
+            { id: 'r4f1', type: 'header', label: '7-day trends', comp: 'TopBar' },
+            { id: 'r4f2', type: 'card', label: 'Sales chart (line · 7 bars)', comp: 'TrendChart' },
+            { id: 'r4f3', type: 'card', label: 'Wastage chart (bars)', comp: 'TrendChart' },
+            { id: 'r4f4', type: 'card', label: 'Category breakdown (pie)', comp: 'CategoryPie' },
+            { id: 'r4f5', type: 'primary-button', label: 'Share to HQ', comp: 'ShareButton' }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'menu', name: 'Menu / More',
+      screens: [
+        {
+          id: 'menu-home', name: 'Menu Home', uc: null,
+          features: [
+            { id: 'm1f1', type: 'header', label: 'Menu', comp: 'TopBar' },
+            { id: 'm1f2', type: 'card', label: '👤 Radhika · more. Indiranagar #142', comp: 'ProfileCard' },
+            { id: 'm1f3', type: 'success', label: '✓ Sync · 12 sec ago', comp: 'SyncStatus' },
+            { id: 'm1f4', type: 'list-row', label: '⭐ Vendor Scores', comp: 'MenuRow' },
+            { id: 'm1f5', type: 'list-row', label: '⚙️ Settings', comp: 'MenuRow' },
+            { id: 'm1f6', type: 'list-row', label: '🧠 Train Roz', comp: 'MenuRow' },
+            { id: 'm1f7', type: 'list-row', label: '📡 Offline & Sync', comp: 'MenuRow' },
+            { id: 'm1f8', type: 'list-row', label: '❓ Help & Support', comp: 'MenuRow' },
+            { id: 'm1f9', type: 'list-row', label: '🚪 Sign Out', comp: 'MenuRow' },
+            { id: 'm1f10', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+          ]
+        },
+        {
+          id: 'vendor-scores', name: 'Vendor Scores', uc: 'UC-02',
+          features: [
+            { id: 'm2f1', type: 'header', label: '← Vendor Scores', comp: 'TopBar' },
+            { id: 'm2f2', type: 'card', label: 'Sort: Score ▼ · Last 90 days', comp: 'SortChip' },
+            { id: 'm2f3', type: 'list-row', label: 'Reliance Fresh · 0.94 ⭐', comp: 'VendorRow' },
+            { id: 'm2f4', type: 'list-row', label: 'Mother Dairy · 0.91 ⭐', comp: 'VendorRow' },
+            { id: 'm2f5', type: 'list-row', label: 'Suresh Mandi · 0.87 ▼', comp: 'VendorRow' },
+            { id: 'm2f6', type: 'list-row', label: 'Local FMCG · 0.72 ⚠', comp: 'VendorRow' }
+          ]
+        },
+        {
+          id: 'train', name: 'Train Roz', uc: null,
+          features: [
+            { id: 'm3f1', type: 'header', label: '← Train Roz', comp: 'TopBar' },
+            { id: 'm3f2', type: 'card', label: 'Recent Roz suggestions you overrode (3)', comp: 'OverridesHeader' },
+            { id: 'm3f3', type: 'list-row', label: 'Smart Order · Tomato 40→60kg', comp: 'OverrideRow' },
+            { id: 'm3f4', type: 'card', label: 'Why did you override? (chips)', comp: 'ReasonChips' },
+            { id: 'm3f5', type: 'voice', label: '🎙 Explain in voice', comp: 'VoiceRecorder' },
+            { id: 'm3f6', type: 'primary-button', label: 'Save feedback', comp: 'SaveButton' }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ===== STATE =====
+const STORAGE_KEY = 'roz-wireframe-state-v1';
+let state = loadState();
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : structuredClone(DEFAULT_DATA);
+  } catch (e) {
+    return structuredClone(DEFAULT_DATA);
+  }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ===== RENDER =====
+function render() {
+  renderSidebar();
+  renderWireframes();
+}
+
+function renderSidebar() {
+  const aside = document.getElementById('sidebar');
+  aside.innerHTML = '<div class="side-head">Jump to section</div>' +
+    state.sections.map(sec =>
+      `<a class="side-link" data-section="${sec.id}" href="#sec-${sec.id}">
+         <span class="side-dot"></span>${sec.name}
+       </a>`).join('');
+}
+
+function renderWireframes() {
+  const root = document.getElementById('wireframe-root');
+  root.innerHTML = state.sections.map(sec => `
+    <div class="section-head" id="sec-${sec.id}">
+      <span class="section-tag ${sec.id}">${sec.id}</span>
+      <h2>${sec.name}</h2>
+    </div>
+    <div class="phone-grid">
+      ${sec.screens.map(scr => renderPhone(sec.id, scr)).join('')}
+    </div>
+  `).join('');
+}
+
+function renderPhone(sectionId, screen) {
+  return `
+    <div class="phone-wrap" data-section="${sectionId}" data-screen="${screen.id}">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-status">
+          <span>9:41</span>
+          <span>●●● 4G ▮▮▮</span>
+        </div>
+        <div class="phone-header">
+          <span class="ph-back">←</span>
+          <span class="ph-title">${escapeHtml(screen.name)}</span>
+          <span class="ph-icons">🎙 ●</span>
+        </div>
+        <div class="phone-body">
+          <div class="feat-list">
+            ${screen.features.map((f, idx) => renderFeature(sectionId, screen.id, f, idx, screen.features.length)).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="phone-toolbar">
+        <button class="ph-btn add" onclick="openAdd('${sectionId}','${screen.id}')">+ Add Feature</button>
+        <button class="ph-btn" onclick="resetScreen('${sectionId}','${screen.id}')">Reset</button>
+      </div>
+      <div class="phone-meta">
+        <div>
+          <span class="pm-name">${escapeHtml(screen.name)}</span>
+          ${screen.uc ? `<span class="pm-uc">${escapeHtml(screen.uc)}</span>` : ''}
+        </div>
+        <div class="pm-id">${sectionId}/${screen.id}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFeature(sectionId, screenId, f, idx, total) {
+  return `
+    <div class="feat" data-vtype="${f.type}" data-id="${f.id}">
+      <span class="feat-type">${escapeHtml(f.type)}${f.comp ? ' · ' + escapeHtml(f.comp) : ''}</span>
+      <span class="feat-label"
+            contenteditable="true"
+            spellcheck="false"
+            onblur="saveLabel('${sectionId}','${screenId}','${f.id}', this.innerText)">${escapeHtml(f.label)}</span>
+      <div class="feat-ctrls">
+        ${idx > 0 ? `<button class="feat-ctrl" onclick="moveFeat('${sectionId}','${screenId}','${f.id}',-1)" title="Move up">↑</button>` : ''}
+        ${idx < total - 1 ? `<button class="feat-ctrl" onclick="moveFeat('${sectionId}','${screenId}','${f.id}',1)" title="Move down">↓</button>` : ''}
+        <button class="feat-ctrl del" onclick="deleteFeat('${sectionId}','${screenId}','${f.id}')" title="Delete">✕</button>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ===== ACTIONS =====
+function getScreen(sectionId, screenId) {
+  const sec = state.sections.find(s => s.id === sectionId);
+  return sec ? sec.screens.find(s => s.id === screenId) : null;
+}
+
+function saveLabel(sectionId, screenId, featId, newLabel) {
+  const screen = getScreen(sectionId, screenId);
+  if (!screen) return;
+  const f = screen.features.find(x => x.id === featId);
+  if (!f) return;
+  if (f.label === newLabel.trim()) return;
+  f.label = newLabel.trim();
+  saveState();
+  toast('Saved');
+}
+
+function moveFeat(sectionId, screenId, featId, dir) {
+  const screen = getScreen(sectionId, screenId);
+  const idx = screen.features.findIndex(f => f.id === featId);
+  if (idx < 0) return;
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= screen.features.length) return;
+  const [moved] = screen.features.splice(idx, 1);
+  screen.features.splice(newIdx, 0, moved);
+  saveState();
+  renderWireframes();
+}
+
+let lastDeleted = null;
+function deleteFeat(sectionId, screenId, featId) {
+  const screen = getScreen(sectionId, screenId);
+  const idx = screen.features.findIndex(f => f.id === featId);
+  if (idx < 0) return;
+  lastDeleted = { sectionId, screenId, feat: screen.features[idx], idx };
+  screen.features.splice(idx, 1);
+  saveState();
+  renderWireframes();
+  toast('Feature deleted', 'Undo', undoDelete);
+}
+
+function undoDelete() {
+  if (!lastDeleted) return;
+  const { sectionId, screenId, feat, idx } = lastDeleted;
+  const screen = getScreen(sectionId, screenId);
+  screen.features.splice(idx, 0, feat);
+  lastDeleted = null;
+  saveState();
+  renderWireframes();
+  toast('Restored');
+}
+
+// ===== ADD MODAL =====
+let addContext = null;
+function openAdd(sectionId, screenId) {
+  addContext = { sectionId, screenId };
+  document.getElementById('addLabel').value = '';
+  document.getElementById('addComp').value = '';
+  document.getElementById('addType').value = 'card';
+  document.getElementById('addModal').classList.add('open');
+  setTimeout(() => document.getElementById('addLabel').focus(), 50);
+}
+
+function confirmAdd() {
+  if (!addContext) return;
+  const label = document.getElementById('addLabel').value.trim();
+  const type = document.getElementById('addType').value;
+  const comp = document.getElementById('addComp').value.trim();
+  if (!label) { toast('Enter a label first'); return; }
+  const screen = getScreen(addContext.sectionId, addContext.screenId);
+  const newFeat = { id: 'new' + Date.now(), type, label, comp: comp || null };
+  screen.features.push(newFeat);
+  saveState();
+  closeModal('addModal');
+  renderWireframes();
+  toast('Feature added');
+}
+
+// ===== RESET / IMPORT / EXPORT =====
+function resetScreen(sectionId, screenId) {
+  if (!confirm('Reset this screen to defaults?')) return;
+  const defSec = DEFAULT_DATA.sections.find(s => s.id === sectionId);
+  const defScr = defSec ? defSec.screens.find(s => s.id === screenId) : null;
+  if (!defScr) { toast('No default — cannot reset'); return; }
+  const sec = state.sections.find(s => s.id === sectionId);
+  const scrIdx = sec.screens.findIndex(s => s.id === screenId);
+  sec.screens[scrIdx] = structuredClone(defScr);
+  saveState();
+  renderWireframes();
+  toast('Screen reset');
+}
+
+function resetAll() {
+  if (!confirm('Reset ALL wireframes to defaults? Your edits will be lost.')) return;
+  state = structuredClone(DEFAULT_DATA);
+  saveState();
+  renderWireframes();
+  toast('All wireframes reset');
+}
+
+function exportJSON() {
+  const txt = JSON.stringify(state, null, 2);
+  document.getElementById('ioTitle').textContent = 'Export wireframe state';
+  document.getElementById('ioHelp').textContent = 'Copy this JSON. Paste it into a Figma note or save it for backup.';
+  document.getElementById('ioField').value = txt;
+  document.getElementById('ioPrimary').textContent = 'Copy to clipboard';
+  document.getElementById('ioPrimary').dataset.mode = 'export';
+  document.getElementById('ioModal').classList.add('open');
+}
+
+function openImport() {
+  document.getElementById('ioTitle').textContent = 'Import wireframe state';
+  document.getElementById('ioHelp').textContent = 'Paste previously exported JSON below. This REPLACES your current state.';
+  document.getElementById('ioField').value = '';
+  document.getElementById('ioPrimary').textContent = 'Import';
+  document.getElementById('ioPrimary').dataset.mode = 'import';
+  document.getElementById('ioModal').classList.add('open');
+}
+
+function confirmIO() {
+  const mode = document.getElementById('ioPrimary').dataset.mode;
+  if (mode === 'export') {
+    const txt = document.getElementById('ioField').value;
+    navigator.clipboard.writeText(txt).then(() => {
+      toast('Copied to clipboard');
+      closeModal('ioModal');
+    });
+  } else {
+    const txt = document.getElementById('ioField').value;
+    try {
+      const parsed = JSON.parse(txt);
+      if (!parsed.sections) throw new Error('Missing sections');
+      state = parsed;
+      saveState();
+      closeModal('ioModal');
+      renderWireframes();
+      toast('Imported');
+    } catch (e) {
+      toast('Invalid JSON');
+    }
+  }
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ===== TOAST =====
+let toastTimer = null;
+function toast(msg, actionLabel, actionFn) {
+  const t = document.getElementById('toast');
+  t.innerHTML = escapeHtml(msg);
+  if (actionLabel && actionFn) {
+    const b = document.createElement('button');
+    b.textContent = actionLabel;
+    b.onclick = () => { actionFn(); t.classList.remove('show'); };
+    t.appendChild(b);
+  }
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ===== KEYBOARD ===== (enter to confirm in add modal)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && document.getElementById('addModal').classList.contains('open')) {
+    if (e.target.tagName !== 'TEXTAREA') confirmAdd();
+  }
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// ===== SCROLL ACTIVE STATE =====
+function updateActiveSection() {
+  const sections = document.querySelectorAll('.section-head');
+  let activeId = null;
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if (top < 200) activeId = sec.id.replace('sec-', '');
+  });
+  document.querySelectorAll('.side-link').forEach(a => {
+    a.classList.toggle('active', a.dataset.section === activeId);
+  });
+}
+window.addEventListener('scroll', updateActiveSection);
+
+// ===== INIT =====
+render();
+updateActiveSection();
+</script>
+
+</body>
+</html>
