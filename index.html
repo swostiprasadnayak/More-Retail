@@ -548,7 +548,7 @@
       <div class="nav-tab" onclick="showSection('competitive','11 · Competitive Landscape')">11 · Competitive Landscape</div>
 
       <div class="nav-group" id="navArchGroup">
-        <div class="nav-parent" onclick="toggleNavSubmenu(event)">
+        <div class="nav-parent" onclick="toggleNavSubmenu(event, 'navArchGroup')">
           12 · System Architecture
           <span class="nav-chevron">▾</span>
         </div>
@@ -557,6 +557,19 @@
           <a class="nav-subitem" href="roz-system-architecture.html?tab=usecases">Use Case Workflows</a>
           <a class="nav-subitem" href="roz-system-architecture.html?tab=dataflow">Data Flow Map</a>
           <a class="nav-subitem" href="roz-system-architecture.html?tab=offline">Offline + Feedback</a>
+        </div>
+      </div>
+
+      <div class="nav-group" id="navIAGroup">
+        <div class="nav-parent" onclick="toggleNavSubmenu(event, 'navIAGroup')">
+          13 · Information Architecture
+          <span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-submenu">
+          <a class="nav-subitem" href="roz-information-architecture.html?tab=appmap">App Map</a>
+          <a class="nav-subitem" href="roz-information-architecture.html?tab=features">Feature Inventory</a>
+          <a class="nav-subitem" href="roz-information-architecture.html?tab=flows">User Flows</a>
+          <a class="nav-subitem" href="roz-information-architecture.html?tab=components">Components</a>
         </div>
       </div>
     </div>
@@ -776,6 +789,13 @@
         <div class="ov-nav-content">
           <div class="ov-nav-tab-name">System Architecture</div>
           <div class="ov-nav-tab-desc">Standalone deep-dive on the tech stack — opens in a separate page under the "12 · System Architecture" menu group. Four views: Architecture Overview (5-zone layered diagram), Use Case Workflows (all 12 use cases with flow diagrams), Data Flow Map (reads/writes per use case), and Offline + Feedback Loops. Use this when the interviewer asks "what's actually running under the hood."</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">13</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">Information Architecture</div>
+          <div class="ov-nav-tab-desc">The structural blueprint for the mobile app — use this as a checklist when designing wireframes. Four views: App Map (every screen from sign-in to all features, grouped under 5 bottom-nav tabs), Feature Inventory (every feature with screen + components + AI behavior), User Flows (6 storyboards covering auth, dock, Smart Order, expiry, briefing, edge cases), and Components (15 reusable UI patterns with states). Build the components first in Figma, then assemble screens from them.</div>
         </div>
       </div>
     </div>
@@ -6064,9 +6084,9 @@
     document.getElementById('navDropdown').classList.toggle('open');
   }
 
-  function toggleNavSubmenu(e) {
+  function toggleNavSubmenu(e, groupId) {
     e.stopPropagation();
-    document.getElementById('navArchGroup').classList.toggle('open');
+    document.getElementById(groupId).classList.toggle('open');
   }
 
   document.addEventListener('click', (e) => {

@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roz — Information Architecture & Feature Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --orange: #E8460A;
+    --orange-light: #FF6B35;
+    --orange-pale: #FFF0EB;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --muted: #8A8A8A;
+    --border: #E5E5E5;
+    --bg: #F8F8F6;
+    --white: #FFFFFF;
+    --red: #DC2626;
+    --red-pale: #FEF2F2;
+    --green: #16A34A;
+    --green-pale: #F0FDF4;
+    --blue: #2563EB;
+    --blue-pale: #EFF6FF;
+    --purple: #7C3AED;
+    --purple-pale: #F5F3FF;
+    --yellow: #D97706;
+    --yellow-pale: #FFFBEB;
+    --teal: #0D9488;
+    --teal-pale: #F0FDFA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg); color: var(--dark);
+    line-height: 1.55;
+  }
+
+  /* ===== TOP BAR ===== */
+  .top-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 60px;
+    gap: 32px;
+  }
+  .logo { font-size: 22px; font-weight: 900; color: var(--orange); letter-spacing: -0.5px; }
+  .logo small { font-size: 10px; font-weight: 500; color: var(--muted); display: block; letter-spacing: 0.5px; }
+  .nav-pills { display: flex; gap: 4px; }
+  .nav-pill {
+    padding: 8px 16px; font-size: 12px; font-weight: 600;
+    color: var(--muted); border-radius: 8px; cursor: pointer;
+    transition: all 0.15s; border: 1px solid transparent;
+  }
+  .nav-pill:hover { color: var(--dark); background: var(--bg); }
+  .nav-pill.active { color: var(--orange); background: var(--orange-pale); border-color: #FDBA74; }
+  .back-link {
+    margin-left: auto; font-size: 12px; font-weight: 600;
+    color: var(--muted); text-decoration: none;
+    padding: 8px 14px; border-radius: 8px; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .back-link:hover { color: var(--orange); background: var(--orange-pale); }
+
+  /* ===== MAIN ===== */
+  main { max-width: 1400px; margin: 0 auto; padding: 32px 40px 80px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .page-head { margin-bottom: 32px; }
+  .page-head h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .page-head p { font-size: 14px; color: var(--muted); max-width: 760px; }
+
+  /* ===== APP MAP TREE ===== */
+  .ia-canvas {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .ia-legend {
+    display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border); flex-wrap: wrap;
+  }
+  .ia-legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--mid); font-weight: 500;
+  }
+  .ia-legend-swatch {
+    width: 14px; height: 14px; border-radius: 4px;
+  }
+  .legend-auth { background: var(--purple-pale); border: 1px solid var(--purple); }
+  .legend-home { background: var(--orange-pale); border: 1px solid var(--orange); }
+  .legend-order { background: var(--blue-pale); border: 1px solid var(--blue); }
+  .legend-floor { background: var(--green-pale); border: 1px solid var(--green); }
+  .legend-reports { background: var(--yellow-pale); border: 1px solid var(--yellow); }
+  .legend-menu { background: #F5F5F5; border: 1px solid var(--muted); }
+  .legend-modal { background: var(--red-pale); border: 1px solid var(--red); }
+
+  /* IA Section */
+  .ia-section {
+    margin-bottom: 36px;
+    padding: 24px;
+    border-radius: 14px;
+    border: 2px dashed var(--border);
+    position: relative;
+  }
+  .ia-section-head {
+    position: absolute;
+    top: -14px;
+    left: 18px;
+    background: var(--white);
+    padding: 4px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+  }
+  .ia-sec-auth .ia-section-head { color: var(--purple); border-color: var(--purple); }
+  .ia-sec-home .ia-section-head { color: var(--orange); border-color: var(--orange); }
+  .ia-sec-order .ia-section-head { color: var(--blue); border-color: var(--blue); }
+  .ia-sec-floor .ia-section-head { color: var(--green); border-color: var(--green); }
+  .ia-sec-reports .ia-section-head { color: var(--yellow); border-color: var(--yellow); }
+  .ia-sec-menu .ia-section-head { color: var(--muted); border-color: var(--muted); }
+  .ia-sec-global .ia-section-head { color: var(--red); border-color: var(--red); }
+
+  .ia-tab-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-top: 12px;
+  }
+  .ia-tab-anchor {
+    background: var(--bg);
+    padding: 16px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .ia-tab-anchor .tab-icon { font-size: 24px; margin-bottom: 6px; }
+  .ia-tab-anchor h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .ia-tab-anchor .tab-meta { font-size: 11px; color: var(--muted); }
+
+  .ia-screens {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .ia-screen {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: all 0.15s;
+  }
+  .ia-screen.l2 { border-left: 4px solid var(--orange); }
+  .ia-sec-auth .ia-screen.l2 { border-left-color: var(--purple); }
+  .ia-sec-order .ia-screen.l2 { border-left-color: var(--blue); }
+  .ia-sec-floor .ia-screen.l2 { border-left-color: var(--green); }
+  .ia-sec-reports .ia-screen.l2 { border-left-color: var(--yellow); }
+  .ia-sec-menu .ia-screen.l2 { border-left-color: var(--muted); }
+
+  .ia-screen-name {
+    font-size: 13px; font-weight: 700; margin-bottom: 3px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ia-screen-uc {
+    font-size: 10px; font-weight: 700;
+    background: var(--orange-pale); color: var(--orange);
+    padding: 2px 6px; border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .ia-screen-desc { font-size: 11.5px; color: var(--mid); line-height: 1.5; }
+
+  /* Global tray */
+  .ia-global {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .ia-global-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .ia-global-item h4 {
+    font-size: 12px; font-weight: 700; margin-bottom: 4px;
+    color: var(--red);
+  }
+  .ia-global-item p { font-size: 11px; color: var(--mid); }
+
+  /* ===== FEATURE INVENTORY TABLE ===== */
+  .feat-controls {
+    display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .feat-chip {
+    padding: 6px 12px; font-size: 11px; font-weight: 600;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all 0.15s;
+  }
+  .feat-chip:hover { border-color: var(--orange); color: var(--orange); }
+  .feat-chip.active {
+    background: var(--orange); color: var(--white); border-color: var(--orange);
+  }
+
+  .feat-table {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+  }
+  .feat-table th {
+    background: var(--bg);
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--mid);
+    border-bottom: 1px solid var(--border);
+  }
+  .feat-table td {
+    padding: 14px;
+    vertical-align: top;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .feat-table tr:last-child td { border-bottom: none; }
+  .feat-table tr:hover td { background: #FCFCFC; }
+
+  .feat-uc-badge {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 5px;
+    letter-spacing: 0.4px;
+  }
+  .feat-uc-core { background: var(--green-pale); color: var(--green); }
+  .feat-uc-alert { background: var(--yellow-pale); color: var(--yellow); }
+  .feat-uc-support { background: var(--blue-pale); color: var(--blue); }
+  .feat-uc-auth { background: var(--purple-pale); color: var(--purple); }
+
+  .feat-name { font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .feat-screen { color: var(--orange); font-weight: 600; font-size: 11px; }
+  .feat-comps { color: var(--mid); }
+  .feat-comp-pill {
+    display: inline-block; padding: 2px 6px;
+    font-size: 10px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 4px;
+    margin: 2px 2px 2px 0;
+    font-family: 'SF Mono', Menlo, monospace;
+    color: var(--mid);
+  }
+  .feat-ai { color: var(--mid); }
+  .feat-data { color: var(--muted); font-size: 11px; }
+
+  /* ===== USER FLOWS ===== */
+  .flow-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .flow-head {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px dashed var(--border);
+  }
+  .flow-time {
+    background: var(--orange); color: var(--white);
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 13px; font-weight: 800;
+  }
+  .flow-name { font-size: 18px; font-weight: 800; flex: 1; }
+  .flow-uc-tag {
+    background: var(--green-pale); color: var(--green);
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+  }
+
+  .flow-steps {
+    display: flex; align-items: stretch; gap: 0;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1; min-width: 160px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px;
+    position: relative;
+    border-top: 3px solid var(--blue);
+  }
+  .flow-step.trigger { border-top-color: var(--purple); }
+  .flow-step.ai { border-top-color: var(--orange); }
+  .flow-step.human { border-top-color: var(--green); }
+  .flow-step.output { border-top-color: var(--red); }
+  .flow-step + .flow-step { margin-left: 10px; }
+  .flow-step h4 {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px;
+  }
+  .flow-step .step-screen {
+    font-size: 13px; font-weight: 700; margin-bottom: 4px;
+  }
+  .flow-step .step-action {
+    font-size: 11px; color: var(--mid); line-height: 1.5;
+  }
+  .flow-arrow {
+    display: flex; align-items: center; padding: 0 4px;
+    color: var(--muted); font-size: 18px;
+  }
+
+  .flow-notes {
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .flow-note {
+    background: var(--bg); padding: 10px 12px; border-radius: 8px;
+    border-left: 3px solid var(--teal);
+  }
+  .flow-note h5 {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 4px; letter-spacing: 0.5px;
+  }
+  .flow-note p { font-size: 11.5px; color: var(--mid); line-height: 1.5; }
+
+  /* ===== COMPONENTS LIBRARY ===== */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .comp-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.15s;
+  }
+  .comp-card:hover { border-color: var(--orange); }
+  .comp-card-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .comp-icon {
+    font-size: 18px; width: 32px; height: 32px;
+    background: var(--orange-pale); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .comp-card h3 { font-size: 14px; font-weight: 800; }
+  .comp-purpose { font-size: 12px; color: var(--mid); margin-bottom: 12px; line-height: 1.55; }
+
+  .comp-section { margin-top: 10px; }
+  .comp-section h4 {
+    font-size: 9px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--muted); margin-bottom: 4px;
+  }
+  .comp-section .comp-line { font-size: 11px; color: var(--mid); }
+  .comp-section .uc-chip {
+    display: inline-block; padding: 2px 6px;
+    font-size: 9.5px; font-weight: 700;
+    background: var(--orange-pale); color: var(--orange);
+    border-radius: 4px; margin: 2px 2px 2px 0;
+  }
+  .comp-section .state-chip {
+    display: inline-block; padding: 2px 6px;
+    font-size: 9.5px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; margin: 2px 2px 2px 0;
+    color: var(--mid);
+    font-family: 'SF Mono', Menlo, monospace;
+  }
+
+  /* Hero strip */
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .hero-card .hero-num {
+    font-size: 28px; font-weight: 900; color: var(--orange);
+    line-height: 1; margin-bottom: 6px;
+  }
+  .hero-card .hero-label {
+    font-size: 11px; font-weight: 700; color: var(--mid);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .hero-card .hero-sub {
+    font-size: 11px; color: var(--muted); margin-top: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: repeat(2, 1fr); }
+    .ia-tab-row { grid-template-columns: 1fr; }
+    .ia-global { grid-template-columns: repeat(2, 1fr); }
+    .flow-step + .flow-step { margin-left: 0; margin-top: 10px; }
+    .flow-notes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">रोज़ Roz<small>INFORMATION ARCHITECTURE</small></div>
+  <div class="nav-pills">
+    <div class="nav-pill active" data-id="appmap" onclick="showView('appmap')">App Map</div>
+    <div class="nav-pill" data-id="features" onclick="showView('features')">Feature Inventory</div>
+    <div class="nav-pill" data-id="flows" onclick="showView('flows')">User Flows</div>
+    <div class="nav-pill" data-id="components" onclick="showView('components')">Components</div>
+  </div>
+  <a class="back-link" href="more-system-map.html">← Back to Research Doc</a>
+</div>
+
+<main>
+
+<!-- ==================== VIEW 1: APP MAP ==================== -->
+<div class="view active" id="view-appmap">
+  <div class="page-head">
+    <h1>App Map: complete information architecture</h1>
+    <p>Every screen Radhika touches — from first sign-in to every feature — grouped by the 5-tab bottom navigation. Use this as the structural skeleton when sketching wireframes.</p>
+  </div>
+
+  <div class="hero">
+    <div class="hero-card">
+      <div class="hero-num">28</div>
+      <div class="hero-label">Total Screens</div>
+      <div class="hero-sub">across auth, 5 tabs, modals</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-num">5</div>
+      <div class="hero-label">Bottom-Nav Tabs</div>
+      <div class="hero-sub">Today / Order / Floor / Reports / Menu</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-num">12</div>
+      <div class="hero-label">Use Cases Covered</div>
+      <div class="hero-sub">UC-01 through UC-12 — all mapped</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-num">15</div>
+      <div class="hero-label">Reusable Components</div>
+      <div class="hero-sub">scan, alert, approval, voice, etc.</div>
+    </div>
+  </div>
+
+  <div class="ia-canvas">
+
+    <div class="ia-legend">
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-auth"></div>Auth & Onboarding</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-home"></div>Today / Home</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-order"></div>Smart Order</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-floor"></div>Floor Tools</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-reports"></div>Reports</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-menu"></div>Menu / More</div>
+      <div class="ia-legend-item"><div class="ia-legend-swatch legend-modal"></div>Global / Modals</div>
+    </div>
+
+    <!-- ===== AUTH & ONBOARDING ===== -->
+    <div class="ia-section ia-sec-auth">
+      <div class="ia-section-head">00 · Sign In & Onboarding</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">🔐</div>
+          <h3>Entry Flow</h3>
+          <div class="tab-meta">Pre-authenticated · once per device</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Splash</div>
+            <div class="ia-screen-desc">Roz logo, 1.5s. Checks auth token. Routes to Sign In or Today.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Sign In (Phone)</div>
+            <div class="ia-screen-desc">Phone number + country code. "Send OTP" CTA. Hindi/English toggle.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">OTP Verification</div>
+            <div class="ia-screen-desc">6-digit OTP entry. Auto-read from SMS. Resend timer.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Store Confirm</div>
+            <div class="ia-screen-desc">Auto-detected store + role from HR system. One-tap confirm. Edit if wrong.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Permissions</div>
+            <div class="ia-screen-desc">3 cards: Notifications, Camera (for scans), Voice (for notes). All critical.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Intro Tour (3 cards)</div>
+            <div class="ia-screen-desc">"Meet Roz" → "Smart Order in 1 tap" → "Voice anytime". Skippable.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">First-Run Today</div>
+            <div class="ia-screen-desc">Today screen with onboarding tooltips on first 3 elements.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 1: TODAY ===== -->
+    <div class="ia-section ia-sec-home">
+      <div class="ia-section-head">Tab 1 · Today (Home)</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">🏠</div>
+          <h3>Today</h3>
+          <div class="tab-meta">Default landing · refreshes hourly</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Today Dashboard <span class="ia-screen-uc">UC-11</span></div>
+            <div class="ia-screen-desc">Auto-generated daily briefing card · 4 KPI tiles · "What needs you" alerts feed.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Briefing Detail <span class="ia-screen-uc">UC-11</span></div>
+            <div class="ia-screen-desc">Full briefing view · anomaly chips · voice-add note · send to HQ.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Inbox (Alerts feed)</div>
+            <div class="ia-screen-desc">Time-ordered feed of all Roz alerts — peak, stockout, expiry, vendor.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Alert Detail <span class="ia-screen-uc">UC-04 · UC-05</span></div>
+            <div class="ia-screen-desc">Per-alert deep view · context · suggested action · 1-tap accept/dismiss.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">EOD Confirmation <span class="ia-screen-uc">UC-12</span></div>
+            <div class="ia-screen-desc">8 PM card · "All logged · tomorrow's order ready" · confirm + close.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: ORDER ===== -->
+    <div class="ia-section ia-sec-order">
+      <div class="ia-section-head">Tab 2 · Smart Order (CORE)</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">📦</div>
+          <h3>Order</h3>
+          <div class="tab-meta">12 PM core flow · ML-driven</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Order List <span class="ia-screen-uc">UC-06</span></div>
+            <div class="ia-screen-desc">SKU-level ML suggestions · sort/filter · bulk-approve · summary header.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">SKU Detail <span class="ia-screen-uc">UC-06</span></div>
+            <div class="ia-screen-desc">Drill-down · 11-factor breakdown · 30-day trend · edit qty · approve.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Edit Quantity Modal</div>
+            <div class="ia-screen-desc">Slide-up sheet · ±  buttons · reason picker · save override.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Order Confirmation</div>
+            <div class="ia-screen-desc">Success screen · total SKUs/value · sent to Oracle ERP.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Order History</div>
+            <div class="ia-screen-desc">Past 30 days · accuracy score per order · re-open if delivery pending.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: FLOOR ===== -->
+    <div class="ia-section ia-sec-floor">
+      <div class="ia-section-head">Tab 3 · Floor Tools (in-store)</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">📋</div>
+          <h3>Floor</h3>
+          <div class="tab-meta">Camera-first · used on the move</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Floor Hub</div>
+            <div class="ia-screen-desc">Entry grid · 6 tool tiles · context-aware (highlights current task).</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Dock Receive <span class="ia-screen-uc">UC-01</span></div>
+            <div class="ia-screen-desc">QR challan scanner · live tally vs ERP indent · flag discrepancies.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Quality Inspect <span class="ia-screen-uc">UC-02</span></div>
+            <div class="ia-screen-desc">Crate-by-crate · photo + reject reason · vendor score updates live.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Roster View <span class="ia-screen-uc">UC-03</span></div>
+            <div class="ia-screen-desc">Today + tomorrow shifts · predicted-footfall overlay · absence flag.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Expiry Scan <span class="ia-screen-uc">UC-07</span></div>
+            <div class="ia-screen-desc">Batch scanner · unknown-expiry fallback · near-expiry list.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Markdown Optimizer <span class="ia-screen-uc">UC-08</span></div>
+            <div class="ia-screen-desc">Per-SKU markdown % suggestion · 1-tap apply · prints label.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Queue Monitor <span class="ia-screen-uc">UC-09</span></div>
+            <div class="ia-screen-desc">Live POS counter status · threshold alert · open-another suggestion.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Cross-Store Transfer <span class="ia-screen-uc">UC-05</span></div>
+            <div class="ia-screen-desc">Stockout fallback · suggests nearest store · request transfer.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 4: REPORTS ===== -->
+    <div class="ia-section ia-sec-reports">
+      <div class="ia-section-head">Tab 4 · Reports</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">📊</div>
+          <h3>Reports</h3>
+          <div class="tab-meta">EOD + history + trends</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Reports Hub</div>
+            <div class="ia-screen-desc">Quick access to EOD brief, cash recon, trends. Today's status at top.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">EOD Brief Builder <span class="ia-screen-uc">UC-11</span></div>
+            <div class="ia-screen-desc">Auto-drafted at 7:30 PM · anomalies highlighted · voice note · 1-tap send.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Cash Reconciliation <span class="ia-screen-uc">UC-10</span></div>
+            <div class="ia-screen-desc">Auto-match POS vs counted · only mismatches surface · resolve.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">7-Day Trends</div>
+            <div class="ia-screen-desc">Sales, wastage, footfall trends · category breakdown · share to HQ.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">HQ Reports Outbox</div>
+            <div class="ia-screen-desc">All reports sent · status (delivered/read) · re-open & edit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 5: MENU ===== -->
+    <div class="ia-section ia-sec-menu">
+      <div class="ia-section-head">Tab 5 · Menu / More</div>
+      <div class="ia-tab-row">
+        <div class="ia-tab-anchor">
+          <div class="tab-icon">☰</div>
+          <h3>Menu</h3>
+          <div class="tab-meta">Settings + long-tail</div>
+        </div>
+        <div class="ia-screens">
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Menu Home</div>
+            <div class="ia-screen-desc">Profile card · sync status · 6 sub-items.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Vendor Scores <span class="ia-screen-uc">UC-02</span></div>
+            <div class="ia-screen-desc">All vendors ranked · accumulated reliability score · history per vendor.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Settings</div>
+            <div class="ia-screen-desc">Language · notifications · voice prompts · sync frequency.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Train Roz (Feedback)</div>
+            <div class="ia-screen-desc">Mark a Roz suggestion as wrong/right · explain why · improves model.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Offline & Sync Status</div>
+            <div class="ia-screen-desc">Last sync time · queued actions · force sync button.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Help & Support</div>
+            <div class="ia-screen-desc">FAQ · contact area manager · WhatsApp helpline.</div>
+          </div>
+          <div class="ia-screen l2">
+            <div class="ia-screen-name">Sign Out</div>
+            <div class="ia-screen-desc">Confirm modal · clears local cache except offline queue.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GLOBAL ELEMENTS ===== -->
+    <div class="ia-section ia-sec-global">
+      <div class="ia-section-head">Global · Persistent UI</div>
+      <p style="font-size:12px;color:var(--mid);margin-top:8px;margin-bottom:14px;">These elements appear on every (or most) screens.</p>
+      <div class="ia-global">
+        <div class="ia-global-item">
+          <h4>Top App Bar</h4>
+          <p>Back · screen title · voice mic icon · sync indicator dot.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Bottom Nav (5 tabs)</h4>
+          <p>Today · Order · Floor · Reports · Menu. Badge counts on alerts.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Push Notifications</h4>
+          <p>Roz alerts (peak, stockout, vendor delay) — actionable inline.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Offline Banner</h4>
+          <p>Yellow strip at top when offline. Shows queued action count.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Voice Roz Sheet</h4>
+          <p>Slide-up triggered by mic — talk to Roz, get text-back answer.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Cold-Chain Alert</h4>
+          <p>Fullscreen red modal — temperature breach. Cannot dismiss without ack.</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Edge Case Banner</h4>
+          <p>Contextual banner: "POS down — using cached data", "DC delayed".</p>
+        </div>
+        <div class="ia-global-item">
+          <h4>Confirmation Toast</h4>
+          <p>Brief green bottom toast — "Order sent", "Note saved", "Synced".</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== VIEW 2: FEATURE INVENTORY ==================== -->
+<div class="view" id="view-features">
+  <div class="page-head">
+    <h1>Feature Inventory</h1>
+    <p>Every feature mapped to its use case, screen, UI components, and AI behavior. Filter by use-case bucket to focus.</p>
+  </div>
+
+  <div class="feat-controls">
+    <div class="feat-chip active" onclick="filterFeat('all')">All Features</div>
+    <div class="feat-chip" onclick="filterFeat('auth')">Auth & Onboarding</div>
+    <div class="feat-chip" onclick="filterFeat('core')">CORE (UC-06, UC-11)</div>
+    <div class="feat-chip" onclick="filterFeat('alert')">ALERT</div>
+    <div class="feat-chip" onclick="filterFeat('support')">SUPPORT</div>
+  </div>
+
+  <table class="feat-table">
+    <thead>
+      <tr>
+        <th style="width:60px">UC</th>
+        <th style="width:200px">Feature</th>
+        <th style="width:130px">Screen</th>
+        <th>Components</th>
+        <th>AI / Data Behavior</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- AUTH -->
+      <tr data-bucket="auth">
+        <td><span class="feat-uc-badge feat-uc-auth">AUTH</span></td>
+        <td>
+          <div class="feat-name">Phone OTP Sign-In</div>
+          <div class="feat-data">Auth gate · once per device · biometric refresh after</div>
+        </td>
+        <td class="feat-screen">Sign In · OTP</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">PhoneInput</span>
+          <span class="feat-comp-pill">OTPField</span>
+          <span class="feat-comp-pill">LangToggle</span>
+          <span class="feat-comp-pill">PrimaryButton</span>
+        </td>
+        <td class="feat-ai">SMS OTP via Twilio / MSG91. Token stored in secure storage. Auto-fills OTP via Android SMS Retriever API.</td>
+      </tr>
+
+      <tr data-bucket="auth">
+        <td><span class="feat-uc-badge feat-uc-auth">AUTH</span></td>
+        <td>
+          <div class="feat-name">Store + Role Detection</div>
+          <div class="feat-data">Auto-pulled from HRMS / Oracle ERP user table</div>
+        </td>
+        <td class="feat-screen">Store Confirm</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">StoreCard</span>
+          <span class="feat-comp-pill">RoleBadge</span>
+          <span class="feat-comp-pill">ConfirmButton</span>
+        </td>
+        <td class="feat-ai">Lookup by phone → HRMS API → returns store_id, role, district. User confirms or edits. Personalises briefing tone.</td>
+      </tr>
+
+      <tr data-bucket="auth">
+        <td><span class="feat-uc-badge feat-uc-auth">AUTH</span></td>
+        <td>
+          <div class="feat-name">Permissions Onboarding</div>
+          <div class="feat-data">Camera, notifications, voice — all required for full Roz</div>
+        </td>
+        <td class="feat-screen">Permissions</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">PermissionCard</span>
+          <span class="feat-comp-pill">IconBlock</span>
+          <span class="feat-comp-pill">SkipLink</span>
+        </td>
+        <td class="feat-ai">Native OS prompts after explainer cards. Tracks which were granted; greys-out blocked features in app.</td>
+      </tr>
+
+      <tr data-bucket="auth">
+        <td><span class="feat-uc-badge feat-uc-auth">AUTH</span></td>
+        <td>
+          <div class="feat-name">First-Run Tour</div>
+          <div class="feat-data">3-card carousel · skippable</div>
+        </td>
+        <td class="feat-screen">Intro Tour</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">CardCarousel</span>
+          <span class="feat-comp-pill">DotIndicator</span>
+        </td>
+        <td class="feat-ai">No AI. Static intro to: Roz personality, Smart Order 1-tap, Voice anytime.</td>
+      </tr>
+
+      <!-- UC-11 CORE: BRIEFING -->
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-11</span></td>
+        <td>
+          <div class="feat-name">Auto Daily Briefing</div>
+          <div class="feat-data">CORE · generated 7:30 PM · refreshed hourly through next day</div>
+        </td>
+        <td class="feat-screen">Today Dashboard</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">BriefingCard</span>
+          <span class="feat-comp-pill">KPITile</span>
+          <span class="feat-comp-pill">AnomalyBadge</span>
+          <span class="feat-comp-pill">VoiceButton</span>
+        </td>
+        <td class="feat-ai">SageMaker NLG model. Inputs: POS sales (last 24h), inventory delta, weather, festival cal, vendor reliability. Output: 3-line briefing + KPIs + anomaly flags.</td>
+      </tr>
+
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-11</span></td>
+        <td>
+          <div class="feat-name">Voice Note Add to Briefing</div>
+          <div class="feat-data">Hindi/English speech → transcript appended to HQ report</div>
+        </td>
+        <td class="feat-screen">Briefing Detail</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">VoiceRecorder</span>
+          <span class="feat-comp-pill">TranscriptBlock</span>
+          <span class="feat-comp-pill">EditField</span>
+        </td>
+        <td class="feat-ai">Whisper / Google Speech-to-Text. Hindi + English support. Manager can edit transcript before sending.</td>
+      </tr>
+
+      <!-- UC-06 CORE: SMART ORDER -->
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-06</span></td>
+        <td>
+          <div class="feat-name">Smart Order ML Suggestions</div>
+          <div class="feat-data">CORE · 11-factor model · pre-computed at 11:30 AM server-side</div>
+        </td>
+        <td class="feat-screen">Order List</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">SKURow</span>
+          <span class="feat-comp-pill">SuggestedQtyChip</span>
+          <span class="feat-comp-pill">FactorChip</span>
+          <span class="feat-comp-pill">BulkApproveButton</span>
+        </td>
+        <td class="feat-ai">Ganit demand-forecasting ML. Inputs: 30-day SKU sales, day-of-week, weather, festival, vendor reliability, Q-comm cannibalization, margin tier, storage cap, cold-chain ceiling, wastage history, markdown clearance.</td>
+      </tr>
+
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-06</span></td>
+        <td>
+          <div class="feat-name">SKU Factor Drill-Down</div>
+          <div class="feat-data">Explainability — why Roz suggested this qty</div>
+        </td>
+        <td class="feat-screen">SKU Detail</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">FactorList</span>
+          <span class="feat-comp-pill">TrendSparkline</span>
+          <span class="feat-comp-pill">EditButton</span>
+        </td>
+        <td class="feat-ai">SHAP-style attribution — surfaces top 3 factors driving the suggestion. 30-day sales sparkline. Override updates training signal.</td>
+      </tr>
+
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-06</span></td>
+        <td>
+          <div class="feat-name">1-Tap Approve to Oracle ERP</div>
+          <div class="feat-data">Final indent submission</div>
+        </td>
+        <td class="feat-screen">Order List → Confirmation</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">ApproveButton</span>
+          <span class="feat-comp-pill">ConfirmModal</span>
+          <span class="feat-comp-pill">SuccessToast</span>
+        </td>
+        <td class="feat-ai">REST POST to Oracle ERP indent endpoint. Local optimistic UI — queued if offline, syncs when back.</td>
+      </tr>
+
+      <!-- UC-01 SUPPORT: DOCK -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-01</span></td>
+        <td>
+          <div class="feat-name">QR Challan Scan + Tally</div>
+          <div class="feat-data">7 AM dock workflow · vendor delivery check</div>
+        </td>
+        <td class="feat-screen">Dock Receive</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">ScanCamera</span>
+          <span class="feat-comp-pill">TallyList</span>
+          <span class="feat-comp-pill">DiscrepancyFlag</span>
+        </td>
+        <td class="feat-ai">Decodes QR → fetches vendor challan from ERP → live-compares with indent. Counts packets by category. Flags shortages / wrong SKUs before vendor leaves.</td>
+      </tr>
+
+      <!-- UC-02 SUPPORT: QUALITY -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-02</span></td>
+        <td>
+          <div class="feat-name">Quality Photo + Reject</div>
+          <div class="feat-data">7:30 AM · per-crate inspection · accumulates vendor score</div>
+        </td>
+        <td class="feat-screen">Quality Inspect</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">PhotoCapture</span>
+          <span class="feat-comp-pill">ReasonChips</span>
+          <span class="feat-comp-pill">VendorScoreUpdate</span>
+        </td>
+        <td class="feat-ai">Photo + reason persisted. Vendor reliability score updates: rejection rate / volume × time-decay. Surfaces in Smart Order as factor.</td>
+      </tr>
+
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-02</span></td>
+        <td>
+          <div class="feat-name">Vendor Reliability Score History</div>
+          <div class="feat-data">Long-tail view of accumulated scoring</div>
+        </td>
+        <td class="feat-screen">Vendor Scores</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">VendorList</span>
+          <span class="feat-comp-pill">ScoreBadge</span>
+          <span class="feat-comp-pill">TimelineView</span>
+        </td>
+        <td class="feat-ai">Rolling 90-day window. Score = (1 - rejection_rate) × on_time_rate × packet_accuracy. Visible to HQ via category dashboard.</td>
+      </tr>
+
+      <!-- UC-03 SUPPORT: ROSTER -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-03</span></td>
+        <td>
+          <div class="feat-name">Predicted-Footfall Roster</div>
+          <div class="feat-data">8 AM · staff positioning for the day</div>
+        </td>
+        <td class="feat-screen">Roster View</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">RosterTable</span>
+          <span class="feat-comp-pill">FootfallOverlay</span>
+          <span class="feat-comp-pill">AbsenceChip</span>
+        </td>
+        <td class="feat-ai">SageMaker footfall model — hourly forecast by zone. Overlays on shift schedule. Suggests floor positions (fresh / billing / floor).</td>
+      </tr>
+
+      <!-- UC-04 ALERT: PEAK -->
+      <tr data-bucket="alert">
+        <td><span class="feat-uc-badge feat-uc-alert">UC-04</span></td>
+        <td>
+          <div class="feat-name">Peak Predictor Alert</div>
+          <div class="feat-data">8:40 AM + 4:30 PM · 20-min pre-rush warning</div>
+        </td>
+        <td class="feat-screen">Inbox · Alert Detail</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">PushNotification</span>
+          <span class="feat-comp-pill">AlertCard</span>
+          <span class="feat-comp-pill">StaffMoveButton</span>
+        </td>
+        <td class="feat-ai">Real-time footfall model + historical pattern. Fires 20 min before forecast peak. Suggests which staff to move where.</td>
+      </tr>
+
+      <!-- UC-05 ALERT: STOCKOUT -->
+      <tr data-bucket="alert">
+        <td><span class="feat-uc-badge feat-uc-alert">UC-05</span></td>
+        <td>
+          <div class="feat-name">Stockout Forecast Alert</div>
+          <div class="feat-data">Continuous · proactive shelf-empty warning</div>
+        </td>
+        <td class="feat-screen">Inbox · Alert Detail</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">AlertCard</span>
+          <span class="feat-comp-pill">SKURow</span>
+          <span class="feat-comp-pill">SuggestionButton</span>
+        </td>
+        <td class="feat-ai">Watches POS velocity vs shelf qty. Forecasts depletion time. Alerts 45 min before empty. Offers cross-store transfer when DC slow.</td>
+      </tr>
+
+      <tr data-bucket="alert">
+        <td><span class="feat-uc-badge feat-uc-alert">UC-05</span></td>
+        <td>
+          <div class="feat-name">Cross-Store Stock Transfer</div>
+          <div class="feat-data">Stage 2 fallback · nearest store with surplus</div>
+        </td>
+        <td class="feat-screen">Cross-Store Transfer</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">StoreList</span>
+          <span class="feat-comp-pill">DistanceChip</span>
+          <span class="feat-comp-pill">RequestButton</span>
+        </td>
+        <td class="feat-ai">Inventory query across district stores. Ranks by distance + surplus qty. WhatsApp request to other store manager.</td>
+      </tr>
+
+      <!-- UC-07 SUPPORT: EXPIRY -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-07</span></td>
+        <td>
+          <div class="feat-name">Expiry Scanner + Unknown-Expiry Fallback</div>
+          <div class="feat-data">2 PM floor walk · category-default for mango / watermelon</div>
+        </td>
+        <td class="feat-screen">Expiry Scan</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">ScanCamera</span>
+          <span class="feat-comp-pill">ExpiryList</span>
+          <span class="feat-comp-pill">CategoryDefault</span>
+        </td>
+        <td class="feat-ai">Barcode → batch lookup. If no expiry on packet (loose produce), uses product taxonomy default (Fresh 1-5d, Dairy 1-10d, etc.). Sorts by hours-to-expiry.</td>
+      </tr>
+
+      <!-- UC-08 SUPPORT: MARKDOWN -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-08</span></td>
+        <td>
+          <div class="feat-name">Markdown Optimizer</div>
+          <div class="feat-data">4 PM · per-SKU discount % suggestion</div>
+        </td>
+        <td class="feat-screen">Markdown Optimizer</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">MarkdownTable</span>
+          <span class="feat-comp-pill">DiscountSlider</span>
+          <span class="feat-comp-pill">PrintLabelButton</span>
+        </td>
+        <td class="feat-ai">Inputs: hours-to-expiry, sales velocity, historical clearance %. Output: suggested markdown %. Roadmap: dynamic intraday pricing.</td>
+      </tr>
+
+      <!-- UC-09 ALERT: QUEUE -->
+      <tr data-bucket="alert">
+        <td><span class="feat-uc-badge feat-uc-alert">UC-09</span></td>
+        <td>
+          <div class="feat-name">Queue Monitor</div>
+          <div class="feat-data">5 PM evening peak · POS load watch</div>
+        </td>
+        <td class="feat-screen">Queue Monitor</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">LiveCounter</span>
+          <span class="feat-comp-pill">ThresholdAlert</span>
+          <span class="feat-comp-pill">OpenCounterButton</span>
+        </td>
+        <td class="feat-ai">POS transaction velocity per terminal → queue inference. Threshold alert when avg wait > 3 min. Suggests opening another counter.</td>
+      </tr>
+
+      <!-- UC-10 SUPPORT: CASH -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">UC-10</span></td>
+        <td>
+          <div class="feat-name">Auto Cash Reconciliation</div>
+          <div class="feat-data">7 PM EOD · POS vs counted match</div>
+        </td>
+        <td class="feat-screen">Cash Reconciliation</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">MismatchList</span>
+          <span class="feat-comp-pill">CounterRow</span>
+          <span class="feat-comp-pill">ResolveButton</span>
+        </td>
+        <td class="feat-ai">Pulls POS totals per terminal + manager-entered counted cash. Auto-matches. Only surfaces mismatches > ₹50. Resolution log for audit.</td>
+      </tr>
+
+      <!-- UC-12 CORE: EOD -->
+      <tr data-bucket="core">
+        <td><span class="feat-uc-badge feat-uc-core">UC-12</span></td>
+        <td>
+          <div class="feat-name">EOD Confirmation Summary</div>
+          <div class="feat-data">9 PM close · "all logged · tomorrow's order ready"</div>
+        </td>
+        <td class="feat-screen">EOD Confirmation</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">EODCard</span>
+          <span class="feat-comp-pill">ChecklistView</span>
+          <span class="feat-comp-pill">CloseButton</span>
+        </td>
+        <td class="feat-ai">Aggregates day's actions — orders sent, reports filed, cash reconciled, alerts resolved. Confirms tomorrow's pre-staged order is ready.</td>
+      </tr>
+
+      <!-- GLOBAL: VOICE -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">ALL</span></td>
+        <td>
+          <div class="feat-name">Voice Roz (Talk to Assistant)</div>
+          <div class="feat-data">Global · persistent mic button · ask anything</div>
+        </td>
+        <td class="feat-screen">Voice Sheet (slide-up)</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">MicButton</span>
+          <span class="feat-comp-pill">VoiceSheet</span>
+          <span class="feat-comp-pill">TranscriptView</span>
+        </td>
+        <td class="feat-ai">Hindi/English speech-to-text + LLM intent classifier. Routes to right screen ("show today's order" → Order List) or returns answer ("how much rice do we have?" → query inventory).</td>
+      </tr>
+
+      <!-- GLOBAL: OFFLINE -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">ALL</span></td>
+        <td>
+          <div class="feat-name">Offline Queue + Sync</div>
+          <div class="feat-data">Critical for Tier-2/3 connectivity reality</div>
+        </td>
+        <td class="feat-screen">Global Banner · Sync Status</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">OfflineBanner</span>
+          <span class="feat-comp-pill">QueueCounter</span>
+          <span class="feat-comp-pill">SyncButton</span>
+        </td>
+        <td class="feat-ai">Local IndexedDB queue. All write actions cached. Auto-sync when connectivity returns. Conflict resolution server-side (last-write-wins for orders, accumulate for vendor scores).</td>
+      </tr>
+
+      <!-- GLOBAL: COLD CHAIN -->
+      <tr data-bucket="alert">
+        <td><span class="feat-uc-badge feat-uc-alert">GLOBAL</span></td>
+        <td>
+          <div class="feat-name">Cold-Chain Breach Alert</div>
+          <div class="feat-data">Critical · cannot dismiss without action</div>
+        </td>
+        <td class="feat-screen">Fullscreen Modal</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">FullscreenModal</span>
+          <span class="feat-comp-pill">TemperatureGraph</span>
+          <span class="feat-comp-pill">AckButton</span>
+        </td>
+        <td class="feat-ai">IoT sensor data from cold-storage units. Triggers if temp > threshold for > 10 min. Suggests salvage actions (markdown, move to other unit).</td>
+      </tr>
+
+      <!-- GLOBAL: TRAIN ROZ -->
+      <tr data-bucket="support">
+        <td><span class="feat-uc-badge feat-uc-support">ALL</span></td>
+        <td>
+          <div class="feat-name">Feedback / Train Roz</div>
+          <div class="feat-data">Inline + dedicated · improves model over time</div>
+        </td>
+        <td class="feat-screen">Inline + Train Roz screen</td>
+        <td class="feat-comps">
+          <span class="feat-comp-pill">ThumbsUpDown</span>
+          <span class="feat-comp-pill">FeedbackChips</span>
+          <span class="feat-comp-pill">ExplanationField</span>
+        </td>
+        <td class="feat-ai">Override events are training signals — feed back to Smart Order, Stockout, Roster, Markdown models on nightly retrain cycle.</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== VIEW 3: USER FLOWS ==================== -->
+<div class="view" id="view-flows">
+  <div class="page-head">
+    <h1>User Flows</h1>
+    <p>Six key journeys showing the exact screen sequence Radhika moves through. Read these as wireframe storyboards.</p>
+  </div>
+
+  <!-- FLOW 1: FIRST SIGN IN -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">DAY 1</div>
+      <div class="flow-name">First-time sign in</div>
+      <div class="flow-uc-tag">AUTH</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Trigger</h4>
+        <div class="step-screen">Splash</div>
+        <div class="step-action">App opens · no token · routes to Sign In</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Human Input</h4>
+        <div class="step-screen">Sign In</div>
+        <div class="step-action">Enter phone · tap "Send OTP"</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Human Input</h4>
+        <div class="step-screen">OTP</div>
+        <div class="step-action">SMS auto-fills · confirm</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>AI Detect</h4>
+        <div class="step-screen">Store Confirm</div>
+        <div class="step-action">Roz pulls store + role from HRMS · pre-fills</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Permissions</h4>
+        <div class="step-screen">3 Cards</div>
+        <div class="step-action">Camera · Notifications · Voice</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Land</h4>
+        <div class="step-screen">Today (first run)</div>
+        <div class="step-action">Tooltips on briefing card · voice mic · alerts feed</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>Tier 2 managers are first-time-app-users for ops tools. Auto-detect store eliminates the "what's my store ID" friction.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>No HRMS match → manual store-list dropdown filtered to district.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 2: 7 AM DOCK -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">7:00 AM</div>
+      <div class="flow-name">Dock receive — vendor check</div>
+      <div class="flow-uc-tag">UC-01 · UC-02</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Trigger</h4>
+        <div class="step-screen">Push Notif</div>
+        <div class="step-action">"Vendor truck at dock — open Roz"</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Tap</h4>
+        <div class="step-screen">Today</div>
+        <div class="step-action">Tap alert → Floor → Dock Receive</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Scan</h4>
+        <div class="step-screen">Dock Receive</div>
+        <div class="step-action">Scan QR challan · camera</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>AI Compare</h4>
+        <div class="step-screen">Tally View</div>
+        <div class="step-action">Roz cross-checks vs ERP indent · live flags</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Reject</h4>
+        <div class="step-screen">Quality Inspect</div>
+        <div class="step-action">Photo crate · pick reason · vendor score updates</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Done</h4>
+        <div class="step-screen">Confirmation Toast</div>
+        <div class="step-action">"Dock cleared · 12 crates received · 2 rejected"</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>Today she eyeballs and signs. Roz makes the discrepancy visible before vendor leaves — no he-said-she-said later.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>Vendor sends wrong SKU → scan rejects · vendor score hit · Roz flags to Smart Order for tomorrow.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 3: 12 PM SMART ORDER -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">12:00 PM</div>
+      <div class="flow-name">Smart Order — the core daily decision</div>
+      <div class="flow-uc-tag">UC-06 (CORE)</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Trigger</h4>
+        <div class="step-screen">Today</div>
+        <div class="step-action">"Order draft ready" tile lights up · 11:30 AM pipeline complete</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Tap</h4>
+        <div class="step-screen">Order Tab</div>
+        <div class="step-action">Bottom nav · tap Order</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>Review</h4>
+        <div class="step-screen">Order List</div>
+        <div class="step-action">~80 SKU rows · suggested qty · factor chips · sort by category</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Drill (optional)</h4>
+        <div class="step-screen">SKU Detail</div>
+        <div class="step-action">11-factor breakdown · 30-day trend · edit qty if needed</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Approve</h4>
+        <div class="step-screen">Order List</div>
+        <div class="step-action">"Approve all" button · or per-SKU approve</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Sent</h4>
+        <div class="step-screen">Confirmation</div>
+        <div class="step-action">Indent → Oracle ERP · vendor will deliver tomorrow 7 AM</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>This is the moment everything else calibrates around. 1-tap approval, full explainability via factor chips.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>Festival not in calendar → Roz under-suggests → manager overrides → next year auto-learns the festival.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 4: 4 PM EXPIRY + MARKDOWN -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">4:00 PM</div>
+      <div class="flow-name">Expiry walk + markdown</div>
+      <div class="flow-uc-tag">UC-07 · UC-08</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Trigger</h4>
+        <div class="step-screen">Inbox</div>
+        <div class="step-action">"12 SKUs near expiry — start floor walk"</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Open</h4>
+        <div class="step-screen">Expiry Scan</div>
+        <div class="step-action">Pre-generated list · sorted by hours-to-expiry</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Scan / Confirm</h4>
+        <div class="step-screen">Expiry Scan</div>
+        <div class="step-action">Walk floor · scan packets · confirm expiry</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>Suggest</h4>
+        <div class="step-screen">Markdown Opt</div>
+        <div class="step-action">Per-SKU markdown % suggested · hours × velocity × clearance</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Apply</h4>
+        <div class="step-screen">Markdown Opt</div>
+        <div class="step-action">1-tap apply · print label · stick on shelf</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Done</h4>
+        <div class="step-screen">Confirmation Toast</div>
+        <div class="step-action">"7 markdowns applied · ₹2,340 expected recovery"</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>Today she eyeballs and guesses. Roz turns -30% wastage into -50% with optimal markdown timing.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>Unknown expiry (loose mango / watermelon) → category-default fallback (Fresh 1-5 days).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 5: 8 PM BRIEFING -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">8:00 PM</div>
+      <div class="flow-name">Daily briefing — auto-draft to HQ</div>
+      <div class="flow-uc-tag">UC-11 (CORE)</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Auto</h4>
+        <div class="step-screen">7:30 PM pipeline</div>
+        <div class="step-action">Roz drafts briefing from POS + inventory + alerts</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Open</h4>
+        <div class="step-screen">Today</div>
+        <div class="step-action">Briefing card glowing · tap to expand</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>Review</h4>
+        <div class="step-screen">Briefing Detail</div>
+        <div class="step-action">3-line summary · KPIs · anomalies highlighted</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Voice Add</h4>
+        <div class="step-screen">Briefing Detail</div>
+        <div class="step-action">"Power was out 2:00–2:30 PM" · transcribed · appended</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Send</h4>
+        <div class="step-screen">Briefing Detail</div>
+        <div class="step-action">1-tap send → HQ + area manager</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Delivered</h4>
+        <div class="step-screen">Outbox</div>
+        <div class="step-action">"Report delivered · read by area mgr at 8:14 PM"</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>Today: 60 min WhatsApp + Excel grind. Now: 2 min review + voice context. Reclaimed 58 min per day.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>POS down period → Roz flags gap in data, manager explains in voice note, HQ knows the asterisk.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 6: EDGE CASE -->
+  <div class="flow-block">
+    <div class="flow-head">
+      <div class="flow-time">EDGE</div>
+      <div class="flow-name">Stockout alert → cross-store transfer</div>
+      <div class="flow-uc-tag">UC-05</div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step trigger">
+        <h4>Predict</h4>
+        <div class="step-screen">Push Notif</div>
+        <div class="step-action">"Tomato will stockout in 45 min — DC delivery 5 hrs late"</div>
+      </div>
+      <div class="flow-step ai">
+        <h4>AI Suggest</h4>
+        <div class="step-screen">Alert Detail</div>
+        <div class="step-action">"Nearby store B has 40kg surplus · 8 km · area mgr approved"</div>
+      </div>
+      <div class="flow-step human">
+        <h4>Tap</h4>
+        <div class="step-screen">Cross-Store</div>
+        <div class="step-action">"Request 30kg" · confirm</div>
+      </div>
+      <div class="flow-step output">
+        <h4>WhatsApp</h4>
+        <div class="step-screen">Auto-message</div>
+        <div class="step-action">Roz sends request to store B manager · auto-formatted</div>
+      </div>
+      <div class="flow-step output">
+        <h4>Confirm</h4>
+        <div class="step-screen">Inbox</div>
+        <div class="step-action">"Store B confirmed · arriving 12:30 PM"</div>
+      </div>
+    </div>
+    <div class="flow-notes">
+      <div class="flow-note">
+        <h5>Why this matters</h5>
+        <p>Today: customer sees empty shelf · manager scrambles or accepts the loss. Roz turns it into a clean inter-store ops flow.</p>
+      </div>
+      <div class="flow-note">
+        <h5>Edge case</h5>
+        <p>No nearby surplus → Roz suggests substitute SKU on the shelf with "out of stock — try X" digital tag.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== VIEW 4: COMPONENTS ==================== -->
+<div class="view" id="view-components">
+  <div class="page-head">
+    <h1>Component System</h1>
+    <p>The reusable UI patterns that compose every screen. Build these first in Figma, then assemble screens from them.</p>
+  </div>
+
+  <div class="comp-grid">
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📋</div>
+        <h3>Alert Card</h3>
+      </div>
+      <div class="comp-purpose">A single Roz-initiated alert. Header (time + tag) · body (context) · 2 action buttons (accept / dismiss).</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-04 Peak</span>
+        <span class="uc-chip">UC-05 Stockout</span>
+        <span class="uc-chip">UC-09 Queue</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">unread</span>
+        <span class="state-chip">acknowledged</span>
+        <span class="state-chip">expired</span>
+        <span class="state-chip">snoozed</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">✓</div>
+        <h3>Approval Row</h3>
+      </div>
+      <div class="comp-purpose">SKU/item + suggested action + 1-tap approve. Edit affordance on long-press.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-06 Smart Order</span>
+        <span class="uc-chip">UC-08 Markdown</span>
+        <span class="uc-chip">UC-10 Cash Recon</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">pending</span>
+        <span class="state-chip">approved</span>
+        <span class="state-chip">edited</span>
+        <span class="state-chip">overridden</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📷</div>
+        <h3>Scan Camera</h3>
+      </div>
+      <div class="comp-purpose">Fullscreen camera with QR / barcode detection overlay. Persistent tally counter.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-01 Dock</span>
+        <span class="uc-chip">UC-07 Expiry</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">scanning</span>
+        <span class="state-chip">detected</span>
+        <span class="state-chip">error</span>
+        <span class="state-chip">no-permission</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📸</div>
+        <h3>Photo Capture + Reason</h3>
+      </div>
+      <div class="comp-purpose">Camera with reason-chip overlay. Forces a categorisation before save (no free-text trap).</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-02 Quality</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">capture</span>
+        <span class="state-chip">review</span>
+        <span class="state-chip">tagged</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📊</div>
+        <h3>Factor Chip</h3>
+      </div>
+      <div class="comp-purpose">Surfaces *why* Roz suggested a value. Tap to expand to factor breakdown.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-06 Smart Order</span>
+        <span class="uc-chip">UC-11 Briefing</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">positive</span>
+        <span class="state-chip">negative</span>
+        <span class="state-chip">neutral</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🎤</div>
+        <h3>Voice Button + Sheet</h3>
+      </div>
+      <div class="comp-purpose">Persistent mic in top bar. Slide-up sheet with waveform + live transcript.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">Global</span>
+        <span class="uc-chip">UC-11 Briefing voice-add</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">idle</span>
+        <span class="state-chip">recording</span>
+        <span class="state-chip">processing</span>
+        <span class="state-chip">transcript-ready</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🚨</div>
+        <h3>Anomaly Badge</h3>
+      </div>
+      <div class="comp-purpose">Small red dot on KPI tile when value diverges from forecast. Tap → explanation.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-10 Cash</span>
+        <span class="uc-chip">UC-11 Briefing</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">none</span>
+        <span class="state-chip">minor</span>
+        <span class="state-chip">major</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📡</div>
+        <h3>Offline Banner</h3>
+      </div>
+      <div class="comp-purpose">Persistent yellow strip at top when no connectivity. Shows queued action count.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">Global</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">online</span>
+        <span class="state-chip">offline-syncing</span>
+        <span class="state-chip">offline-queued</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">⚠️</div>
+        <h3>Edge Case Banner</h3>
+      </div>
+      <div class="comp-purpose">Contextual banner inside a screen — "POS down — cached data" / "DC delayed".</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-06 Order</span>
+        <span class="uc-chip">UC-10 Cash</span>
+        <span class="uc-chip">UC-11 Briefing</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">info</span>
+        <span class="state-chip">warning</span>
+        <span class="state-chip">critical</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">📈</div>
+        <h3>Trend Sparkline</h3>
+      </div>
+      <div class="comp-purpose">Tiny inline 30-day sales chart inside SKU row. No axis — pattern at a glance.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-05 Stockout</span>
+        <span class="uc-chip">UC-06 Smart Order</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">trending-up</span>
+        <span class="state-chip">trending-down</span>
+        <span class="state-chip">stable</span>
+        <span class="state-chip">volatile</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🍱</div>
+        <h3>KPI Tile</h3>
+      </div>
+      <div class="comp-purpose">Big number + label + delta vs yesterday. Optional anomaly badge.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-11 Today</span>
+        <span class="uc-chip">UC-12 EOD</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">positive</span>
+        <span class="state-chip">negative</span>
+        <span class="state-chip">flat</span>
+        <span class="state-chip">loading</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">⭐</div>
+        <h3>Vendor Score Badge</h3>
+      </div>
+      <div class="comp-purpose">0-100 reliability pill next to vendor name. Color-graded.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">UC-02 Quality</span>
+        <span class="uc-chip">UC-06 Smart Order factor</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">excellent &gt;90</span>
+        <span class="state-chip">good 70-90</span>
+        <span class="state-chip">risk &lt;70</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🔢</div>
+        <h3>OTP Field</h3>
+      </div>
+      <div class="comp-purpose">6 single-digit boxes · auto-advance · auto-fill from SMS retriever.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">AUTH</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">empty</span>
+        <span class="state-chip">filling</span>
+        <span class="state-chip">verifying</span>
+        <span class="state-chip">error</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🧭</div>
+        <h3>Bottom Nav (5 tabs)</h3>
+      </div>
+      <div class="comp-purpose">Today / Order / Floor / Reports / Menu. Badge counts on Today + Order.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">Global</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">default</span>
+        <span class="state-chip">active</span>
+        <span class="state-chip">badged</span>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-head">
+        <div class="comp-icon">🎉</div>
+        <h3>Confirmation Toast</h3>
+      </div>
+      <div class="comp-purpose">Brief bottom toast — success / error / queued. Auto-dismiss 3s.</div>
+      <div class="comp-section">
+        <h4>Used by</h4>
+        <span class="uc-chip">Global</span>
+      </div>
+      <div class="comp-section">
+        <h4>States</h4>
+        <span class="state-chip">success</span>
+        <span class="state-chip">error</span>
+        <span class="state-chip">queued-offline</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  document.querySelector('.nav-pill[data-id="' + id + '"]').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function filterFeat(bucket) {
+  document.querySelectorAll('.feat-chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.feat-table tbody tr').forEach(row => {
+    if (bucket === 'all' || row.dataset.bucket === bucket) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
+
+(function initFromQuery() {
+  const tab = new URLSearchParams(window.location.search).get('tab');
+  if (!tab) return;
+  const targetView = document.getElementById('view-' + tab);
+  const targetPill = document.querySelector('.nav-pill[data-id="' + tab + '"]');
+  if (!targetView || !targetPill) return;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  targetView.classList.add('active');
+  targetPill.classList.add('active');
+})();
+</script>
+
+</body>
+</html>
