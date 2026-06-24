@@ -246,6 +246,37 @@
   .feat[data-vtype="danger"] {
     background: #FEF2F2; border-left: 3px solid var(--red);
   }
+  .feat[data-vtype="touchpoint"] {
+    background: #EFF6FF; border-left: 3px solid var(--blue);
+  }
+  .feat[data-vtype="touchpoint"] .feat-type { color: var(--blue); }
+  .feat[data-vtype="activity"] {
+    background: var(--white); border: 1px solid var(--border);
+    border-left: 2px solid var(--muted);
+    padding: 7px 10px;
+  }
+  .feat[data-vtype="activity"] .feat-label {
+    font-size: 11px; color: var(--mid); font-weight: 500;
+  }
+  .feat[data-vtype="activity"] .feat-type {
+    font-size: 7px; color: var(--muted);
+  }
+  .feat[data-vtype="quick-actions"] {
+    background: var(--orange-pale); border: 1px solid #FDBA74;
+    text-align: center;
+  }
+  .feat[data-vtype="quick-actions"] .feat-type { color: var(--orange); }
+  .feat[data-vtype="section-label"] {
+    background: transparent; border: none;
+    padding: 8px 4px 4px;
+  }
+  .feat[data-vtype="section-label"] .feat-label {
+    font-size: 11px; font-weight: 800; color: var(--dark);
+    text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  .feat[data-vtype="section-label"] .feat-type {
+    display: none;
+  }
 
   /* Edit controls */
   .feat-ctrls {
@@ -409,10 +440,14 @@
     <label>Component type</label>
     <select id="addType">
       <option value="header">Header / Title block</option>
+      <option value="section-label">Section label (subhead)</option>
       <option value="card">Card</option>
+      <option value="touchpoint">Touchpoint card (flow status)</option>
+      <option value="activity">Activity feed row</option>
       <option value="kpi">KPI tile</option>
       <option value="alert">Alert</option>
       <option value="list-row">List row / SKU row</option>
+      <option value="quick-actions">Quick actions grid</option>
       <option value="primary-button">Primary button</option>
       <option value="input">Input field</option>
       <option value="scan">Scan camera</option>
@@ -523,16 +558,48 @@ const DEFAULT_DATA = {
         {
           id: 'today', name: 'Today Dashboard', uc: 'UC-11',
           features: [
-            { id: 't1f1', type: 'header', label: 'सुप्रभात Radhika 🌅', comp: 'GreetingBar' },
-            { id: 't1f2', type: 'card', label: 'Roz briefing: 3-line summary auto-drafted', comp: 'BriefingCard' },
-            { id: 't1f3', type: 'kpi', label: 'Sales ₹1.2L · +8% vs yest', comp: 'KPITile' },
-            { id: 't1f4', type: 'kpi', label: 'Wastage 2.1kg · -22% vs yest', comp: 'KPITile' },
-            { id: 't1f5', type: 'header', label: 'What needs you (3)', comp: 'SectionLabel' },
-            { id: 't1f6', type: 'alert', label: '⏰ Peak in 22 min — move 2 staff to bill', comp: 'AlertCard' },
-            { id: 't1f7', type: 'alert', label: '🍅 Tomato low — 45 min to empty', comp: 'AlertCard' },
-            { id: 't1f8', type: 'alert', label: '🚛 Vendor delay — DC slip 11 AM', comp: 'AlertCard' },
-            { id: 't1f9', type: 'voice', label: '🎙 Tap to talk to Roz', comp: 'VoiceButton' },
-            { id: 't1f10', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
+            // === GLANCE ROW ===
+            { id: 't1f1', type: 'header', label: 'सुप्रभात Radhika · Sat 14 Dec · ☀ 28°', comp: 'GreetingBar' },
+
+            // === HERO BRIEFING ===
+            { id: 't1f2', type: 'card', label: 'Roz brief: 3-line story of today (auto-drafted at 7 AM)', comp: 'BriefingCard' },
+
+            // === KPI STRIP ===
+            { id: 't1f3', type: 'kpi', label: 'Sales · ₹1.2L · +8%', comp: 'KPITile' },
+            { id: 't1f4', type: 'kpi', label: 'Wastage · 2.1kg · -22%', comp: 'KPITile' },
+            { id: 't1f5', type: 'kpi', label: 'Footfall · 412 · +6%', comp: 'KPITile' },
+            { id: 't1f6', type: 'kpi', label: 'Open alerts · 3 unread', comp: 'KPITile' },
+
+            // === WHAT NEEDS YOU NOW ===
+            { id: 't1f7', type: 'section-label', label: '⚡ What needs you now (3)', comp: 'SectionLabel' },
+            { id: 't1f8', type: 'alert', label: '⏰ Peak in 22 min — move 2 staff to billing', comp: 'AlertCard' },
+            { id: 't1f9', type: 'alert', label: '🍅 Tomato low — 45 min to empty', comp: 'AlertCard' },
+            { id: 't1f10', type: 'alert', label: '🚛 Vendor delay — Mother Dairy slips 11 AM', comp: 'AlertCard' },
+
+            // === MAJOR TOUCHPOINTS (status cards per flow) ===
+            { id: 't1f11', type: 'section-label', label: '📌 Today\'s touchpoints', comp: 'SectionLabel' },
+            { id: 't1f12', type: 'touchpoint', label: '📦 Smart Order · draft ready · 82 SKUs · review by 12 PM →', comp: 'OrderTouchpoint' },
+            { id: 't1f13', type: 'touchpoint', label: '📝 HQ Briefing · pending · auto-drafts at 7:30 PM', comp: 'HQTouchpoint' },
+            { id: 't1f14', type: 'touchpoint', label: '🚚 Vendors today · 4 incoming · 1 delayed', comp: 'VendorTouchpoint' },
+            { id: 't1f15', type: 'touchpoint', label: '💰 Cash recon · 7 PM · 3 counters · last var ₹0', comp: 'CashTouchpoint' },
+            { id: 't1f16', type: 'touchpoint', label: '🕐 Expiry watch · 12 SKUs near · floor walk 2 PM', comp: 'ExpiryTouchpoint' },
+            { id: 't1f17', type: 'touchpoint', label: '👥 Roster · 8 staff · 1 absent · roz redeployed', comp: 'RosterTouchpoint' },
+
+            // === ROZ ACTIVITY FEED ===
+            { id: 't1f18', type: 'section-label', label: '🌀 Roz activity (since 6 AM)', comp: 'SectionLabel' },
+            { id: 't1f19', type: 'activity', label: '8:42 AM · Drafted tomorrow\'s order (82 SKUs · ₹47.2K)', comp: 'ActivityRow' },
+            { id: 't1f20', type: 'activity', label: '8:15 AM · Dock cleared · Reliance Fresh · 12/14 crates ✓', comp: 'ActivityRow' },
+            { id: 't1f21', type: 'activity', label: '7:30 AM · Yesterday\'s briefing delivered · area mgr read', comp: 'ActivityRow' },
+            { id: 't1f22', type: 'activity', label: '7:00 AM · Vendor score updated · Suresh Mandi 0.92 → 0.87 ▼', comp: 'ActivityRow' },
+            { id: 't1f23', type: 'activity', label: '6:00 AM · Footfall forecast set · peak 9-11 AM, 5-8 PM', comp: 'ActivityRow' },
+
+            // === QUICK ACTIONS ===
+            { id: 't1f24', type: 'section-label', label: '⚡ Quick actions', comp: 'SectionLabel' },
+            { id: 't1f25', type: 'quick-actions', label: '📥 Dock · 🔍 Quality · 🕐 Expiry · 🎙 Voice', comp: 'QuickActionsGrid' },
+
+            // === VOICE + NAV ===
+            { id: 't1f26', type: 'voice', label: '🎙 Tap to talk to Roz · Hindi / English', comp: 'VoiceButton' },
+            { id: 't1f27', type: 'bottomnav', label: 'Today · Order · Floor · Reports · Menu', comp: 'BottomNav' }
           ]
         },
         {
@@ -834,7 +901,7 @@ const DEFAULT_DATA = {
 };
 
 // ===== STATE =====
-const STORAGE_KEY = 'roz-wireframe-state-v1';
+const STORAGE_KEY = 'roz-wireframe-state-v2';
 let state = loadState();
 
 function loadState() {
