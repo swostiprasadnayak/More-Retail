@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roz — Interactive Prototype</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  /* ============================================================
+     DESIGN TOKENS — extracted 1:1 from Figma design system
+     (Swosti_Portfolio_2026 · node 1929:578)
+  ============================================================ */
+  :root {
+    /* Brand · Orange (PRIMARY) */
+    --orange-50:#fff1e6; --orange-100:#ffe0cc; --orange-200:#ffb78a; --orange-300:#ff8e4d;
+    --orange-400:#ff741f; --orange-500:#ff5b0a; --orange-600:#e64a0e; --orange-700:#b43808;
+    --orange-800:#822a05; --orange-900:#511a03;
+    /* Premium · Purple (more+) */
+    --purple-50:#f3f0ff; --purple-100:#e0d6ff; --purple-200:#c2adff; --purple-300:#9f7bff;
+    --purple-400:#7c4dff; --purple-500:#5e2edb; --purple-600:#4a1fb0; --purple-700:#3a1888;
+    --purple-800:#2a1166; --purple-900:#1a0944;
+    /* Action · Green */
+    --green-50:#dcfce7; --green-100:#bbf7d0; --green-200:#86efac; --green-300:#4ade80;
+    --green-400:#22c55e; --green-500:#16a34a; --green-600:#15803d; --green-700:#166534;
+    --green-800:#14532d; --green-900:#052e16;
+    /* Info · Blue */
+    --blue-50:#eff6ff; --blue-100:#dbeafe; --blue-200:#bfdbfe; --blue-300:#93c5fd;
+    --blue-400:#60a5fa; --blue-500:#3b82f6; --blue-600:#2563eb; --blue-700:#1d4ed8;
+    --blue-800:#1e40af; --blue-900:#1e3a8a;
+    /* Warning · Yellow */
+    --yellow-50:#fefce8; --yellow-100:#fef9c3; --yellow-200:#fef08a; --yellow-300:#fde047;
+    --yellow-400:#facc15; --yellow-500:#eab308; --yellow-600:#ca8a04; --yellow-700:#a16207;
+    /* Error · Red */
+    --red-50:#fef2f2; --red-100:#fee2e2; --red-200:#fecaca; --red-300:#fca5a5;
+    --red-400:#f87171; --red-500:#ef4444; --red-600:#dc2626; --red-700:#b91c1c; --red-800:#991b1b;
+    /* Neutral · Gray */
+    --gray-0:#ffffff; --gray-50:#fafafa; --gray-100:#f5f5f7; --gray-150:#eeeef1;
+    --gray-200:#e5e7eb; --gray-300:#d1d5db; --gray-400:#9ca3af; --gray-500:#6b7280;
+    --gray-600:#4b5563; --gray-700:#374151; --gray-800:#1f2937; --gray-900:#111827;
+    --gray-950:#0a0e1a; --gray-1000:#000000;
+
+    /* Radius scale */
+    --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-2xl:24px; --r-3xl:32px; --r-pill:999px;
+
+    /* Elevation ladder */
+    --e0:none;
+    --e1:0 1px 2px rgba(17,24,39,0.05);
+    --e2:0 2px 8px rgba(17,24,39,0.06), 0 1px 2px rgba(17,24,39,0.04);
+    --e3:0 6px 16px rgba(17,24,39,0.08), 0 2px 4px rgba(17,24,39,0.04);
+    --e4:0 12px 28px rgba(17,24,39,0.12), 0 4px 8px rgba(17,24,39,0.06);
+    --e5:0 24px 48px rgba(17,24,39,0.18);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body {
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:#e9e9ee;
+    color:var(--gray-900);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ============================================================
+     STUDIO LAYOUT — left rail + centered device
+  ============================================================ */
+  .studio { display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+
+  .rail {
+    background:var(--gray-1000);
+    color:var(--gray-0);
+    padding:22px 16px;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .rail-logo {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--orange-500); color:#fff;
+    font-weight:800; font-size:18px; letter-spacing:-1px;
+    padding:6px 14px; border-radius:var(--r-md); margin-bottom:4px;
+  }
+  .rail-sub { font-size:11px; color:var(--gray-400); margin-bottom:22px; letter-spacing:0.3px; }
+  .rail-group { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--gray-500); margin:18px 0 6px; }
+  .rail-link {
+    display:flex; align-items:center; gap:10px;
+    padding:8px 10px; font-size:13px; color:var(--gray-300);
+    border-radius:var(--r-sm); cursor:pointer; transition:all .12s;
+  }
+  .rail-link:hover { background:var(--gray-800); color:#fff; }
+  .rail-link.active { background:var(--orange-500); color:#fff; font-weight:600; }
+  .rail-num { font-size:10px; color:var(--gray-500); width:16px; }
+  .rail-link.active .rail-num { color:rgba(255,255,255,0.7); }
+  .rail-foot { margin-top:24px; padding-top:16px; border-top:1px solid var(--gray-800); font-size:11px; color:var(--gray-500); line-height:1.6; }
+  .rail-foot a { color:var(--orange-300); text-decoration:none; }
+
+  .stage {
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:40px 20px 80px;
+  }
+  .stage-head { text-align:center; margin-bottom:22px; }
+  .stage-head h1 { font-size:20px; font-weight:800; letter-spacing:-0.3px; }
+  .stage-head p { font-size:13px; color:var(--gray-500); margin-top:4px; }
+  .stage-controls { display:flex; gap:8px; justify-content:center; margin-bottom:20px; }
+  .sc-btn {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 14px; font-size:12px; font-weight:600;
+    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-pill);
+    cursor:pointer; color:var(--gray-700); box-shadow:var(--e1);
+  }
+  .sc-btn:hover { border-color:var(--orange-400); color:var(--orange-600); }
+
+  /* ============================================================
+     DEVICE FRAME
+  ============================================================ */
+  .device {
+    width:402px; height:858px;
+    background:var(--gray-1000);
+    border-radius:54px;
+    padding:6px;
+    box-shadow:var(--e5), 0 0 0 2px rgba(0,0,0,0.2);
+    position:relative;
+    flex-shrink:0;
+  }
+  .device-screen {
+    width:100%; height:100%;
+    background:var(--gray-100);
+    border-radius:48px;
+    overflow:hidden;
+    position:relative;
+  }
+  /* dynamic island */
+  .device::after {
+    content:''; position:absolute; top:20px; left:50%; transform:translateX(-50%);
+    width:120px; height:32px; background:var(--gray-1000); border-radius:var(--r-pill); z-index:60; pointer-events:none;
+  }
+
+  .screens { width:100%; height:100%; position:relative; }
+  .screen {
+    position:absolute; inset:0;
+    display:none; flex-direction:column;
+    background:var(--gray-100);
+  }
+  .screen.active { display:flex; }
+
+  /* status bar */
+  .statusbar {
+    height:54px; flex-shrink:0;
+    display:flex; align-items:flex-end; justify-content:space-between;
+    padding:0 28px 8px; font-size:14px; font-weight:700;
+    position:relative; z-index:10;
+  }
+  .statusbar.light { color:#fff; }
+  .statusbar .sb-right { display:flex; gap:6px; align-items:center; font-size:12px; }
+
+  /* app bar */
+  .appbar {
+    flex-shrink:0; padding:6px 18px 12px;
+    display:flex; align-items:center; gap:12px;
+    background:transparent;
+  }
+  .appbar .ab-back {
+    width:36px; height:36px; border-radius:var(--r-pill);
+    background:#fff; border:1px solid var(--gray-200);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; color:var(--gray-700); cursor:pointer; box-shadow:var(--e1);
+    flex-shrink:0;
+  }
+  .appbar .ab-title { font-size:18px; font-weight:700; flex:1; letter-spacing:-0.2px; }
+  .appbar .ab-actions { display:flex; gap:8px; }
+  .appbar .ab-icon {
+    width:36px; height:36px; border-radius:var(--r-pill);
+    background:#fff; border:1px solid var(--gray-200);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; cursor:pointer; box-shadow:var(--e1);
+  }
+
+  /* scroll body */
+  .body {
+    flex:1; overflow-y:auto; padding:4px 18px 120px;
+  }
+  .body::-webkit-scrollbar { width:0; }
+  .body.flush { padding:0 0 120px; }
+
+  /* ============================================================
+     PRIMITIVES
+  ============================================================ */
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:inherit; font-weight:600; font-size:16px;
+    border-radius:var(--r-pill); border:none; cursor:pointer;
+    padding:15px 24px; transition:all .14s; width:100%;
+  }
+  .btn-primary { background:var(--orange-500); color:#fff; box-shadow:0 4px 12px rgba(255,91,10,0.32); }
+  .btn-primary:active { background:var(--orange-600); transform:translateY(1px); }
+  .btn-secondary { background:var(--gray-900); color:#fff; }
+  .btn-outline { background:#fff; color:var(--orange-600); border:1.5px solid var(--orange-500); }
+  .btn-ghost { background:transparent; color:var(--orange-600); }
+  .btn-success { background:var(--green-500); color:#fff; }
+  .btn-sm { padding:10px 16px; font-size:14px; width:auto; }
+
+  .card {
+    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-lg);
+    box-shadow:var(--e2); padding:16px;
+  }
+  .overline { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.2px; color:var(--gray-400); }
+  .section-title { font-size:14px; font-weight:800; letter-spacing:0.2px; margin:18px 2px 10px; display:flex; align-items:center; justify-content:space-between; }
+  .section-title .st-link { font-size:12px; font-weight:600; color:var(--orange-600); }
+
+  .chip {
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:12px; font-weight:600; padding:6px 12px;
+    border-radius:var(--r-pill); background:var(--gray-100); color:var(--gray-600);
+    border:1px solid var(--gray-200);
+  }
+  .chip.active { background:var(--orange-500); color:#fff; border-color:var(--orange-500); }
+
+  /* ============================================================
+     BOTTOM NAV — dark floating pill, orange active (Figma organism)
+  ============================================================ */
+  .bottomnav {
+    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    width:362px; height:64px;
+    background:var(--gray-950);
+    border-radius:var(--r-pill);
+    display:none; align-items:center; justify-content:space-around;
+    padding:0 10px; z-index:50; box-shadow:var(--e4);
+  }
+  .screen.has-nav .bottomnav { display:flex; }
+  .nav-item {
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    color:var(--gray-500); cursor:pointer; flex:1; padding:8px 0;
+    font-size:9px; font-weight:600; transition:color .12s;
+  }
+  .nav-item .ni-ic { font-size:19px; line-height:1; filter:grayscale(1) opacity(0.6); }
+  .nav-item.active { color:#fff; }
+  .nav-item.active .ni-ic { filter:none; }
+  .nav-item.active .ni-pill {
+    position:absolute; top:8px;
+  }
+
+  /* shared bottom nav markup is cloned into each tab screen */
+  .navbar-host { position:absolute; bottom:18px; left:0; right:0; display:flex; justify-content:center; z-index:50; pointer-events:none; }
+  .navbar {
+    pointer-events:auto;
+    width:362px; height:62px; background:var(--gray-950); border-radius:var(--r-pill);
+    display:flex; align-items:center; padding:0 8px; box-shadow:var(--e4);
+  }
+  .navbar .nb {
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+    color:var(--gray-500); cursor:pointer; padding:9px 0; border-radius:var(--r-pill);
+    font-size:9px; font-weight:600;
+  }
+  .navbar .nb .nb-ic { font-size:18px; line-height:1; }
+  .navbar .nb.active { color:#fff; }
+  .navbar .nb.active .nb-ic { transform:scale(1.05); }
+
+  /* ============================================================
+     KPI / STAT CHIP (Figma molecule)
+  ============================================================ */
+  .kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .kpi {
+    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-md);
+    padding:12px 14px; box-shadow:var(--e1);
+  }
+  .kpi .kpi-label { font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:4px; }
+  .kpi .kpi-val { font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+  .kpi .kpi-delta { font-size:11px; font-weight:700; margin-left:4px; }
+  .kpi .up { color:var(--green-600); }
+  .kpi .down { color:var(--green-600); }
+  .kpi .bad { color:var(--red-600); }
+
+  /* alert card */
+  .alert {
+    display:flex; gap:12px; align-items:flex-start;
+    background:#fff; border:1px solid var(--gray-200); border-left:3px solid var(--yellow-400);
+    border-radius:var(--r-md); padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1);
+    cursor:pointer;
+  }
+  .alert.crit { border-left-color:var(--red-500); }
+  .alert.info { border-left-color:var(--blue-500); }
+  .alert .al-ic { font-size:18px; line-height:1.2; }
+  .alert .al-body { flex:1; }
+  .alert .al-title { font-size:13px; font-weight:700; }
+  .alert .al-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
+  .alert .al-go { color:var(--gray-300); font-size:16px; align-self:center; }
+
+  /* touchpoint card */
+  .tp {
+    display:flex; gap:12px; align-items:center;
+    background:#fff; border:1px solid var(--gray-200);
+    border-radius:var(--r-md); padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1); cursor:pointer;
+  }
+  .tp .tp-ic {
+    width:40px; height:40px; border-radius:var(--r-md); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:19px;
+    background:var(--orange-50);
+  }
+  .tp .tp-body { flex:1; min-width:0; }
+  .tp .tp-name { font-size:13px; font-weight:700; }
+  .tp .tp-meta { font-size:11px; color:var(--gray-500); margin-top:1px; }
+  .tp .tp-badge {
+    font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px;
+    padding:3px 7px; border-radius:var(--r-pill); margin-top:5px; display:inline-block;
+  }
+  .tp .b-ready { background:var(--green-50); color:var(--green-700); }
+  .tp .b-pending { background:var(--gray-100); color:var(--gray-500); }
+  .tp .b-warn { background:var(--yellow-50); color:var(--yellow-700); }
+  .tp .tp-go { color:var(--gray-300); font-size:18px; }
+
+  /* activity feed */
+  .act { display:flex; gap:10px; padding:9px 2px; border-bottom:1px solid var(--gray-150); }
+  .act .act-time { font-size:10px; font-weight:700; color:var(--gray-400); width:54px; flex-shrink:0; padding-top:1px; }
+  .act .act-text { font-size:12px; color:var(--gray-600); }
+  .act .act-text b { color:var(--gray-800); font-weight:600; }
+
+  /* list row */
+  .lrow {
+    display:flex; align-items:center; gap:12px;
+    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-md);
+    padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1); cursor:pointer;
+  }
+  .lrow .lr-ic { font-size:18px; }
+  .lrow .lr-body { flex:1; }
+  .lrow .lr-title { font-size:13px; font-weight:700; }
+  .lrow .lr-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
+  .lrow .lr-go { color:var(--gray-300); font-size:16px; }
+  .lrow .lr-val { font-size:13px; font-weight:700; }
+
+  /* input */
+  .field { margin-bottom:14px; }
+  .field label { font-size:12px; font-weight:700; color:var(--gray-600); display:block; margin-bottom:6px; }
+  .input {
+    width:100%; background:#fff; border:1.5px solid var(--gray-200); border-radius:var(--r-md);
+    padding:14px 16px; font-size:16px; font-family:inherit; color:var(--gray-900);
+    display:flex; align-items:center; gap:10px;
+  }
+  .input:focus-within, .input.focus { border-color:var(--orange-500); box-shadow:0 0 0 3px var(--orange-100); }
+  .input input { border:none; outline:none; font-size:16px; font-family:inherit; flex:1; background:transparent; }
+  .input .in-prefix { color:var(--gray-500); font-weight:600; }
+
+  /* OTP boxes */
+  .otp-row { display:flex; gap:10px; justify-content:space-between; }
+  .otp-box {
+    flex:1; aspect-ratio:1/1.15; max-width:50px;
+    border:1.5px solid var(--gray-200); border-radius:var(--r-md);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; font-weight:800; background:#fff;
+  }
+  .otp-box.filled { border-color:var(--orange-500); color:var(--orange-600); }
+
+  /* hero gradient (auth) */
+  .hero-grad { background:linear-gradient(160deg, var(--orange-500) 0%, var(--orange-700) 55%, #8f2305 100%); }
+  .purple-grad { background:linear-gradient(135deg, var(--purple-400) 0%, var(--purple-600) 100%); }
+  .green-grad { background:linear-gradient(135deg, var(--green-400) 0%, var(--green-600) 100%); }
+
+  /* misc */
+  .pill-tag { display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px; padding:3px 8px; border-radius:var(--r-pill); }
+  .t-core { background:var(--green-50); color:var(--green-700); }
+  .t-alert { background:var(--yellow-50); color:var(--yellow-700); }
+  .divider-accent { height:2px; background:var(--orange-500); border-radius:2px; border:none; margin:14px 0; }
+  .muted { color:var(--gray-500); }
+
+  @media (max-width:920px){
+    .studio { grid-template-columns:1fr; }
+    .rail { position:static; height:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="studio">
+
+  <!-- ===================== LEFT RAIL ===================== -->
+  <aside class="rail">
+    <div class="rail-logo">more</div>
+    <div class="rail-sub">रोज़ Roz · ops app prototype</div>
+
+    <div class="rail-group">Auth & Onboarding</div>
+    <div class="rail-link" data-go="splash"><span class="rail-num">00</span> Splash</div>
+    <div class="rail-link" data-go="phone"><span class="rail-num">01</span> Phone Sign-In</div>
+    <div class="rail-link" data-go="otp"><span class="rail-num">02</span> OTP</div>
+    <div class="rail-link" data-go="store"><span class="rail-num">03</span> Store Confirm</div>
+    <div class="rail-link" data-go="perms"><span class="rail-num">04</span> Permissions</div>
+
+    <div class="rail-group">Main App</div>
+    <div class="rail-link" data-go="today"><span class="rail-num">05</span> Today</div>
+    <div class="rail-link" data-go="order-list"><span class="rail-num">06</span> Smart Order</div>
+    <div class="rail-link" data-go="sku"><span class="rail-num">07</span> SKU Detail</div>
+    <div class="rail-link" data-go="order-done"><span class="rail-num">08</span> Order Confirmed</div>
+    <div class="rail-link" data-go="floor"><span class="rail-num">09</span> Floor Hub</div>
+    <div class="rail-link" data-go="dock"><span class="rail-num">10</span> Dock Receive</div>
+    <div class="rail-link" data-go="reports"><span class="rail-num">11</span> Reports</div>
+    <div class="rail-link" data-go="briefing"><span class="rail-num">12</span> Daily Briefing</div>
+    <div class="rail-link" data-go="menu"><span class="rail-num">13</span> Menu</div>
+
+    <div class="rail-foot">
+      Built 1:1 from your Figma<br>design system · Inter · orange&nbsp;#ff5b0a<br>
+      <a href="more-system-map.html">← Back to Research Doc</a>
+    </div>
+  </aside>
+
+  <!-- ===================== STAGE ===================== -->
+  <div class="stage">
+    <div class="stage-head">
+      <h1>Roz — Interactive Prototype</h1>
+      <p>Tap through it like the real app · bottom-nav + flows are live</p>
+    </div>
+    <div class="stage-controls">
+      <button class="sc-btn" onclick="go('splash')">↺ Restart flow</button>
+      <button class="sc-btn" onclick="goBack()">← Back</button>
+    </div>
+
+    <div class="device">
+      <div class="device-screen">
+        <div class="screens" id="screens">
+
+          <!-- ============ 00 · SPLASH ============ -->
+          <div class="screen" id="s-splash" data-bg="hero">
+            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="body flush hero-grad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;cursor:pointer" onclick="go('phone')">
+              <div style="background:#fff;color:var(--orange-500);font-weight:800;font-size:46px;letter-spacing:-2px;padding:18px 40px;border-radius:var(--r-2xl);box-shadow:var(--e4)">more</div>
+              <div style="margin-top:22px;font-size:18px;font-weight:700">रोज़ · Roz</div>
+              <div style="font-size:13px;opacity:0.85;margin-top:4px;max-width:240px">your store, sorted — taza, sasta, ekdum&nbsp;smart</div>
+              <div style="position:absolute;bottom:60px;font-size:12px;opacity:0.7">tap anywhere to start →</div>
+            </div>
+          </div>
+
+          <!-- ============ 01 · PHONE ============ -->
+          <div class="screen" id="s-phone">
+            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="body flush hero-grad" style="display:flex;flex-direction:column;justify-content:flex-end">
+              <div style="padding:40px 24px 20px;color:#fff">
+                <div style="font-size:34px;font-weight:800;line-height:1.12;letter-spacing:-0.5px">
+                  get the <span style="font-style:italic">freshest</span><br>store data at your<br>fingertips, <span style="color:var(--orange-200)">faaaaasssttt</span>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:24px 24px 0 0;padding:24px 20px 30px">
+                <div class="overline" style="margin-bottom:8px">Store Manager Sign-In</div>
+                <div class="field" style="margin-bottom:10px">
+                  <label>can we have your number?</label>
+                  <div class="input"><span class="in-prefix">🇮🇳 +91</span><input value="98765 43210" readonly></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-bottom:16px">
+                  <span class="chip active">हिंदी</span><span class="chip">English</span>
+                </div>
+                <button class="btn btn-primary" onclick="go('otp')">Send OTP</button>
+                <div style="font-size:11px;color:var(--gray-400);text-align:center;margin-top:12px">By continuing, you agree to our T&Cs and Privacy Policy.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ 02 · OTP ============ -->
+          <div class="screen" id="s-otp">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('phone')">←</div><div class="ab-title">Verify</div></div>
+            <div class="body">
+              <div style="font-size:32px;font-weight:800;letter-spacing:-0.5px;line-height:1.15;margin:8px 0 6px">we sent you<br>an OTP <span style="color:var(--orange-500)">(onion,</span><br><span style="color:var(--orange-500);text-decoration:line-through;text-decoration-color:var(--gray-300)">tomato, potato)</span><br>valid for 59s only</div>
+              <div style="font-size:13px;color:var(--gray-500);margin-bottom:24px">Sent to +91 98765 43210 · <span style="color:var(--orange-600);font-weight:600">change</span></div>
+              <div class="otp-row" style="margin-bottom:20px">
+                <div class="otp-box filled">9</div><div class="otp-box filled">4</div><div class="otp-box filled">9</div>
+                <div class="otp-box filled">1</div><div class="otp-box">·</div><div class="otp-box">·</div>
+              </div>
+              <div style="font-size:12px;color:var(--gray-500);text-align:center;margin-bottom:24px">Resend code in <b style="color:var(--gray-800)">0:42</b></div>
+              <button class="btn btn-primary" onclick="go('store')">Verify & Continue</button>
+            </div>
+          </div>
+
+          <!-- ============ 03 · STORE CONFIRM ============ -->
+          <div class="screen" id="s-store">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('otp')">←</div><div class="ab-title">Confirm store</div></div>
+            <div class="body">
+              <div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">Roz auto-detected your store from HR records. Looks right?</div>
+              <div class="card" style="margin-bottom:12px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--orange-50);display:flex;align-items:center;justify-content:center;font-size:26px">🏪</div>
+                  <div>
+                    <div style="font-size:16px;font-weight:800">more. Indiranagar</div>
+                    <div style="font-size:12px;color:var(--gray-500)">Store #142 · Bengaluru · Hybrid</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:14px">
+                <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--purple-50);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div>
+                <div>
+                  <div style="font-size:16px;font-weight:800">Radhika Sharma</div>
+                  <div style="font-size:12px;color:var(--gray-500)">Store Manager · 8 staff reporting</div>
+                </div>
+              </div>
+              <div style="text-align:center;font-size:12px;color:var(--orange-600);font-weight:600;margin:16px 0">Wrong store? Edit details</div>
+              <button class="btn btn-primary" onclick="go('perms')">That's right — continue</button>
+            </div>
+          </div>
+
+          <!-- ============ 04 · PERMISSIONS ============ -->
+          <div class="screen" id="s-perms">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-title">Roz needs 3 things</div></div>
+            <div class="body">
+              <div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">So Roz can scan, alert, and listen on the floor.</div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">📷</div><div class="lr-body"><div class="lr-title">Camera</div><div class="lr-sub">Scan QR challans + barcodes</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🔔</div><div class="lr-body"><div class="lr-title">Notifications</div><div class="lr-sub">Peak, stockout & vendor alerts</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🎙</div><div class="lr-body"><div class="lr-title">Microphone</div><div class="lr-sub">Voice notes on your briefing</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
+              <div style="margin-top:20px"><button class="btn btn-primary" onclick="go('today')">Allow all · enter Roz</button></div>
+            </div>
+          </div>
+
+          <!-- ============ 05 · TODAY ============ -->
+          <div class="screen has-nav" id="s-today" data-tab="today">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar">
+              <div style="flex:1">
+                <div style="font-size:12px;color:var(--gray-500);font-weight:600">सुप्रभात, Radhika · Sat 14 Dec · ☀ 28°</div>
+                <div class="ab-title" style="font-size:22px">Today</div>
+              </div>
+              <div class="ab-icon" onclick="alert('Voice Roz — Hindi/English')">🎙</div>
+            </div>
+            <div class="body">
+              <!-- hero briefing -->
+              <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:16px">✦</span><span class="overline" style="color:var(--orange-300)">Roz brief · 7:00 AM</span></div>
+                <div style="font-size:14px;line-height:1.5">Strong Saturday ahead — festival eve. Footfall up <b style="color:var(--green-300)">~12%</b>, peak 9–11 AM. Tomorrow's order is drafted & waiting. Mother Dairy runs late today.</div>
+                <div style="margin-top:12px;font-size:12px;color:var(--orange-300);font-weight:600" onclick="go('briefing')">Open full briefing →</div>
+              </div>
+              <!-- KPI -->
+              <div class="kpi-grid" style="margin-bottom:6px">
+                <div class="kpi"><div class="kpi-label">Sales today</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta down">-22%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Open alerts</div><div class="kpi-val">3<span class="kpi-delta bad" style="color:var(--gray-400)">unread</span></div></div>
+              </div>
+
+              <div class="section-title">⚡ What needs you now</div>
+              <div class="alert crit" onclick="alert('Peak Predictor — move 2 staff to billing')"><div class="al-ic">⏰</div><div class="al-body"><div class="al-title">Peak in 22 min</div><div class="al-sub">Move 2 staff to billing before the rush</div></div><div class="al-go">›</div></div>
+              <div class="alert" onclick="go('dock')"><div class="al-ic">🍅</div><div class="al-body"><div class="al-title">Tomato low — 45 min to empty</div><div class="al-sub">DC delayed · tap for transfer options</div></div><div class="al-go">›</div></div>
+              <div class="alert info"><div class="al-ic">🚚</div><div class="al-body"><div class="al-title">Vendor delay</div><div class="al-sub">Mother Dairy slips to 11 AM</div></div><div class="al-go">›</div></div>
+
+              <div class="section-title">📌 Today's touchpoints</div>
+              <div class="tp" onclick="go('order-list')"><div class="tp-ic">📦</div><div class="tp-body"><div class="tp-name">Smart Order</div><div class="tp-meta">82 SKUs · ₹47.2K drafted</div><span class="tp-badge b-ready">Ready · review by 12 PM</span></div><div class="tp-go">›</div></div>
+              <div class="tp" onclick="go('briefing')"><div class="tp-ic" style="background:var(--blue-50)">📝</div><div class="tp-body"><div class="tp-name">HQ Briefing</div><div class="tp-meta">Auto-drafts at 7:30 PM</div><span class="tp-badge b-pending">Pending</span></div><div class="tp-go">›</div></div>
+              <div class="tp" onclick="go('dock')"><div class="tp-ic" style="background:var(--green-50)">🚚</div><div class="tp-body"><div class="tp-name">Vendors today</div><div class="tp-meta">4 incoming · 1 delayed</div><span class="tp-badge b-warn">1 needs you</span></div><div class="tp-go">›</div></div>
+              <div class="tp" onclick="go('reports')"><div class="tp-ic" style="background:var(--purple-50)">💰</div><div class="tp-body"><div class="tp-name">Cash recon</div><div class="tp-meta">7 PM · 3 counters · last var ₹0</div><span class="tp-badge b-pending">Scheduled</span></div><div class="tp-go">›</div></div>
+
+              <div class="section-title">🌀 Roz activity <span class="st-link">since 6 AM</span></div>
+              <div class="card" style="padding:6px 14px">
+                <div class="act"><div class="act-time">8:42 AM</div><div class="act-text"><b>Drafted tomorrow's order</b> · 82 SKUs · ₹47.2K</div></div>
+                <div class="act"><div class="act-time">8:15 AM</div><div class="act-text"><b>Dock cleared</b> · Reliance Fresh · 12/14 crates ✓</div></div>
+                <div class="act"><div class="act-time">7:30 AM</div><div class="act-text"><b>Briefing delivered</b> · area mgr read it</div></div>
+                <div class="act" style="border:none"><div class="act-time">7:00 AM</div><div class="act-text"><b>Vendor score updated</b> · Suresh Mandi 0.92→0.87 ▼</div></div>
+              </div>
+
+              <div class="section-title">⚡ Quick actions</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                <div onclick="go('dock')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">📥<br>Dock</div>
+                <div onclick="go('floor')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🔍<br>Quality</div>
+                <div onclick="go('floor')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🕐<br>Expiry</div>
+                <div style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🎙<br>Voice</div>
+              </div>
+            </div>
+            <div class="navbar-host"></div>
+          </div>
+
+          <!-- ============ 06 · ORDER LIST ============ -->
+          <div class="screen has-nav" id="s-order-list" data-tab="order">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-title">Smart Order</div><div class="ab-actions"><div class="ab-icon">🔍</div></div></div>
+            <div class="body">
+              <div class="card hero-grad" style="border:none;color:#fff;margin-bottom:14px">
+                <div class="overline" style="color:rgba(255,255,255,0.8)">Tomorrow's order · ready</div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+                  <div style="font-size:30px;font-weight:800;letter-spacing:-0.5px">82 SKUs</div>
+                  <div style="font-size:16px;font-weight:700;opacity:0.9">· ₹47,200</div>
+                </div>
+                <div style="font-size:12px;opacity:0.85;margin-top:2px">Roz forecast across 11 factors · 4 vendors</div>
+              </div>
+              <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto">
+                <span class="chip active">All 82</span><span class="chip">Fresh</span><span class="chip">Dairy</span><span class="chip">Dry</span><span class="chip">⚠ Flagged 3</span>
+              </div>
+
+              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🍅</div><div class="lr-body"><div class="lr-title">Tomato · 1kg</div><div class="lr-sub">↑ vs last week · festival demand</div></div><div style="text-align:right"><div class="lr-val">40 kg</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🥛</div><div class="lr-body"><div class="lr-title">Milk 500ml</div><div class="lr-sub">Festival surge +30%</div></div><div style="text-align:right"><div class="lr-val">60 pks</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🍚</div><div class="lr-body"><div class="lr-title">Rice 5kg</div><div class="lr-sub" style="color:var(--yellow-700)">⚠ vendor delay risk</div></div><div style="text-align:right"><div class="lr-val">12 bags</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🧅</div><div class="lr-body"><div class="lr-title">Onion · 1kg</div><div class="lr-sub">Steady demand</div></div><div style="text-align:right"><div class="lr-val">35 kg</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div style="text-align:center;font-size:12px;color:var(--gray-400);padding:6px">+ 78 more SKUs · scroll</div>
+
+              <div style="position:sticky;bottom:0;padding-top:8px">
+                <button class="btn btn-primary" onclick="go('order-done')">Approve all 82 · 1 tap</button>
+              </div>
+            </div>
+            <div class="navbar-host"></div>
+          </div>
+
+          <!-- ============ 07 · SKU DETAIL ============ -->
+          <div class="screen" id="s-sku">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('order-list')">←</div><div class="ab-title">Tomato · 1kg</div></div>
+            <div class="body">
+              <div class="card" style="text-align:center;margin-bottom:12px">
+                <div style="font-size:48px">🍅</div>
+                <div style="font-size:13px;color:var(--gray-500);margin-top:4px">Roz suggests</div>
+                <div style="font-size:40px;font-weight:800;letter-spacing:-1px;color:var(--orange-600)">40 kg</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--gray-400);margin-top:2px">7-day trend <span style="color:var(--green-600);font-weight:700">▁▂▃▅▇ ↑</span></div>
+              </div>
+              <div class="section-title" style="margin-top:6px">Why 40 kg? Top factors</div>
+              <div class="card" style="padding:6px 14px">
+                <div class="act"><div class="act-text" style="flex:1"><b>Day</b> · Saturday</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+15%</div></div>
+                <div class="act"><div class="act-text" style="flex:1"><b>Festival eve</b> · Karva Chauth</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+22%</div></div>
+                <div class="act"><div class="act-text" style="flex:1"><b>Weather</b> · clear, 28°</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+8%</div></div>
+                <div class="act" style="border:none"><div class="act-text" style="flex:1"><b>Vendor reliability</b> · 0.92</div><div style="color:var(--gray-500);font-weight:700;font-size:12px">steady</div></div>
+              </div>
+              <div class="section-title">Adjust quantity</div>
+              <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;cursor:pointer">−</div>
+                <div style="font-size:28px;font-weight:800">40 kg</div>
+                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;cursor:pointer">+</div>
+              </div>
+              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('order-list')">Approve this SKU</button></div>
+            </div>
+          </div>
+
+          <!-- ============ 08 · ORDER DONE ============ -->
+          <div class="screen" id="s-order-done">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px">
+              <div style="width:88px;height:88px;border-radius:var(--r-pill);background:var(--green-500);display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff;box-shadow:0 8px 24px rgba(22,163,74,0.4)">✓</div>
+              <div style="font-size:24px;font-weight:800;margin-top:20px">Order sent to Oracle ERP</div>
+              <div style="font-size:14px;color:var(--gray-500);margin-top:6px">82 SKUs · ₹47,200 · 4 vendors</div>
+              <div class="card" style="width:100%;margin-top:20px;text-align:left">
+                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Delivery</span><b>Tomorrow · 7:00 AM</b></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Indent ID</span><b>#IND-2294</b></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Forecast accuracy</span><b style="color:var(--green-600)">76% avg</b></div>
+              </div>
+              <div style="margin-top:24px;width:100%"><button class="btn btn-primary" onclick="go('today')">Done</button></div>
+            </div>
+          </div>
+
+          <!-- ============ 09 · FLOOR HUB ============ -->
+          <div class="screen has-nav" id="s-floor" data-tab="floor">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-title">Floor tools</div></div>
+            <div class="body">
+              <div class="card" style="background:var(--orange-50);border-color:var(--orange-100);margin-bottom:14px;display:flex;align-items:center;gap:10px">
+                <span style="font-size:20px">📥</span><div style="font-size:13px;font-weight:600;color:var(--orange-800)">Now · 7:00 AM dock window is open</div>
+              </div>
+              <div class="lrow" onclick="go('dock')"><div class="lr-ic">📥</div><div class="lr-body"><div class="lr-title">Dock Receive</div><div class="lr-sub">Scan challan · tally vs indent</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('quality')"><div class="lr-ic">🔍</div><div class="lr-body"><div class="lr-title">Quality Inspect</div><div class="lr-sub">Photo + reject · vendor score</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('roster')"><div class="lr-ic">👥</div><div class="lr-body"><div class="lr-title">Roster</div><div class="lr-sub">8 staff · 1 absent · redeployed</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('expiry')"><div class="lr-ic">🕐</div><div class="lr-body"><div class="lr-title">Expiry Scan</div><div class="lr-sub">12 SKUs near · floor walk 2 PM</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('markdown')"><div class="lr-ic">🏷</div><div class="lr-body"><div class="lr-title">Markdown</div><div class="lr-sub">Optimal % · recover ₹2,340</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('queue')"><div class="lr-ic">🧾</div><div class="lr-body"><div class="lr-title">Queue Monitor</div><div class="lr-sub">Live counter load</div></div><div class="lr-go">›</div></div>
+            </div>
+            <div class="navbar-host"></div>
+          </div>
+
+          <!-- ============ 10 · DOCK ============ -->
+          <div class="screen" id="s-dock">
+            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Dock · Reliance Fresh</div></div>
+            <div class="body">
+              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
+                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
+                <div style="font-size:40px">📷</div><div style="font-size:13px;margin-top:8px;opacity:0.8">Scan vendor QR challan</div>
+              </div>
+              <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <div style="font-size:13px;font-weight:700">Tally vs indent</div>
+                <div style="font-size:13px;font-weight:800;color:var(--orange-600)">12 / 14 crates</div>
+              </div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Tomato · 40kg</div><div class="lr-sub">Matches indent</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Onion · 30kg received</div><div class="lr-sub">Indent was 50kg · 20kg short</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Coriander · 5kg</div><div class="lr-sub">Matches indent</div></div></div>
+              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('floor')">Close vendor · flag 1 issue</button></div>
+            </div>
+          </div>
+
+          <!-- ============ 11 · REPORTS ============ -->
+          <div class="screen has-nav" id="s-reports" data-tab="reports">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-title">Reports</div></div>
+            <div class="body">
+              <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:10px;background:var(--yellow-50);border-color:var(--yellow-200)">
+                <span style="font-size:18px">📝</span><div style="font-size:13px;font-weight:600;color:var(--yellow-700)">Today's HQ briefing is drafted — review by 8 PM</div>
+              </div>
+              <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📝</div><div class="lr-body"><div class="lr-title">EOD Brief Builder</div><div class="lr-sub">Auto-drafted · 1-tap send</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('cash')"><div class="lr-ic">💰</div><div class="lr-body"><div class="lr-title">Cash Reconciliation</div><div class="lr-sub">3 counters · 1 mismatch</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('trends')"><div class="lr-ic">📈</div><div class="lr-body"><div class="lr-title">7-Day Trends</div><div class="lr-sub">Sales · wastage · footfall</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📤</div><div class="lr-body"><div class="lr-title">HQ Outbox</div><div class="lr-sub">All reports sent · read receipts</div></div><div class="lr-go">›</div></div>
+            </div>
+            <div class="navbar-host"></div>
+          </div>
+
+          <!-- ============ 12 · DAILY BRIEFING ============ -->
+          <div class="screen" id="s-briefing">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="goBack()">←</div><div class="ab-title">Daily Briefing</div><div class="ab-actions"><div class="ab-icon">📅</div></div></div>
+            <div class="body">
+              <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span>✦</span><span class="overline" style="color:var(--orange-300)">Roz · Sat 14 Dec</span></div>
+                <div style="font-size:15px;line-height:1.6">Solid day. Sales <b style="color:var(--green-300)">₹1.2L (+8%)</b> on festival-eve footfall. Wastage down to 2.1kg with on-time markdowns. Mother Dairy ran late — flagged for vendor score. Tomorrow's order is staged & ready.</div>
+              </div>
+              <div class="kpi-grid" style="margin-bottom:14px">
+                <div class="kpi"><div class="kpi-label">Sales</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta down">-22%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Avg basket</div><div class="kpi-val">₹291<span class="kpi-delta up">+3%</span></div></div>
+              </div>
+              <div class="alert crit" style="cursor:default"><div class="al-ic">⚠</div><div class="al-body"><div class="al-title">Anomaly: dairy sales −40%</div><div class="al-sub">Likely the 2 PM cold-storage dip · Roz flagged</div></div></div>
+              <div class="section-title">Add your note</div>
+              <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--purple-50);border-color:var(--purple-100)">
+                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--purple-400);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff">🎙</div>
+                <div><div style="font-size:13px;font-weight:700">Tap to add voice note</div><div style="font-size:11px;color:var(--gray-500)">Hindi or English · transcribed</div></div>
+              </div>
+              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('reports')">Send to HQ + Area Mgr</button></div>
+            </div>
+          </div>
+
+          <!-- ============ 13 · MENU ============ -->
+          <div class="screen has-nav" id="s-menu" data-tab="menu">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-title">Menu</div></div>
+            <div class="body">
+              <div class="card" style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
+                <div style="width:52px;height:52px;border-radius:var(--r-pill);background:var(--purple-100);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div>
+                <div style="flex:1"><div style="font-size:16px;font-weight:800">Radhika Sharma</div><div style="font-size:12px;color:var(--gray-500)">more. Indiranagar #142</div></div>
+                <div style="font-size:11px;font-weight:700;color:var(--green-600)">✓ Synced 12s ago</div>
+              </div>
+              <div class="lrow" onclick="go('vendors')"><div class="lr-ic">⭐</div><div class="lr-body"><div class="lr-title">Vendor Scores</div><div class="lr-sub">90-day reliability ranking</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('train')"><div class="lr-ic">🧠</div><div class="lr-body"><div class="lr-title">Train Roz</div><div class="lr-sub">3 recent overrides to review</div></div><div class="lr-go">›</div></div>
+              <div class="lrow"><div class="lr-ic">📡</div><div class="lr-body"><div class="lr-title">Offline & Sync</div><div class="lr-sub">All caught up</div></div><div class="lr-go">›</div></div>
+              <div class="lrow"><div class="lr-ic">⚙️</div><div class="lr-body"><div class="lr-title">Settings</div><div class="lr-sub">Language · notifications · voice</div></div><div class="lr-go">›</div></div>
+              <div class="lrow"><div class="lr-ic">❓</div><div class="lr-body"><div class="lr-title">Help & Support</div><div class="lr-sub">FAQ · WhatsApp helpline</div></div><div class="lr-go">›</div></div>
+              <div class="lrow" onclick="go('splash')"><div class="lr-ic">🚪</div><div class="lr-body"><div class="lr-title">Sign Out</div></div><div class="lr-go">›</div></div>
+            </div>
+            <div class="navbar-host"></div>
+          </div>
+
+          <!-- ============ QUALITY INSPECT ============ -->
+          <div class="screen" id="s-quality">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Quality · Crate 1/14</div></div>
+            <div class="body">
+              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
+                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
+                <div style="font-size:38px">📷</div><div style="font-size:13px;margin-top:6px;opacity:0.8">Photo the crate</div>
+              </div>
+              <div class="section-title" style="margin-top:0">Reject reason</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+                <span class="chip active">Bruised</span><span class="chip">Spoiled</span><span class="chip">Wrong SKU</span><span class="chip">Underweight</span>
+              </div>
+              <div class="card" style="display:flex;align-items:center;justify-content:space-between;background:var(--red-50);border-color:var(--red-200);margin-bottom:14px">
+                <div style="font-size:13px;font-weight:700;color:var(--red-700)">Suresh Mandi · vendor score</div>
+                <div style="font-size:15px;font-weight:800;color:var(--red-600)">0.87 ▼</div>
+              </div>
+              <button class="btn btn-primary" onclick="go('floor')">Save & next crate</button>
+            </div>
+          </div>
+
+          <!-- ============ ROSTER ============ -->
+          <div class="screen" id="s-roster">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Roster · 8 staff</div></div>
+            <div class="body">
+              <div class="card" style="background:var(--blue-50);border-color:var(--blue-200);margin-bottom:14px">
+                <div class="overline" style="color:var(--blue-700)">Predicted footfall</div>
+                <div style="font-size:13px;font-weight:600;color:var(--blue-800);margin-top:2px">Peaks 9–11 AM & 5–8 PM · staff weighted to billing</div>
+              </div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Suresh · 7 AM–3 PM</div><div class="lr-sub">Floor → billing at peak</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Anita · 9 AM–5 PM</div><div class="lr-sub">Billing</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Ravi · absent (sick)</div><div class="lr-sub">Roz: redeploy Priya to billing</div></div></div>
+              <button class="btn btn-primary" style="margin-top:10px" onclick="go('floor')">Apply Roz suggestion</button>
+            </div>
+          </div>
+
+          <!-- ============ EXPIRY ============ -->
+          <div class="screen" id="s-expiry">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Expiry · 12 near</div></div>
+            <div class="body">
+              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:120px;display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
+                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
+                <div style="text-align:center"><div style="font-size:32px">📷</div><div style="font-size:12px;opacity:0.8">Scan barcode</div></div>
+              </div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🍅</div><div class="lr-body"><div class="lr-title">Tomato</div><div class="lr-sub">18 hrs left · 8kg</div></div><div class="lr-val" style="color:var(--red-600)">18h</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🥛</div><div class="lr-body"><div class="lr-title">Curd 200ml</div><div class="lr-sub">24 hrs left · 12 packs</div></div><div class="lr-val" style="color:var(--yellow-700)">24h</div></div>
+              <div class="card" style="background:var(--gray-100);border:none;font-size:11px;color:var(--gray-500);margin:6px 0 14px">No date on loose produce? Roz uses category-default (Fresh 1–5 days).</div>
+              <button class="btn btn-primary" onclick="go('markdown')">Go to Markdown →</button>
+            </div>
+          </div>
+
+          <!-- ============ MARKDOWN ============ -->
+          <div class="screen" id="s-markdown">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('expiry')">←</div><div class="ab-title">Markdown</div></div>
+            <div class="body">
+              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Tomato · 18h</div><div class="lr-sub">velocity × hours-to-expiry</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">30% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Curd 200ml · 24h</div><div class="lr-sub">steady clearance</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">20% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Bread 400g · 6h</div><div class="lr-sub">fast clear needed</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">50% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
+              <div class="card" style="background:var(--green-50);border-color:var(--green-200);text-align:center;margin:6px 0 14px"><div class="overline" style="color:var(--green-700)">Estimated recovery</div><div style="font-size:24px;font-weight:800;color:var(--green-700)">₹2,340</div></div>
+              <button class="btn btn-primary" onclick="go('floor')">Apply all · print labels</button>
+            </div>
+          </div>
+
+          <!-- ============ QUEUE ============ -->
+          <div class="screen" id="s-queue">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Queue · live</div></div>
+            <div class="body">
+              <div class="kpi-grid" style="margin-bottom:12px">
+                <div class="kpi"><div class="kpi-label">Counter 1</div><div class="kpi-val">4 min<span class="kpi-delta" style="color:var(--gray-400)">6 in q</span></div></div>
+                <div class="kpi" style="border-color:var(--red-300)"><div class="kpi-label">Counter 2</div><div class="kpi-val" style="color:var(--red-600)">7 min<span class="kpi-delta bad">11 in q</span></div></div>
+              </div>
+              <div class="alert crit" style="cursor:default"><div class="al-ic">⚠</div><div class="al-body"><div class="al-title">Avg wait &gt; 3 min</div><div class="al-sub">Roz: open Counter 3, move Anita</div></div></div>
+              <button class="btn btn-primary" style="margin-top:8px" onclick="go('floor')">Open Counter 3 · notify Anita</button>
+            </div>
+          </div>
+
+          <!-- ============ CASH RECON ============ -->
+          <div class="screen" id="s-cash">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">Cash Recon · 7 PM</div></div>
+            <div class="body">
+              <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:14px">Roz auto-matched POS vs counted. Only mismatches surface.</div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Counter 1 · ₹38,200</div><div class="lr-sub">Matched</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Counter 2 · ₹42,800</div><div class="lr-sub">Matched</div></div></div>
+              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Counter 3 · ₹150 short</div><div class="lr-sub">₹27,400 counted vs ₹27,250 POS</div></div></div>
+              <button class="btn btn-primary" style="margin-top:10px" onclick="go('reports')">Resolve & log</button>
+            </div>
+          </div>
+
+          <!-- ============ TRENDS ============ -->
+          <div class="screen" id="s-trends">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">7-Day Trends</div></div>
+            <div class="body">
+              <div class="card" style="margin-bottom:12px">
+                <div class="overline">Sales · last 7 days</div>
+                <div style="display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:10px">
+                  <div style="flex:1;background:var(--orange-200);height:55%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-200);height:62%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-300);height:70%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-300);height:58%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-400);height:80%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-500);height:100%;border-radius:4px 4px 0 0"></div>
+                  <div style="flex:1;background:var(--orange-300);height:66%;border-radius:4px 4px 0 0"></div>
+                </div>
+              </div>
+              <div class="kpi-grid" style="margin-bottom:14px">
+                <div class="kpi"><div class="kpi-label">Avg daily sales</div><div class="kpi-val">₹1.1L<span class="kpi-delta up">+5%</span></div></div>
+                <div class="kpi"><div class="kpi-label">Avg wastage</div><div class="kpi-val">2.6kg<span class="kpi-delta down">-18%</span></div></div>
+              </div>
+              <button class="btn btn-primary" onclick="go('reports')">Share to HQ</button>
+            </div>
+          </div>
+
+          <!-- ============ VENDOR SCORES ============ -->
+          <div class="screen" id="s-vendors">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Vendor Scores</div></div>
+            <div class="body">
+              <div style="display:flex;gap:8px;margin-bottom:12px"><span class="chip active">Score ▼</span><span class="chip">Last 90 days</span></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🟢</div><div class="lr-body"><div class="lr-title">Reliance Fresh</div><div class="lr-sub">On-time · low rejection</div></div><div class="lr-val" style="color:var(--green-600)">0.94</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🟢</div><div class="lr-body"><div class="lr-title">Mother Dairy</div><div class="lr-sub">Occasionally late</div></div><div class="lr-val" style="color:var(--green-600)">0.91</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🟡</div><div class="lr-body"><div class="lr-title">Suresh Mandi</div><div class="lr-sub">▼ from 0.92 · quality dips</div></div><div class="lr-val" style="color:var(--yellow-700)">0.87</div></div>
+              <div class="lrow" style="cursor:default"><div class="lr-ic">🔴</div><div class="lr-body"><div class="lr-title">Local FMCG</div><div class="lr-sub">Frequent wrong-SKU</div></div><div class="lr-val" style="color:var(--red-600)">0.72</div></div>
+            </div>
+          </div>
+
+          <!-- ============ TRAIN ROZ ============ -->
+          <div class="screen" id="s-train">
+            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
+            <div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Train Roz</div></div>
+            <div class="body">
+              <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:14px">Your overrides teach Roz. 3 recent — tell Roz why.</div>
+              <div class="card" style="margin-bottom:10px">
+                <div style="font-size:13px;font-weight:700;margin-bottom:8px">Smart Order · Tomato 40→60kg</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip active">Local event</span><span class="chip">Promo</span><span class="chip">Weather</span></div>
+              </div>
+              <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--purple-50);border-color:var(--purple-100)">
+                <div style="width:40px;height:40px;border-radius:var(--r-pill);background:var(--purple-400);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">🎙</div>
+                <div style="font-size:12px;font-weight:600">Explain in voice — Hindi or English</div>
+              </div>
+              <button class="btn btn-primary" style="margin-top:14px" onclick="go('menu')">Save feedback</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== NAV MODEL =====
+  const TABS = [
+    { id:'today',      label:'Today',   ic:'🏠' },
+    { id:'order-list', label:'Order',   ic:'📦' },
+    { id:'floor',      label:'Floor',   ic:'📋' },
+    { id:'reports',    label:'Reports', ic:'📊' },
+    { id:'menu',       label:'Menu',    ic:'☰' }
+  ];
+
+  // Build the bottom nav inside each tab screen
+  function buildNavbars(){
+    document.querySelectorAll('.navbar-host').forEach(host => {
+      const screen = host.closest('.screen');
+      const activeTab = screen.dataset.tab;
+      host.innerHTML = '<div class="navbar">' + TABS.map(t =>
+        `<div class="nb ${t.id===activeTab?'active':''}" onclick="go('${t.id}')">
+           <span class="nb-ic">${t.ic}</span><span>${t.label}</span>
+         </div>`).join('') + '</div>';
+    });
+  }
+
+  let history = [];
+  function go(id){
+    const cur = document.querySelector('.screen.active');
+    if (cur && cur.id !== 's-'+id) history.push(cur.id.replace('s-',''));
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const next = document.getElementById('s-'+id);
+    if (!next) return;
+    next.classList.add('active');
+    next.querySelector('.body').scrollTop = 0;
+    syncRail(id);
+  }
+  function goBack(){
+    if (!history.length){ return; }
+    const prev = history.pop();
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s-'+prev).classList.add('active');
+    syncRail(prev);
+  }
+  function syncRail(id){
+    document.querySelectorAll('.rail-link').forEach(l => l.classList.toggle('active', l.dataset.go===id));
+  }
+
+  document.querySelectorAll('.rail-link').forEach(l => l.addEventListener('click', () => go(l.dataset.go)));
+
+  buildNavbars();
+  go('splash');
+</script>
+</body>
+</html>
