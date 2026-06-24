@@ -64,21 +64,103 @@
 
   .logo span { color: var(--dark); font-size: 11px; font-weight: 400; display: block; letter-spacing: 0.5px; }
 
-  .nav-tabs { display: flex; gap: 0; }
+  .nav-wrap { position: relative; display: flex; align-items: center; gap: 14px; }
 
-  .nav-tab {
-    padding: 20px 20px;
+  .nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--dark); border-radius: 1px; transition: background 0.15s; }
+  .nav-hamburger:hover span { background: var(--orange); }
+
+  .nav-current {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .nav-dropdown {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 0;
+    min-width: 340px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 1px;
+    z-index: 200;
+  }
+  .nav-dropdown.open { display: flex; }
+
+  .nav-dropdown .nav-tab {
+    padding: 11px 14px;
     font-size: 13px;
     font-weight: 500;
     color: var(--muted);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
+    border-radius: 6px;
     transition: all 0.15s;
-    white-space: nowrap;
+    white-space: normal;
   }
 
-  .nav-tab:hover { color: var(--dark); }
-  .nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .nav-dropdown .nav-tab:hover { color: var(--dark); background: var(--orange-pale); }
+  .nav-dropdown .nav-tab.active { color: var(--orange); background: var(--orange-pale); font-weight: 600; }
+
+  .nav-group { display: flex; flex-direction: column; margin-top: 5px; padding-top: 9px; border-top: 1px solid var(--border); }
+
+  .nav-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav-parent:hover { color: var(--dark); background: var(--orange-pale); }
+
+  .nav-chevron { font-size: 10px; color: var(--muted); transition: transform 0.2s; }
+  .nav-group.open .nav-chevron { transform: rotate(180deg); }
+
+  .nav-submenu {
+    display: none;
+    flex-direction: column;
+    gap: 1px;
+    padding: 4px 0 4px 16px;
+    margin-left: 18px;
+    border-left: 2px solid var(--orange-pale);
+  }
+  .nav-group.open .nav-submenu { display: flex; }
+
+  .nav-subitem {
+    display: block;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    color: var(--mid);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav-subitem:hover { color: var(--orange); background: var(--orange-pale); }
 
   /* MAIN */
   main { padding: 40px 40px; max-width: 1440px; margin: 0 auto; }
@@ -445,19 +527,39 @@
 
 <nav>
   <div class="logo">more.<span>AI TOOL — DESIGN RESEARCH</span></div>
-  <div class="nav-tabs">
-    <div class="nav-tab active" onclick="showSection('overview')">00 · Overview</div>
-    <div class="nav-tab" onclick="showSection('ecosystem')">01 · Ecosystem Blueprint</div>
-    <div class="nav-tab" onclick="showSection('journey')">02 · As-Is Journey</div>
-    <div class="nav-tab" onclick="showSection('tobe-journey')">03 · To-Be Journey</div>
-    <div class="nav-tab" onclick="showSection('interventions')">04 · AI Interventions</div>
-    <div class="nav-tab" onclick="showSection('screens')">05 · Screen Specs</div>
-    <div class="nav-tab" onclick="showSection('blueprint')">06 · Service Blueprint</div>
-    <div class="nav-tab" onclick="showSection('personas')">07 · User Personas</div>
-    <div class="nav-tab" onclick="showSection('usecases')">08 · Use Cases</div>
-    <div class="nav-tab" onclick="showSection('sysmap')">09 · System Map</div>
-    <div class="nav-tab" onclick="showSection('loop')">10 · Operational Loop</div>
-    <div class="nav-tab" onclick="showSection('competitive')">11 · Competitive Landscape</div>
+  <div class="nav-wrap">
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleNavMenu(event)" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-current" id="navCurrentLabel" onclick="toggleNavMenu(event)">00 · Overview</div>
+
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="nav-tab active" onclick="showSection('overview','00 · Overview')">00 · Overview</div>
+      <div class="nav-tab" onclick="showSection('ecosystem','01 · Ecosystem Blueprint')">01 · Ecosystem Blueprint</div>
+      <div class="nav-tab" onclick="showSection('journey','02 · As-Is Journey')">02 · As-Is Journey</div>
+      <div class="nav-tab" onclick="showSection('tobe-journey','03 · To-Be Journey')">03 · To-Be Journey</div>
+      <div class="nav-tab" onclick="showSection('interventions','04 · AI Interventions')">04 · AI Interventions</div>
+      <div class="nav-tab" onclick="showSection('screens','05 · Screen Specs')">05 · Screen Specs</div>
+      <div class="nav-tab" onclick="showSection('blueprint','06 · Service Blueprint')">06 · Service Blueprint</div>
+      <div class="nav-tab" onclick="showSection('personas','07 · User Personas')">07 · User Personas</div>
+      <div class="nav-tab" onclick="showSection('usecases','08 · Use Cases')">08 · Use Cases</div>
+      <div class="nav-tab" onclick="showSection('sysmap','09 · System Map')">09 · System Map</div>
+      <div class="nav-tab" onclick="showSection('loop','10 · Operational Loop')">10 · Operational Loop</div>
+      <div class="nav-tab" onclick="showSection('competitive','11 · Competitive Landscape')">11 · Competitive Landscape</div>
+
+      <div class="nav-group" id="navArchGroup">
+        <div class="nav-parent" onclick="toggleNavSubmenu(event)">
+          12 · System Architecture
+          <span class="nav-chevron">▾</span>
+        </div>
+        <div class="nav-submenu">
+          <a class="nav-subitem" href="roz-system-architecture.html?tab=overview">Architecture Overview</a>
+          <a class="nav-subitem" href="roz-system-architecture.html?tab=usecases">Use Case Workflows</a>
+          <a class="nav-subitem" href="roz-system-architecture.html?tab=dataflow">Data Flow Map</a>
+          <a class="nav-subitem" href="roz-system-architecture.html?tab=offline">Offline + Feedback</a>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -667,6 +769,13 @@
         <div class="ov-nav-content">
           <div class="ov-nav-tab-name">Competitive Landscape</div>
           <div class="ov-nav-tab-desc">Deep dive into who's already solving this — Hyperpure, Udaan, Walmart, Domino's, Reflexis, BeatRoute, Infilect and more. Feature matrix + a 2×2 quadrant showing the empty space where Roz lives. Use this to defend product positioning in your deck.</div>
+        </div>
+      </div>
+      <div class="ov-nav-step">
+        <div class="ov-nav-num">12</div>
+        <div class="ov-nav-content">
+          <div class="ov-nav-tab-name">System Architecture</div>
+          <div class="ov-nav-tab-desc">Standalone deep-dive on the tech stack — opens in a separate page under the "12 · System Architecture" menu group. Four views: Architecture Overview (5-zone layered diagram), Use Case Workflows (all 12 use cases with flow diagrams), Data Flow Map (reads/writes per use case), and Offline + Feedback Loops. Use this when the interviewer asks "what's actually running under the hood."</div>
         </div>
       </div>
     </div>
@@ -5938,15 +6047,35 @@
 <script>
   let smInitialised = false;
 
-  function showSection(id) {
+  function showSection(id, label) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-dropdown .nav-tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     event.target.classList.add('active');
+    if (label) document.getElementById('navCurrentLabel').textContent = label;
+    document.getElementById('navDropdown').classList.remove('open');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (id === 'sysmap' && !smInitialised) { smInitialised = true; initSysMap(); }
     if (id === 'loop') { setTimeout(scaleLoopRing, 30); }
   }
+
+  function toggleNavMenu(e) {
+    e.stopPropagation();
+    document.getElementById('navDropdown').classList.toggle('open');
+  }
+
+  function toggleNavSubmenu(e) {
+    e.stopPropagation();
+    document.getElementById('navArchGroup').classList.toggle('open');
+  }
+
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('navDropdown');
+    const wrap = document.querySelector('.nav-wrap');
+    if (dropdown.classList.contains('open') && !wrap.contains(e.target)) {
+      dropdown.classList.remove('open');
+    }
+  });
 
   function scaleLoopRing() {
     const outer = document.querySelector('.lpr-ring-outer');
@@ -5960,7 +6089,7 @@
   window.addEventListener('resize', () => { if (document.getElementById('loop').classList.contains('active')) scaleLoopRing(); });
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.nav-tab').classList.add('active');
+    document.querySelector('.nav-dropdown .nav-tab').classList.add('active');
   });
 
   // ─── SYSTEM MAP ────────────────────────────────────────────────
