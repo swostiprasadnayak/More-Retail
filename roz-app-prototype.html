@@ -25,7 +25,10 @@
   /* ===== STUDIO ===== */
   .studio{display:grid;grid-template-columns:248px 1fr;min-height:100vh;}
   .rail{background:var(--gray-1000);color:#fff;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
-  .rail-logo{display:inline-flex;background:var(--orange-500);color:#fff;font-weight:800;font-size:18px;letter-spacing:-1px;padding:6px 14px;border-radius:var(--r-md);}
+  /* real more. pill logo — outer rounded, inverted curve bottom — recreated via SVG */
+  .rail-logo{display:inline-flex;align-items:center;justify-content:center;}
+  .more-logo{display:inline-block;}
+  .more-logo svg{display:block;}
   .rail-sub{font-size:11px;color:var(--gray-400);margin:6px 0 18px;}
   .rail-group{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--gray-500);margin:16px 0 6px;}
   .rail-link{display:flex;align-items:center;gap:9px;padding:8px 10px;font-size:13px;color:var(--gray-300);border-radius:var(--r-sm);cursor:pointer;transition:.12s;}
@@ -203,13 +206,129 @@
   .empty{text-align:center;padding:40px 20px;color:var(--gray-400);}
   .empty .e-ic{font-size:40px;margin-bottom:8px;}
 
+  /* ============================================================
+     HOME REDESIGN — mirror live more. app visual treatment
+  ============================================================ */
+  /* Header */
+  .home-header{display:flex;align-items:center;gap:10px;padding:4px 18px 4px;margin-bottom:2px;}
+  .store-chip{display:inline-flex;align-items:center;gap:7px;background:var(--orange-500);color:#fff;padding:8px 14px;border-radius:var(--r-pill);font-size:12px;font-weight:700;cursor:pointer;box-shadow:var(--e2);max-width:200px;}
+  .store-chip .sc-ic{width:22px;height:22px;border-radius:var(--r-pill);background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+  .store-chip .sc-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .store-chip .sc-arrow{font-size:9px;opacity:0.8;flex-shrink:0;}
+  .home-header-r{margin-left:auto;display:flex;gap:6px;}
+  .greeting-row{padding:0 18px 12px;}
+  .greeting-name{font-size:22px;font-weight:800;letter-spacing:-0.3px;color:var(--gray-900);}
+  .greeting-name i{font-style:italic;font-weight:600;color:var(--orange-500);}
+  .greeting-meta{font-size:12px;color:var(--gray-500);font-weight:500;margin-top:1px;}
+
+  /* Demo time picker */
+  .time-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:var(--r-pill);background:var(--gray-100);font-size:10px;font-weight:700;color:var(--gray-600);cursor:pointer;margin-left:6px;}
+  .time-chip:hover{background:var(--orange-50);color:var(--orange-700);}
+
+  /* NOW Hero — photo-led */
+  .now-hero{position:relative;border-radius:24px;overflow:hidden;margin:0 18px 6px;min-height:200px;cursor:pointer;box-shadow:var(--e3);}
+  .now-hero-bg{position:absolute;inset:0;}
+  .now-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.78) 100%);}
+  .now-hero-body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-height:200px;padding:18px 18px 18px;color:#fff;}
+  .now-hero-tag{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.92);color:var(--gray-900);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;padding:5px 11px;border-radius:var(--r-pill);margin-bottom:auto;backdrop-filter:blur(6px);}
+  .now-hero-tag.urgent{background:var(--orange-500);color:#fff;}
+  .now-hero-title{font-size:26px;font-weight:800;letter-spacing:-0.5px;line-height:1.15;margin-top:auto;}
+  .now-hero-title i{font-style:italic;font-weight:800;color:var(--orange-200);}
+  .now-hero-stat{font-size:13px;font-weight:600;opacity:0.95;margin-top:6px;}
+  .now-hero-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--orange-600);padding:11px 18px;border-radius:var(--r-pill);font-size:14px;font-weight:800;margin-top:14px;align-self:flex-start;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+  .now-hero-cta .nhc-arrow{background:var(--orange-500);color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+
+  /* Up next */
+  .up-next{display:flex;align-items:center;gap:8px;padding:12px 18px 18px;font-size:11px;color:var(--gray-500);font-weight:600;}
+  .up-next b{color:var(--gray-800);}
+
+  /* Pulse strip */
+  .pulse-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 18px 12px;}
+  .pulse-strip::-webkit-scrollbar{height:0;}
+  .pulse{flex-shrink:0;background:#fff;border-radius:var(--r-md);padding:10px 13px;box-shadow:var(--e1);min-width:104px;border:1px solid var(--gray-200);}
+  .pulse .p-label{font-size:10px;color:var(--gray-500);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;}
+  .pulse .p-val{font-size:16px;font-weight:800;letter-spacing:-0.3px;margin-top:2px;display:flex;align-items:baseline;gap:5px;}
+  .pulse .p-delta{font-size:10px;font-weight:700;}
+  .pulse .p-delta.up{color:var(--green-600);}
+  .pulse .p-delta.down{color:var(--red-600);}
+  .pulse.alert .p-val{color:var(--orange-600);}
+
+  /* Section heading — more-app style */
+  .h2-row{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 10px;}
+  .h2-row h2{font-size:18px;font-weight:800;letter-spacing:-0.2px;}
+  .h2-row .h2-link{font-size:12px;font-weight:700;color:var(--orange-600);cursor:pointer;display:flex;align-items:center;gap:4px;}
+  .h2-row .h2-link-arrow{width:22px;height:22px;border-radius:50%;background:var(--orange-500);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+
+  /* Needs-you alerts — softer, friendlier */
+  .needs-list{padding:0 18px;}
+  .needs-card{display:flex;gap:12px;background:#fff;border-radius:var(--r-lg);padding:14px;margin-bottom:10px;box-shadow:var(--e1);cursor:pointer;align-items:center;border:1px solid var(--gray-150);position:relative;overflow:hidden;}
+  .needs-card.crit::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red-500);}
+  .needs-card.warn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--orange-500);}
+  .needs-card.info::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue-500);}
+  .needs-ic{width:48px;height:48px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+  .needs-card.crit .needs-ic{background:var(--red-50);}
+  .needs-card.warn .needs-ic{background:var(--orange-50);}
+  .needs-card.info .needs-ic{background:var(--blue-50);}
+  .needs-body{flex:1;min-width:0;}
+  .needs-title{font-size:14px;font-weight:700;line-height:1.3;}
+  .needs-sub{font-size:11.5px;color:var(--gray-500);margin-top:2px;}
+  .needs-act{display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0;}
+  .needs-act .accept-btn{background:var(--orange-500);color:#fff;border:none;border-radius:var(--r-pill);padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;}
+  .needs-act .snooze-btn{background:transparent;border:none;color:var(--gray-400);font-size:10px;font-weight:600;cursor:pointer;}
+  .needs-all-clear{margin:0 18px 4px;background:linear-gradient(135deg,var(--green-50),#fff);border:1px solid var(--green-200);border-radius:var(--r-lg);padding:24px 18px;text-align:center;}
+  .needs-all-clear .nac-ic{font-size:36px;margin-bottom:6px;}
+  .needs-all-clear .nac-title{font-size:14px;font-weight:700;color:var(--green-700);}
+  .needs-all-clear .nac-sub{font-size:11.5px;color:var(--gray-500);margin-top:2px;}
+
+  /* Touchpoint grid — 2x2 like more. product cards */
+  .tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px;}
+  .tp-card{background:#fff;border-radius:var(--r-lg);overflow:hidden;cursor:pointer;box-shadow:var(--e1);position:relative;border:1px solid var(--gray-150);transition:.14s;}
+  .tp-card:active{transform:scale(0.98);}
+  .tp-card-photo{height:80px;display:flex;align-items:center;justify-content:center;position:relative;}
+  .tp-card-photo .tpc-emoji{font-size:36px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.12));}
+  .tp-card-badge{position:absolute;top:6px;left:6px;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;padding:3px 7px;border-radius:var(--r-pill);}
+  .tp-card-status{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;}
+  .tp-card-status.green{background:var(--green-500);}
+  .tp-card-status.orange{background:var(--orange-500);}
+  .tp-card-status.gray{background:var(--gray-300);}
+  .tp-card-info{padding:8px 12px 12px;}
+  .tp-card-name{font-size:13px;font-weight:800;letter-spacing:-0.1px;}
+  .tp-card-meta{font-size:10.5px;color:var(--gray-500);font-weight:600;margin-top:2px;line-height:1.3;}
+  /* photo backgrounds */
+  .tp-photo-order{background:linear-gradient(135deg,#fff4e0,#ffe0c2);}
+  .tp-photo-vendor{background:linear-gradient(135deg,#dcfce7,#bbf7d0);}
+  .tp-photo-cash{background:linear-gradient(135deg,#f3f0ff,#e0d6ff);}
+  .tp-photo-brief{background:linear-gradient(135deg,#dbeafe,#bfdbfe);}
+
+  /* Floor tools — h-scroll tiles */
+  .tools-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 18px 4px;}
+  .tools-scroll::-webkit-scrollbar{height:0;}
+  .tool-tile{flex-shrink:0;width:78px;background:#fff;border:1px solid var(--gray-150);border-radius:var(--r-md);padding:13px 6px 11px;text-align:center;cursor:pointer;box-shadow:var(--e1);transition:.14s;}
+  .tool-tile:active{transform:scale(0.96);}
+  .tool-tile .tt-ic{width:42px;height:42px;border-radius:var(--r-md);background:var(--orange-50);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:22px;}
+  .tool-tile .tt-name{font-size:10.5px;font-weight:700;color:var(--gray-800);line-height:1.2;}
+
+  /* Day so far */
+  .day-so-far{margin:0 18px 16px;background:#fff;border-radius:var(--r-lg);padding:14px;box-shadow:var(--e1);border:1px solid var(--gray-150);}
+  .dsf-row{display:flex;align-items:center;gap:10px;padding:7px 2px;}
+  .dsf-row + .dsf-row{border-top:1px dashed var(--gray-150);}
+  .dsf-check{width:22px;height:22px;border-radius:50%;background:var(--green-500);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .dsf-text{flex:1;font-size:12px;color:var(--gray-700);}
+  .dsf-text b{color:var(--gray-900);font-weight:700;}
+  .dsf-time{font-size:10px;color:var(--gray-400);font-weight:700;}
+  .dsf-see-all{display:block;text-align:center;color:var(--orange-600);font-size:12px;font-weight:700;margin-top:8px;padding:6px;border-top:1px solid var(--gray-150);}
+
+  /* Notif dot on bell */
+  .ab-icon{position:relative;}
+  .ab-icon.has-dot::after{content:'';position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--red-500);border:2px solid #fff;}
+
   @media(max-width:920px){.studio{grid-template-columns:1fr;}.rail{position:static;height:auto;}}
 </style>
 </head>
 <body>
 <div class="studio">
   <aside class="rail">
-    <div class="rail-logo">more</div>
+    <div class="rail-logo"><span class="more-logo"><svg viewBox="0 0 100 50" width="74" height="37" xmlns="http://www.w3.org/2000/svg"><path d="M 6,0 H 94 Q 100,0 100,6 V 36 Q 100,42 94,42 H 60 Q 50,49 40,42 H 6 Q 0,42 0,36 V 6 Q 0,0 6,0 Z" fill="#ff5b0a"/><text x="50" y="29" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#fff" style="letter-spacing:-1px">more</text></svg></span></div>
     <div class="rail-sub">रोज़ Roz · live app</div>
     <div class="rail-group">Auth</div>
     <div class="rail-link" data-go="splash"><span class="rail-num">00</span>Splash</div>
@@ -463,37 +582,165 @@ RENDER.perms=()=>{
 function togglePerm(k){S.perms[k]=!S.perms[k];save();rerender('perms');}
 function finishOnboard(){S.onboarded=true;save();go('today');toast(T('रोज़ में आपका स्वागत है','Welcome to Roz'));}
 
-// ---- TODAY ----
+// ---- TODAY (redesigned with NOW hero, more.-style visual treatment) ----
+
+// Time-aware hero matrix — biggest UX decision: home adapts by time of day
+const HERO_BY_HOUR = [
+  // 6-8 AM — dock receive priority
+  { hours:[6,7,8], id:'dock', urgent:true, tag:'Vendor at dock', title:'Reliance Fresh', italic:'arrived', stat:'Scan QR · expected 14 crates', cta:'Open Dock', go:'dock', bg:'linear-gradient(135deg,#2d6a4f,#52b788)', emoji:'🚚' },
+  // 9-10 AM — peak window
+  { hours:[9,10], id:'peak', urgent:true, tag:'⏰ Peak in 22 min', title:'Move 2 staff', italic:'to billing', stat:'Saturday + festival eve · footfall +12%', cta:'Apply suggestion', go:'roster', bg:'linear-gradient(135deg,#cc2936,#e63946)', emoji:'👥' },
+  // 11 AM-1 PM — THE smart order moment (core)
+  { hours:[11,12,13], id:'order', urgent:false, tag:'★ Roz · 11:30 AM', title:'tomorrow\'s order is', italic:'ready', stat:'82 SKUs · ₹47,200 · 11-factor forecast', cta:'Review & approve', go:'order', bg:'linear-gradient(135deg,#ff5b0a,#b43808)', emoji:'📦' },
+  // 2-4 PM — floor walk
+  { hours:[14,15,16], id:'expiry', urgent:false, tag:'Floor walk window', title:'12 SKUs near', italic:'expiry', stat:'Markdowns ready · ~₹2,340 recovery', cta:'Start floor walk', go:'expiry', bg:'linear-gradient(135deg,#d97706,#92400e)', emoji:'🕐' },
+  // 5-6 PM — evening peak
+  { hours:[17,18], id:'queue', urgent:true, tag:'Evening peak active', title:'Counter 2 backed up', italic:'now', stat:'7 min wait · 11 in queue', cta:'Open Counter 3', go:'queue', bg:'linear-gradient(135deg,#7c2d12,#dc2626)', emoji:'🧾' },
+  // 7 PM — cash recon
+  { hours:[19], id:'cash', urgent:false, tag:'Cash recon time', title:'POS pulled', italic:'enter counted', stat:'3 counters · auto-match running', cta:'Reconcile cash', go:'cash', bg:'linear-gradient(135deg,#5e2edb,#3a1888)', emoji:'💰' },
+  // 8 PM — THE briefing moment (core)
+  { hours:[20], id:'brief', urgent:false, tag:'★ Roz · 7:30 PM', title:'today\'s briefing is', italic:'drafted', stat:'Solid day · sales ₹1.2L · review before sending', cta:'Review & send', go:'briefing', bg:'linear-gradient(135deg,#ff5b0a,#822a05)', emoji:'📝' },
+  // 9 PM onward — day done
+  { hours:[21,22,23,0,1,2,3,4,5], id:'eod', urgent:false, tag:'✓ Day complete', title:'all logged.', italic:'rest easy', stat:'Tomorrow\'s order pre-staged · 7 AM delivery', cta:'See tomorrow', go:'order', bg:'linear-gradient(135deg,#166534,#14532d)', emoji:'✓' },
+];
+
+function currentHero(){
+  const h = (typeof S.mockHour==='number') ? S.mockHour : new Date().getHours();
+  return HERO_BY_HOUR.find(x => x.hours.includes(h)) || HERO_BY_HOUR[2];
+}
+function nextHero(){
+  const cur = currentHero();
+  const idx = HERO_BY_HOUR.indexOf(cur);
+  return HERO_BY_HOUR[(idx+1) % HERO_BY_HOUR.length];
+}
+function heroHourLabel(){
+  const h = (typeof S.mockHour==='number') ? S.mockHour : new Date().getHours();
+  const ampm = h>=12 ? 'PM':'AM';
+  const hh = h%12===0 ? 12 : h%12;
+  return `${hh}:${h===11?'30':'00'} ${ampm}`;
+}
+
 RENDER.today=()=>{
-  const open=S.alerts.filter(a=>a.status==='open');
-  const ord=orderTotals();
-  const alertCard=a=>`<div class="alert ${a.type}"><div class="al-ic">${a.ic}</div><div class="al-body"><div class="al-title">${esc(a.title)}</div><div class="al-sub">${esc(a.sub)}</div>
-    <div class="alert-actions"><button class="mini primary" onclick="actAlert('${a.id}','done')">${a.id==='a2'?'Fix it':'Accept'}</button><button class="mini" onclick="actAlert('${a.id}','snooze')">Snooze</button><button class="mini ghost" onclick="actAlert('${a.id}','dismiss')">Dismiss</button></div>
-  </div></div>`;
+  const open = S.alerts.filter(a=>a.status==='open');
+  const hero = currentHero();
+  const next = nextHero();
+  const ord = orderTotals();
+
+  // Touchpoint statuses
+  const orderSent = S.order.sent;
+  const briefSent = S.briefing.sent;
+  const dockDone = S.dock.closed;
+  const cashOK = cashVar()===0;
+
+  // Alert card (cleaner, more-app product-card-inspired)
+  const alertCard = a => {
+    const cls = a.type==='crit' ? 'crit' : a.type==='info' ? 'info' : 'warn';
+    return `<div class="needs-card ${cls}" onclick="actAlert('${a.id}','done')">
+      <div class="needs-ic">${a.ic}</div>
+      <div class="needs-body"><div class="needs-title">${esc(a.title)}</div><div class="needs-sub">${esc(a.sub)}</div></div>
+      <div class="needs-act">
+        <button class="accept-btn" onclick="event.stopPropagation();actAlert('${a.id}','done')">${a.id==='a2'?'Fix':'Accept'}</button>
+        <button class="snooze-btn" onclick="event.stopPropagation();actAlert('${a.id}','snooze')">Snooze</button>
+      </div>
+    </div>`;
+  };
+
+  // Touchpoint card — mirrors more. product card layout
+  const tpCard = (key, name, meta, status, statusClass, photoClass, emoji, go) => `
+    <div class="tp-card" onclick="go('${go}')">
+      <div class="tp-card-photo ${photoClass}">
+        <span class="tpc-emoji">${emoji}</span>
+        ${status ? `<div class="tp-card-status ${statusClass}">${status}</div>` : ''}
+      </div>
+      <div class="tp-card-info">
+        <div class="tp-card-name">${name}</div>
+        <div class="tp-card-meta">${meta}</div>
+      </div>
+    </div>`;
+
   return `${statusbar()}
-  <div class="appbar"><div style="flex:1"><div style="font-size:12px;color:var(--gray-500);font-weight:600">${greeting()}, Radhika · Sat 14 Dec · ☀ 28°</div><div class="ab-title" style="font-size:22px">Today</div></div><div class="ab-icon" onclick="openVoice()">🎙</div></div>
-  <div class="body">
-    <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span>✦</span><span class="overline" style="color:var(--orange-300)">Roz brief · 7:00 AM</span></div>
-      <div style="font-size:14px;line-height:1.5">Strong Saturday — festival eve. Footfall up <b style="color:var(--green-200)">~12%</b>, peak 9–11 AM. Tomorrow's order is drafted & waiting. Mother Dairy runs late today.</div>
-      <div style="margin-top:12px;font-size:12px;color:var(--orange-300);font-weight:600" onclick="go('briefing')">Open full briefing →</div></div>
-    <div class="kpi-grid" style="margin-bottom:6px">
-      <div class="kpi"><div class="kpi-label">Sales today</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
-      <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta up">-22%</span></div></div>
-      <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
-      <div class="kpi"><div class="kpi-label">Open alerts</div><div class="kpi-val">${open.length}<span class="kpi-delta" style="color:var(--gray-400)">now</span></div></div></div>
-    <div class="section-title">⚡ ${T('अभी ध्यान दें','What needs you now')}</div>
-    ${open.length?open.map(alertCard).join(''):`<div class="card" style="text-align:center;color:var(--green-700);background:var(--green-50);border-color:var(--green-200)">✓ All clear — nothing needs you right now</div>`}
-    <div class="section-title">📌 Today's touchpoints</div>
-    <div class="tp" onclick="go('order')"><div class="tp-ic">📦</div><div class="tp-body"><div class="tp-name">Smart Order</div><div class="tp-meta">${ord.cnt} SKUs · ${money(ord.val)} ${S.order.sent?'· sent ✓':'drafted'}</div><span class="tp-badge ${S.order.sent?'b-ready':'b-warn'}">${S.order.sent?'Sent':'Review by 12 PM'}</span></div><div class="tp-go">›</div></div>
-    <div class="tp" onclick="go('briefing')"><div class="tp-ic" style="background:var(--blue-50)">📝</div><div class="tp-body"><div class="tp-name">HQ Briefing</div><div class="tp-meta">${S.briefing.sent?'Sent to HQ ✓':'Auto-drafts at 7:30 PM'}</div><span class="tp-badge ${S.briefing.sent?'b-ready':'b-pending'}">${S.briefing.sent?'Done':'Pending'}</span></div><div class="tp-go">›</div></div>
-    <div class="tp" onclick="go('dock')"><div class="tp-ic" style="background:var(--green-50)">🚚</div><div class="tp-body"><div class="tp-name">Vendors today</div><div class="tp-meta">4 incoming · ${S.dock.closed?'dock closed ✓':'1 delayed'}</div><span class="tp-badge ${S.dock.closed?'b-ready':'b-warn'}">${S.dock.closed?'Done':'1 needs you'}</span></div><div class="tp-go">›</div></div>
-    <div class="tp" onclick="go('cash')"><div class="tp-ic" style="background:var(--purple-50)">💰</div><div class="tp-body"><div class="tp-name">Cash recon</div><div class="tp-meta">7 PM · 3 counters · ${cashVar()===0?'matched':money(cashVar())+' var'}</div><span class="tp-badge b-pending">Scheduled</span></div><div class="tp-go">›</div></div>
-    <div class="section-title">⚡ Quick actions</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-      ${[['📥','Dock','dock'],['🔍','Quality','quality'],['🕐','Expiry','expiry'],['🎙','Voice','voice']].map(([i,l,t])=>`<div onclick="${t==='voice'?'openVoice()':"go('"+t+"')"}" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">${i}<br>${l}</div>`).join('')}</div>
+  <div class="home-header">
+    <div class="store-chip" onclick="openStoreSheet()"><div class="sc-ic">🏪</div><div class="sc-name">Indiranagar · #142</div><div class="sc-arrow">▾</div></div>
+    <div class="home-header-r">
+      <div class="ab-icon ${open.length?'has-dot':''}" onclick="go('reports')">🔔</div>
+      <div class="ab-icon" onclick="openVoice()">🎙</div>
+    </div>
+  </div>
+
+  <div class="greeting-row">
+    <div class="greeting-name">${greeting()}, <i>Radhika</i></div>
+    <div class="greeting-meta">Sat 14 Dec · ☀ 28° · ${heroHourLabel()} <span class="time-chip" onclick="openTimePicker()">Demo time ▾</span></div>
+  </div>
+
+  <div class="body" style="padding:0 0 130px;">
+    <!-- NOW HERO — adapts to time of day -->
+    <div class="now-hero" onclick="go('${hero.go}')">
+      <div class="now-hero-bg" style="background:${hero.bg};">
+        <div style="position:absolute;right:-20px;bottom:-10px;font-size:180px;opacity:0.18;transform:rotate(-12deg);line-height:1;">${hero.emoji}</div>
+      </div>
+      <div class="now-hero-body">
+        <span class="now-hero-tag ${hero.urgent?'urgent':''}">${esc(hero.tag)}</span>
+        <div class="now-hero-title">${esc(hero.title)} <i>${esc(hero.italic)}</i></div>
+        <div class="now-hero-stat">${esc(hero.stat)}</div>
+        <div class="now-hero-cta">${esc(hero.cta)} <span class="nhc-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="up-next"><span>Up next:</span> <b>${esc(next.tag)}</b> · ${esc(next.cta)}</div>
+
+    <!-- PULSE STRIP -->
+    <div class="pulse-strip">
+      <div class="pulse"><div class="p-label">Sales</div><div class="p-val">₹1.2L <span class="p-delta up">+8%</span></div></div>
+      <div class="pulse"><div class="p-label">Footfall</div><div class="p-val">412 <span class="p-delta up">+6%</span></div></div>
+      <div class="pulse"><div class="p-label">Wastage</div><div class="p-val">2.1kg <span class="p-delta up">-22%</span></div></div>
+      <div class="pulse ${open.length?'alert':''}"><div class="p-label">Pending</div><div class="p-val">${open.length} <span class="p-delta" style="color:var(--gray-400)">now</span></div></div>
+    </div>
+
+    <!-- NEEDS YOU -->
+    <div class="h2-row"><h2>${T('अभी ध्यान दें','Needs you')}${open.length?' ('+open.length+')':''}</h2>${open.length>3?'<div class="h2-link">see all <span class="h2-link-arrow">→</span></div>':''}</div>
+    ${open.length ? `<div class="needs-list">${open.slice(0,3).map(alertCard).join('')}</div>` : `<div class="needs-all-clear"><div class="nac-ic">🎉</div><div class="nac-title">All clear, taza-clean!</div><div class="nac-sub">nothing needs you right now — keep an eye on the floor</div></div>`}
+
+    <!-- TOUCHPOINTS -->
+    <div class="h2-row"><h2>Today's flow</h2><div class="h2-link">history <span class="h2-link-arrow">→</span></div></div>
+    <div class="tp-grid">
+      ${tpCard('order','Smart Order',
+        orderSent ? `Sent ✓ · ${ord.cnt} SKUs · ${money(ord.val)}` : `${ord.cnt} SKUs · ${money(ord.val)} · review by 12 PM`,
+        orderSent?'✓':'!', orderSent?'green':'orange', 'tp-photo-order', '📦', 'order')}
+      ${tpCard('vendor','Vendors',
+        dockDone ? '4 cleared today ✓' : '4 incoming · 1 delayed',
+        dockDone?'✓':'!', dockDone?'green':'orange', 'tp-photo-vendor', '🚚', 'dock')}
+      ${tpCard('cash','Cash recon',
+        cashOK ? `Matched · ${money(cashVar())} var` : `${money(Math.abs(cashVar()))} variance — resolve`,
+        '!', 'gray', 'tp-photo-cash', '💰', 'cash')}
+      ${tpCard('brief','HQ Briefing',
+        briefSent ? 'Sent to HQ ✓' : 'Drafts at 7:30 PM',
+        briefSent?'✓':'!', briefSent?'green':'gray', 'tp-photo-brief', '📝', 'briefing')}
+    </div>
+
+    <!-- FLOOR TOOLS — h-scroll -->
+    <div class="h2-row"><h2>Floor tools</h2><div class="h2-link" onclick="go('floor')">all <span class="h2-link-arrow">→</span></div></div>
+    <div class="tools-scroll">
+      ${[['📥','Dock','dock'],['🔍','Quality','quality'],['👥','Roster','roster'],['🕐','Expiry','expiry'],['🏷','Markdown','markdown'],['🧾','Queue','queue']].map(([i,n,g])=>`<div class="tool-tile" onclick="go('${g}')"><div class="tt-ic">${i}</div><div class="tt-name">${n}</div></div>`).join('')}
+    </div>
+
+    <!-- DAY SO FAR -->
+    <div class="h2-row"><h2>Your day so far</h2></div>
+    <div class="day-so-far">
+      <div class="dsf-row"><div class="dsf-check">✓</div><div class="dsf-text"><b>Drafted tomorrow's order</b> · 82 SKUs · ₹47.2K</div><div class="dsf-time">8:42 AM</div></div>
+      <div class="dsf-row"><div class="dsf-check">✓</div><div class="dsf-text"><b>Dock cleared</b> · Reliance Fresh · 12/14 crates</div><div class="dsf-time">8:15 AM</div></div>
+      <div class="dsf-row"><div class="dsf-check">✓</div><div class="dsf-text"><b>Briefing delivered</b> · area mgr read it</div><div class="dsf-time">7:30 AM</div></div>
+      <div class="dsf-see-all" onclick="toast('Full activity opening')">See full activity log →</div>
+    </div>
   </div>${navbar('today')}`;
 };
+
+function openTimePicker(){
+  const labels = HERO_BY_HOUR.map(h => ({ id:h.id, h:h.hours[0], tag:h.tag, cta:h.cta }));
+  openSheet(`<h3>Demo: see Roz adapt</h3><p class="sub">In production this uses real time. Tap to preview a moment in Radhika's day.</p>
+    ${labels.map(l=>`<div class="lrow" onclick="setMockHour(${l.h})" style="cursor:pointer;${(S.mockHour===l.h||(typeof S.mockHour!=='number'&&l.h===11))?'border-color:var(--orange-500);box-shadow:0 0 0 2px var(--orange-100);':''}"><div class="lr-ic">${l.h<12?'☀️':l.h<17?'🌤':l.h<20?'🌇':'🌙'}</div><div class="lr-body"><div class="lr-title">${l.h===0?12:l.h>12?l.h-12:l.h}:${l.h===11?'30':'00'} ${l.h>=12?'PM':'AM'}</div><div class="lr-sub">${esc(l.tag)} → ${esc(l.cta)}</div></div><div class="lr-go">›</div></div>`).join('')}`);
+}
+function setMockHour(h){ S.mockHour=h; save(); closeSheet(); rerender('today'); toast(`Demo: ${h===0?12:h>12?h-12:h}${h===11?':30':':00'} ${h>=12?'PM':'AM'}`); }
+function openStoreSheet(){ openSheet(`<h3>Switch store</h3><p class="sub">You manage 1 store. Area managers see multiple.</p>
+  ${['more. Indiranagar #142','more. Koramangala #88 (read-only)','more. Whitefield #211 (read-only)'].map(s=>`<div class="lrow" onclick="closeSheet();toast('Stays on #142')"><div class="lr-body"><div class="lr-title">${s}</div></div><div class="lr-go">›</div></div>`).join('')}`); }
 function actAlert(id,act){
   const a=S.alerts.find(x=>x.id===id);if(!a)return;
   const prev=a.status; a.status=act==='snooze'?'snoozed':act==='dismiss'?'dismissed':'done'; save(); rerender('today');
