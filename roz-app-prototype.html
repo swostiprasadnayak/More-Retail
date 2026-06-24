@@ -3,937 +3,797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roz — Interactive Prototype</title>
+<title>Roz — Live App (interactive)</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-  /* ============================================================
-     DESIGN TOKENS — extracted 1:1 from Figma design system
-     (Swosti_Portfolio_2026 · node 1929:578)
-  ============================================================ */
-  :root {
-    /* Brand · Orange (PRIMARY) */
-    --orange-50:#fff1e6; --orange-100:#ffe0cc; --orange-200:#ffb78a; --orange-300:#ff8e4d;
-    --orange-400:#ff741f; --orange-500:#ff5b0a; --orange-600:#e64a0e; --orange-700:#b43808;
-    --orange-800:#822a05; --orange-900:#511a03;
-    /* Premium · Purple (more+) */
-    --purple-50:#f3f0ff; --purple-100:#e0d6ff; --purple-200:#c2adff; --purple-300:#9f7bff;
-    --purple-400:#7c4dff; --purple-500:#5e2edb; --purple-600:#4a1fb0; --purple-700:#3a1888;
-    --purple-800:#2a1166; --purple-900:#1a0944;
-    /* Action · Green */
-    --green-50:#dcfce7; --green-100:#bbf7d0; --green-200:#86efac; --green-300:#4ade80;
-    --green-400:#22c55e; --green-500:#16a34a; --green-600:#15803d; --green-700:#166534;
-    --green-800:#14532d; --green-900:#052e16;
-    /* Info · Blue */
-    --blue-50:#eff6ff; --blue-100:#dbeafe; --blue-200:#bfdbfe; --blue-300:#93c5fd;
-    --blue-400:#60a5fa; --blue-500:#3b82f6; --blue-600:#2563eb; --blue-700:#1d4ed8;
-    --blue-800:#1e40af; --blue-900:#1e3a8a;
-    /* Warning · Yellow */
-    --yellow-50:#fefce8; --yellow-100:#fef9c3; --yellow-200:#fef08a; --yellow-300:#fde047;
-    --yellow-400:#facc15; --yellow-500:#eab308; --yellow-600:#ca8a04; --yellow-700:#a16207;
-    /* Error · Red */
-    --red-50:#fef2f2; --red-100:#fee2e2; --red-200:#fecaca; --red-300:#fca5a5;
-    --red-400:#f87171; --red-500:#ef4444; --red-600:#dc2626; --red-700:#b91c1c; --red-800:#991b1b;
-    /* Neutral · Gray */
-    --gray-0:#ffffff; --gray-50:#fafafa; --gray-100:#f5f5f7; --gray-150:#eeeef1;
-    --gray-200:#e5e7eb; --gray-300:#d1d5db; --gray-400:#9ca3af; --gray-500:#6b7280;
-    --gray-600:#4b5563; --gray-700:#374151; --gray-800:#1f2937; --gray-900:#111827;
-    --gray-950:#0a0e1a; --gray-1000:#000000;
+  /* ===== DESIGN TOKENS — 1:1 from Figma (Swosti_Portfolio_2026 · 1929:578) ===== */
+  :root{
+    --orange-50:#fff1e6;--orange-100:#ffe0cc;--orange-200:#ffb78a;--orange-300:#ff8e4d;--orange-400:#ff741f;--orange-500:#ff5b0a;--orange-600:#e64a0e;--orange-700:#b43808;--orange-800:#822a05;--orange-900:#511a03;
+    --purple-50:#f3f0ff;--purple-100:#e0d6ff;--purple-200:#c2adff;--purple-300:#9f7bff;--purple-400:#7c4dff;--purple-500:#5e2edb;--purple-600:#4a1fb0;
+    --green-50:#dcfce7;--green-100:#bbf7d0;--green-200:#86efac;--green-400:#22c55e;--green-500:#16a34a;--green-600:#15803d;--green-700:#166534;
+    --blue-50:#eff6ff;--blue-100:#dbeafe;--blue-200:#bfdbfe;--blue-500:#3b82f6;--blue-600:#2563eb;--blue-700:#1d4ed8;
+    --yellow-50:#fefce8;--yellow-100:#fef9c3;--yellow-200:#fef08a;--yellow-400:#facc15;--yellow-500:#eab308;--yellow-600:#ca8a04;--yellow-700:#a16207;
+    --red-50:#fef2f2;--red-100:#fee2e2;--red-200:#fecaca;--red-400:#f87171;--red-500:#ef4444;--red-600:#dc2626;--red-700:#b91c1c;
+    --gray-0:#fff;--gray-50:#fafafa;--gray-100:#f5f5f7;--gray-150:#eeeef1;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;--gray-950:#0a0e1a;--gray-1000:#000;
+    --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--r-2xl:24px;--r-pill:999px;
+    --e1:0 1px 2px rgba(17,24,39,.05);--e2:0 2px 8px rgba(17,24,39,.06),0 1px 2px rgba(17,24,39,.04);--e3:0 6px 16px rgba(17,24,39,.08);--e4:0 12px 28px rgba(17,24,39,.12);--e5:0 24px 48px rgba(17,24,39,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Inter',-apple-system,sans-serif;background:#e9e9ee;color:var(--gray-900);line-height:1.5;-webkit-font-smoothing:antialiased;}
 
-    /* Radius scale */
-    --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-2xl:24px; --r-3xl:32px; --r-pill:999px;
+  /* ===== STUDIO ===== */
+  .studio{display:grid;grid-template-columns:248px 1fr;min-height:100vh;}
+  .rail{background:var(--gray-1000);color:#fff;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .rail-logo{display:inline-flex;background:var(--orange-500);color:#fff;font-weight:800;font-size:18px;letter-spacing:-1px;padding:6px 14px;border-radius:var(--r-md);}
+  .rail-sub{font-size:11px;color:var(--gray-400);margin:6px 0 18px;}
+  .rail-group{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--gray-500);margin:16px 0 6px;}
+  .rail-link{display:flex;align-items:center;gap:9px;padding:8px 10px;font-size:13px;color:var(--gray-300);border-radius:var(--r-sm);cursor:pointer;transition:.12s;}
+  .rail-link:hover{background:var(--gray-800);color:#fff;}
+  .rail-link.active{background:var(--orange-500);color:#fff;font-weight:600;}
+  .rail-num{font-size:10px;color:var(--gray-500);width:16px;}
+  .rail-link.active .rail-num{color:rgba(255,255,255,.7);}
+  .rail-foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--gray-800);font-size:11px;color:var(--gray-500);line-height:1.6;}
+  .rail-foot a{color:var(--orange-300);text-decoration:none;}
+  .rail-reset{margin-top:10px;width:100%;padding:8px;font-size:11px;font-weight:700;background:var(--gray-800);color:var(--gray-300);border:none;border-radius:var(--r-sm);cursor:pointer;}
+  .rail-reset:hover{background:var(--gray-700);color:#fff;}
 
-    /* Elevation ladder */
-    --e0:none;
-    --e1:0 1px 2px rgba(17,24,39,0.05);
-    --e2:0 2px 8px rgba(17,24,39,0.06), 0 1px 2px rgba(17,24,39,0.04);
-    --e3:0 6px 16px rgba(17,24,39,0.08), 0 2px 4px rgba(17,24,39,0.04);
-    --e4:0 12px 28px rgba(17,24,39,0.12), 0 4px 8px rgba(17,24,39,0.06);
-    --e5:0 24px 48px rgba(17,24,39,0.18);
-  }
+  .stage{display:flex;flex-direction:column;align-items:center;padding:34px 20px 80px;}
+  .stage-head{text-align:center;margin-bottom:16px;}
+  .stage-head h1{font-size:19px;font-weight:800;letter-spacing:-.3px;}
+  .stage-head p{font-size:12px;color:var(--gray-500);margin-top:3px;}
 
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body {
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-    background:#e9e9ee;
-    color:var(--gray-900);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+  /* ===== DEVICE ===== */
+  .device{width:402px;height:858px;background:var(--gray-1000);border-radius:54px;padding:6px;box-shadow:var(--e5),0 0 0 2px rgba(0,0,0,.2);position:relative;flex-shrink:0;}
+  .device-screen{width:100%;height:100%;background:var(--gray-100);border-radius:48px;overflow:hidden;position:relative;}
+  .device::after{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:var(--gray-1000);border-radius:var(--r-pill);z-index:60;pointer-events:none;}
 
-  /* ============================================================
-     STUDIO LAYOUT — left rail + centered device
-  ============================================================ */
-  .studio { display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+  .screen{position:absolute;inset:0;display:none;flex-direction:column;background:var(--gray-100);}
+  .screen.active{display:flex;}
+  .offline-strip{display:none;background:var(--yellow-400);color:var(--gray-900);font-size:11px;font-weight:700;text-align:center;padding:4px;}
+  body.offline .offline-strip{display:block;}
 
-  .rail {
-    background:var(--gray-1000);
-    color:var(--gray-0);
-    padding:22px 16px;
-    position:sticky; top:0; height:100vh; overflow-y:auto;
-  }
-  .rail-logo {
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--orange-500); color:#fff;
-    font-weight:800; font-size:18px; letter-spacing:-1px;
-    padding:6px 14px; border-radius:var(--r-md); margin-bottom:4px;
-  }
-  .rail-sub { font-size:11px; color:var(--gray-400); margin-bottom:22px; letter-spacing:0.3px; }
-  .rail-group { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--gray-500); margin:18px 0 6px; }
-  .rail-link {
-    display:flex; align-items:center; gap:10px;
-    padding:8px 10px; font-size:13px; color:var(--gray-300);
-    border-radius:var(--r-sm); cursor:pointer; transition:all .12s;
-  }
-  .rail-link:hover { background:var(--gray-800); color:#fff; }
-  .rail-link.active { background:var(--orange-500); color:#fff; font-weight:600; }
-  .rail-num { font-size:10px; color:var(--gray-500); width:16px; }
-  .rail-link.active .rail-num { color:rgba(255,255,255,0.7); }
-  .rail-foot { margin-top:24px; padding-top:16px; border-top:1px solid var(--gray-800); font-size:11px; color:var(--gray-500); line-height:1.6; }
-  .rail-foot a { color:var(--orange-300); text-decoration:none; }
+  .statusbar{height:52px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 7px;font-size:14px;font-weight:700;position:relative;z-index:10;}
+  .statusbar.light{color:#fff;}
+  .statusbar .sb-r{display:flex;gap:6px;font-size:12px;}
 
-  .stage {
-    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-    padding:40px 20px 80px;
-  }
-  .stage-head { text-align:center; margin-bottom:22px; }
-  .stage-head h1 { font-size:20px; font-weight:800; letter-spacing:-0.3px; }
-  .stage-head p { font-size:13px; color:var(--gray-500); margin-top:4px; }
-  .stage-controls { display:flex; gap:8px; justify-content:center; margin-bottom:20px; }
-  .sc-btn {
-    display:inline-flex; align-items:center; gap:6px;
-    padding:8px 14px; font-size:12px; font-weight:600;
-    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-pill);
-    cursor:pointer; color:var(--gray-700); box-shadow:var(--e1);
-  }
-  .sc-btn:hover { border-color:var(--orange-400); color:var(--orange-600); }
+  .appbar{flex-shrink:0;padding:4px 18px 10px;display:flex;align-items:center;gap:12px;}
+  .ab-back{width:36px;height:36px;border-radius:var(--r-pill);background:#fff;border:1px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gray-700);cursor:pointer;box-shadow:var(--e1);flex-shrink:0;}
+  .ab-title{font-size:18px;font-weight:700;flex:1;letter-spacing:-.2px;}
+  .ab-icon{width:36px;height:36px;border-radius:var(--r-pill);background:#fff;border:1px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;box-shadow:var(--e1);}
 
-  /* ============================================================
-     DEVICE FRAME
-  ============================================================ */
-  .device {
-    width:402px; height:858px;
-    background:var(--gray-1000);
-    border-radius:54px;
-    padding:6px;
-    box-shadow:var(--e5), 0 0 0 2px rgba(0,0,0,0.2);
-    position:relative;
-    flex-shrink:0;
-  }
-  .device-screen {
-    width:100%; height:100%;
-    background:var(--gray-100);
-    border-radius:48px;
-    overflow:hidden;
-    position:relative;
-  }
-  /* dynamic island */
-  .device::after {
-    content:''; position:absolute; top:20px; left:50%; transform:translateX(-50%);
-    width:120px; height:32px; background:var(--gray-1000); border-radius:var(--r-pill); z-index:60; pointer-events:none;
-  }
+  .body{flex:1;overflow-y:auto;padding:2px 18px 130px;}
+  .body::-webkit-scrollbar{width:0;}
+  .body.flush{padding:0 0 130px;}
 
-  .screens { width:100%; height:100%; position:relative; }
-  .screen {
-    position:absolute; inset:0;
-    display:none; flex-direction:column;
-    background:var(--gray-100);
-  }
-  .screen.active { display:flex; }
+  /* ===== PRIMITIVES ===== */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:600;font-size:16px;border-radius:var(--r-pill);border:none;cursor:pointer;padding:15px 24px;transition:.14s;width:100%;}
+  .btn-primary{background:var(--orange-500);color:#fff;box-shadow:0 4px 12px rgba(255,91,10,.32);}
+  .btn-primary:active{background:var(--orange-600);transform:translateY(1px);}
+  .btn-primary:disabled{background:var(--gray-300);box-shadow:none;cursor:not-allowed;}
+  .btn-secondary{background:var(--gray-900);color:#fff;}
+  .btn-outline{background:#fff;color:var(--orange-600);border:1.5px solid var(--orange-500);}
+  .btn-ghost{background:var(--gray-100);color:var(--gray-700);}
+  .btn-sm{padding:9px 16px;font-size:13px;width:auto;}
+  .card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-lg);box-shadow:var(--e2);padding:15px;}
+  .overline{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--gray-400);}
+  .section-title{font-size:14px;font-weight:800;margin:18px 2px 10px;display:flex;align-items:center;justify-content:space-between;}
+  .section-title .st-link{font-size:12px;font-weight:600;color:var(--orange-600);cursor:pointer;}
+  .muted{color:var(--gray-500);}
+  .hero-grad{background:linear-gradient(160deg,var(--orange-500),var(--orange-700) 60%,#8f2305);}
+  .pill-tag{display:inline-block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border-radius:var(--r-pill);}
 
-  /* status bar */
-  .statusbar {
-    height:54px; flex-shrink:0;
-    display:flex; align-items:flex-end; justify-content:space-between;
-    padding:0 28px 8px; font-size:14px; font-weight:700;
-    position:relative; z-index:10;
-  }
-  .statusbar.light { color:#fff; }
-  .statusbar .sb-right { display:flex; gap:6px; align-items:center; font-size:12px; }
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:7px 13px;border-radius:var(--r-pill);background:#fff;color:var(--gray-600);border:1px solid var(--gray-200);cursor:pointer;white-space:nowrap;}
+  .chip.active{background:var(--orange-500);color:#fff;border-color:var(--orange-500);}
+  .chip-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;}
+  .chip-row::-webkit-scrollbar{height:0;}
 
-  /* app bar */
-  .appbar {
-    flex-shrink:0; padding:6px 18px 12px;
-    display:flex; align-items:center; gap:12px;
-    background:transparent;
-  }
-  .appbar .ab-back {
-    width:36px; height:36px; border-radius:var(--r-pill);
-    background:#fff; border:1px solid var(--gray-200);
-    display:flex; align-items:center; justify-content:center;
-    font-size:18px; color:var(--gray-700); cursor:pointer; box-shadow:var(--e1);
-    flex-shrink:0;
-  }
-  .appbar .ab-title { font-size:18px; font-weight:700; flex:1; letter-spacing:-0.2px; }
-  .appbar .ab-actions { display:flex; gap:8px; }
-  .appbar .ab-icon {
-    width:36px; height:36px; border-radius:var(--r-pill);
-    background:#fff; border:1px solid var(--gray-200);
-    display:flex; align-items:center; justify-content:center;
-    font-size:15px; cursor:pointer; box-shadow:var(--e1);
-  }
+  /* stepper */
+  .stepper{display:inline-flex;align-items:center;gap:0;background:var(--gray-100);border-radius:var(--r-pill);padding:3px;}
+  .stepper button{width:32px;height:32px;border-radius:var(--r-pill);border:none;background:#fff;color:var(--gray-800);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--e1);}
+  .stepper button:active{background:var(--orange-100);}
+  .stepper .sv{min-width:54px;text-align:center;font-size:15px;font-weight:800;}
+  .stepper.big button{width:46px;height:46px;font-size:24px;}
+  .stepper.big .sv{min-width:86px;font-size:26px;}
 
-  /* scroll body */
-  .body {
-    flex:1; overflow-y:auto; padding:4px 18px 120px;
-  }
-  .body::-webkit-scrollbar { width:0; }
-  .body.flush { padding:0 0 120px; }
+  /* switch */
+  .switch{width:46px;height:28px;border-radius:var(--r-pill);background:var(--gray-300);position:relative;cursor:pointer;transition:.18s;flex-shrink:0;}
+  .switch::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.18s;box-shadow:var(--e1);}
+  .switch.on{background:var(--orange-500);}
+  .switch.on::after{left:21px;}
 
-  /* ============================================================
-     PRIMITIVES
-  ============================================================ */
-  .btn {
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:inherit; font-weight:600; font-size:16px;
-    border-radius:var(--r-pill); border:none; cursor:pointer;
-    padding:15px 24px; transition:all .14s; width:100%;
-  }
-  .btn-primary { background:var(--orange-500); color:#fff; box-shadow:0 4px 12px rgba(255,91,10,0.32); }
-  .btn-primary:active { background:var(--orange-600); transform:translateY(1px); }
-  .btn-secondary { background:var(--gray-900); color:#fff; }
-  .btn-outline { background:#fff; color:var(--orange-600); border:1.5px solid var(--orange-500); }
-  .btn-ghost { background:transparent; color:var(--orange-600); }
-  .btn-success { background:var(--green-500); color:#fff; }
-  .btn-sm { padding:10px 16px; font-size:14px; width:auto; }
+  /* KPI */
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .kpi{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-md);padding:12px 14px;box-shadow:var(--e1);}
+  .kpi-label{font-size:11px;color:var(--gray-500);font-weight:600;margin-bottom:4px;}
+  .kpi-val{font-size:22px;font-weight:800;letter-spacing:-.5px;}
+  .kpi-delta{font-size:11px;font-weight:700;margin-left:4px;}
+  .up{color:var(--green-600);}.bad{color:var(--red-600);}
 
-  .card {
-    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-lg);
-    box-shadow:var(--e2); padding:16px;
-  }
-  .overline { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.2px; color:var(--gray-400); }
-  .section-title { font-size:14px; font-weight:800; letter-spacing:0.2px; margin:18px 2px 10px; display:flex; align-items:center; justify-content:space-between; }
-  .section-title .st-link { font-size:12px; font-weight:600; color:var(--orange-600); }
+  /* alert */
+  .alert{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--gray-200);border-left:3px solid var(--yellow-400);border-radius:var(--r-md);padding:12px 13px;margin-bottom:8px;box-shadow:var(--e1);}
+  .alert.crit{border-left-color:var(--red-500);}.alert.info{border-left-color:var(--blue-500);}
+  .alert .al-ic{font-size:18px;}
+  .alert .al-body{flex:1;}
+  .alert .al-title{font-size:13px;font-weight:700;}
+  .alert .al-sub{font-size:11px;color:var(--gray-500);margin-top:1px;}
+  .alert-actions{display:flex;gap:6px;margin-top:9px;}
+  .mini{font-size:11px;font-weight:700;padding:6px 11px;border-radius:var(--r-pill);border:1px solid var(--gray-200);background:#fff;cursor:pointer;}
+  .mini.primary{background:var(--orange-500);color:#fff;border-color:var(--orange-500);}
+  .mini.ghost{color:var(--gray-500);}
 
-  .chip {
-    display:inline-flex; align-items:center; gap:5px;
-    font-size:12px; font-weight:600; padding:6px 12px;
-    border-radius:var(--r-pill); background:var(--gray-100); color:var(--gray-600);
-    border:1px solid var(--gray-200);
-  }
-  .chip.active { background:var(--orange-500); color:#fff; border-color:var(--orange-500); }
+  /* touchpoint / list row */
+  .tp,.lrow{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-md);padding:12px 13px;margin-bottom:8px;box-shadow:var(--e1);cursor:pointer;}
+  .tp-ic{width:40px;height:40px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px;background:var(--orange-50);}
+  .tp-body,.lr-body{flex:1;min-width:0;}
+  .tp-name,.lr-title{font-size:13px;font-weight:700;}
+  .tp-meta,.lr-sub{font-size:11px;color:var(--gray-500);margin-top:1px;}
+  .tp-badge{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:3px 7px;border-radius:var(--r-pill);margin-top:5px;display:inline-block;}
+  .b-ready{background:var(--green-50);color:var(--green-700);}.b-pending{background:var(--gray-100);color:var(--gray-500);}.b-warn{background:var(--yellow-50);color:var(--yellow-700);}
+  .lr-go,.tp-go{color:var(--gray-300);font-size:18px;}
+  .lr-val{font-size:13px;font-weight:700;}
+  .lr-ic{font-size:18px;}
 
-  /* ============================================================
-     BOTTOM NAV — dark floating pill, orange active (Figma organism)
-  ============================================================ */
-  .bottomnav {
-    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
-    width:362px; height:64px;
-    background:var(--gray-950);
-    border-radius:var(--r-pill);
-    display:none; align-items:center; justify-content:space-around;
-    padding:0 10px; z-index:50; box-shadow:var(--e4);
-  }
-  .screen.has-nav .bottomnav { display:flex; }
-  .nav-item {
-    display:flex; flex-direction:column; align-items:center; gap:3px;
-    color:var(--gray-500); cursor:pointer; flex:1; padding:8px 0;
-    font-size:9px; font-weight:600; transition:color .12s;
-  }
-  .nav-item .ni-ic { font-size:19px; line-height:1; filter:grayscale(1) opacity(0.6); }
-  .nav-item.active { color:#fff; }
-  .nav-item.active .ni-ic { filter:none; }
-  .nav-item.active .ni-pill {
-    position:absolute; top:8px;
-  }
+  /* order SKU row */
+  .sku{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-md);padding:11px 12px;margin-bottom:8px;box-shadow:var(--e1);transition:.15s;}
+  .sku.out{opacity:.5;background:var(--gray-50);}
+  .sku.flag{border-left:3px solid var(--yellow-400);}
+  .sku-top{display:flex;align-items:center;gap:10px;}
+  .sku-emoji{font-size:22px;}
+  .sku-info{flex:1;min-width:0;}
+  .sku-name{font-size:13px;font-weight:700;}
+  .sku-sub{font-size:11px;color:var(--gray-500);margin-top:1px;}
+  .sku-incl{width:26px;height:26px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:transparent;flex-shrink:0;}
+  .sku-incl.on{background:var(--green-500);border-color:var(--green-500);color:#fff;}
+  .sku-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+  .sku-price{font-size:12px;color:var(--gray-500);}
+  .sku-price b{color:var(--gray-900);font-size:14px;}
+  .why{font-size:11px;color:var(--orange-600);font-weight:600;cursor:pointer;margin-top:8px;display:inline-block;}
+  .why-panel{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed var(--gray-200);}
+  .why-panel.open{display:block;}
+  .why-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;}
 
-  /* shared bottom nav markup is cloned into each tab screen */
-  .navbar-host { position:absolute; bottom:18px; left:0; right:0; display:flex; justify-content:center; z-index:50; pointer-events:none; }
-  .navbar {
-    pointer-events:auto;
-    width:362px; height:62px; background:var(--gray-950); border-radius:var(--r-pill);
-    display:flex; align-items:center; padding:0 8px; box-shadow:var(--e4);
-  }
-  .navbar .nb {
-    flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
-    color:var(--gray-500); cursor:pointer; padding:9px 0; border-radius:var(--r-pill);
-    font-size:9px; font-weight:600;
-  }
-  .navbar .nb .nb-ic { font-size:18px; line-height:1; }
-  .navbar .nb.active { color:#fff; }
-  .navbar .nb.active .nb-ic { transform:scale(1.05); }
-
-  /* ============================================================
-     KPI / STAT CHIP (Figma molecule)
-  ============================================================ */
-  .kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .kpi {
-    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-md);
-    padding:12px 14px; box-shadow:var(--e1);
-  }
-  .kpi .kpi-label { font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:4px; }
-  .kpi .kpi-val { font-size:22px; font-weight:800; letter-spacing:-0.5px; }
-  .kpi .kpi-delta { font-size:11px; font-weight:700; margin-left:4px; }
-  .kpi .up { color:var(--green-600); }
-  .kpi .down { color:var(--green-600); }
-  .kpi .bad { color:var(--red-600); }
-
-  /* alert card */
-  .alert {
-    display:flex; gap:12px; align-items:flex-start;
-    background:#fff; border:1px solid var(--gray-200); border-left:3px solid var(--yellow-400);
-    border-radius:var(--r-md); padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1);
-    cursor:pointer;
-  }
-  .alert.crit { border-left-color:var(--red-500); }
-  .alert.info { border-left-color:var(--blue-500); }
-  .alert .al-ic { font-size:18px; line-height:1.2; }
-  .alert .al-body { flex:1; }
-  .alert .al-title { font-size:13px; font-weight:700; }
-  .alert .al-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
-  .alert .al-go { color:var(--gray-300); font-size:16px; align-self:center; }
-
-  /* touchpoint card */
-  .tp {
-    display:flex; gap:12px; align-items:center;
-    background:#fff; border:1px solid var(--gray-200);
-    border-radius:var(--r-md); padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1); cursor:pointer;
-  }
-  .tp .tp-ic {
-    width:40px; height:40px; border-radius:var(--r-md); flex-shrink:0;
-    display:flex; align-items:center; justify-content:center; font-size:19px;
-    background:var(--orange-50);
-  }
-  .tp .tp-body { flex:1; min-width:0; }
-  .tp .tp-name { font-size:13px; font-weight:700; }
-  .tp .tp-meta { font-size:11px; color:var(--gray-500); margin-top:1px; }
-  .tp .tp-badge {
-    font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px;
-    padding:3px 7px; border-radius:var(--r-pill); margin-top:5px; display:inline-block;
-  }
-  .tp .b-ready { background:var(--green-50); color:var(--green-700); }
-  .tp .b-pending { background:var(--gray-100); color:var(--gray-500); }
-  .tp .b-warn { background:var(--yellow-50); color:var(--yellow-700); }
-  .tp .tp-go { color:var(--gray-300); font-size:18px; }
-
-  /* activity feed */
-  .act { display:flex; gap:10px; padding:9px 2px; border-bottom:1px solid var(--gray-150); }
-  .act .act-time { font-size:10px; font-weight:700; color:var(--gray-400); width:54px; flex-shrink:0; padding-top:1px; }
-  .act .act-text { font-size:12px; color:var(--gray-600); }
-  .act .act-text b { color:var(--gray-800); font-weight:600; }
-
-  /* list row */
-  .lrow {
-    display:flex; align-items:center; gap:12px;
-    background:#fff; border:1px solid var(--gray-200); border-radius:var(--r-md);
-    padding:13px 14px; margin-bottom:8px; box-shadow:var(--e1); cursor:pointer;
-  }
-  .lrow .lr-ic { font-size:18px; }
-  .lrow .lr-body { flex:1; }
-  .lrow .lr-title { font-size:13px; font-weight:700; }
-  .lrow .lr-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
-  .lrow .lr-go { color:var(--gray-300); font-size:16px; }
-  .lrow .lr-val { font-size:13px; font-weight:700; }
+  /* summary bar */
+  .summary-bar{position:absolute;bottom:90px;left:18px;right:18px;background:var(--gray-950);color:#fff;border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--e4);z-index:40;}
+  .summary-bar .sb-info{font-size:11px;color:var(--gray-400);}
+  .summary-bar .sb-total{font-size:18px;font-weight:800;}
+  .summary-bar button{background:var(--orange-500);color:#fff;border:none;border-radius:var(--r-pill);padding:11px 18px;font-size:13px;font-weight:700;cursor:pointer;}
 
   /* input */
-  .field { margin-bottom:14px; }
-  .field label { font-size:12px; font-weight:700; color:var(--gray-600); display:block; margin-bottom:6px; }
-  .input {
-    width:100%; background:#fff; border:1.5px solid var(--gray-200); border-radius:var(--r-md);
-    padding:14px 16px; font-size:16px; font-family:inherit; color:var(--gray-900);
-    display:flex; align-items:center; gap:10px;
-  }
-  .input:focus-within, .input.focus { border-color:var(--orange-500); box-shadow:0 0 0 3px var(--orange-100); }
-  .input input { border:none; outline:none; font-size:16px; font-family:inherit; flex:1; background:transparent; }
-  .input .in-prefix { color:var(--gray-500); font-weight:600; }
+  .field{margin-bottom:13px;}
+  .field label{font-size:12px;font-weight:700;color:var(--gray-600);display:block;margin-bottom:6px;}
+  .input{width:100%;background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:13px 15px;font-size:16px;font-family:inherit;color:var(--gray-900);display:flex;align-items:center;gap:10px;}
+  .input:focus-within{border-color:var(--orange-500);box-shadow:0 0 0 3px var(--orange-100);}
+  .input input,.input textarea{border:none;outline:none;font-size:16px;font-family:inherit;flex:1;background:transparent;color:var(--gray-900);resize:none;}
+  .in-prefix{color:var(--gray-500);font-weight:600;}
 
-  /* OTP boxes */
-  .otp-row { display:flex; gap:10px; justify-content:space-between; }
-  .otp-box {
-    flex:1; aspect-ratio:1/1.15; max-width:50px;
-    border:1.5px solid var(--gray-200); border-radius:var(--r-md);
-    display:flex; align-items:center; justify-content:center;
-    font-size:24px; font-weight:800; background:#fff;
-  }
-  .otp-box.filled { border-color:var(--orange-500); color:var(--orange-600); }
+  .otp-row{display:flex;gap:9px;justify-content:space-between;}
+  .otp-box{flex:1;aspect-ratio:1/1.15;max-width:50px;border:1.5px solid var(--gray-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;background:#fff;cursor:pointer;}
+  .otp-box.filled{border-color:var(--orange-500);color:var(--orange-600);}
+  .otp-box.cursor{border-color:var(--orange-500);box-shadow:0 0 0 3px var(--orange-100);}
 
-  /* hero gradient (auth) */
-  .hero-grad { background:linear-gradient(160deg, var(--orange-500) 0%, var(--orange-700) 55%, #8f2305 100%); }
-  .purple-grad { background:linear-gradient(135deg, var(--purple-400) 0%, var(--purple-600) 100%); }
-  .green-grad { background:linear-gradient(135deg, var(--green-400) 0%, var(--green-600) 100%); }
+  /* scan area */
+  .scan{background:var(--gray-900);border-radius:var(--r-lg);height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative;cursor:pointer;}
+  .scan::after{content:'';position:absolute;inset:14px;border:2px dashed rgba(255,255,255,.3);border-radius:var(--r-md);}
+  .scan:active{background:var(--gray-800);}
 
-  /* misc */
-  .pill-tag { display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px; padding:3px 8px; border-radius:var(--r-pill); }
-  .t-core { background:var(--green-50); color:var(--green-700); }
-  .t-alert { background:var(--yellow-50); color:var(--yellow-700); }
-  .divider-accent { height:2px; background:var(--orange-500); border-radius:2px; border:none; margin:14px 0; }
-  .muted { color:var(--gray-500); }
+  /* bottom nav */
+  .navwrap{position:absolute;bottom:18px;left:0;right:0;display:flex;justify-content:center;z-index:50;pointer-events:none;}
+  .navbar{pointer-events:auto;width:362px;height:62px;background:var(--gray-950);border-radius:var(--r-pill);display:flex;align-items:center;padding:0 8px;box-shadow:var(--e4);}
+  .navbar .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--gray-500);cursor:pointer;padding:9px 0;font-size:9px;font-weight:600;position:relative;}
+  .navbar .nb-ic{font-size:18px;}
+  .navbar .nb.active{color:#fff;}
+  .navbar .nb .nb-dot{display:none;position:absolute;top:5px;right:50%;transform:translateX(16px);width:7px;height:7px;border-radius:50%;background:var(--red-500);}
+  .navbar .nb.badge .nb-dot{display:block;}
 
-  @media (max-width:920px){
-    .studio { grid-template-columns:1fr; }
-    .rail { position:static; height:auto; }
-  }
+  /* bottom sheet */
+  .sheet-back{position:absolute;inset:0;background:rgba(10,14,26,.5);display:none;align-items:flex-end;z-index:80;}
+  .sheet-back.open{display:flex;}
+  .sheet{width:100%;background:#fff;border-radius:24px 24px 0 0;padding:20px 18px 26px;max-height:80%;overflow-y:auto;transform:translateY(100%);transition:transform .25s;}
+  .sheet-back.open .sheet{transform:translateY(0);}
+  .sheet-grip{width:40px;height:4px;background:var(--gray-300);border-radius:2px;margin:0 auto 14px;}
+  .sheet h3{font-size:17px;font-weight:800;margin-bottom:4px;}
+  .sheet p.sub{font-size:12px;color:var(--gray-500);margin-bottom:14px;}
+
+  /* toast */
+  .toast{position:absolute;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gray-950);color:#fff;padding:11px 16px;border-radius:var(--r-pill);font-size:13px;font-weight:600;z-index:90;opacity:0;pointer-events:none;transition:.22s;display:flex;align-items:center;gap:12px;white-space:nowrap;box-shadow:var(--e4);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+  .toast button{background:var(--orange-500);color:#fff;border:none;padding:5px 12px;font-size:11px;border-radius:var(--r-pill);cursor:pointer;font-weight:700;}
+
+  .empty{text-align:center;padding:40px 20px;color:var(--gray-400);}
+  .empty .e-ic{font-size:40px;margin-bottom:8px;}
+
+  @media(max-width:920px){.studio{grid-template-columns:1fr;}.rail{position:static;height:auto;}}
 </style>
 </head>
 <body>
 <div class="studio">
-
-  <!-- ===================== LEFT RAIL ===================== -->
   <aside class="rail">
     <div class="rail-logo">more</div>
-    <div class="rail-sub">रोज़ Roz · ops app prototype</div>
-
-    <div class="rail-group">Auth & Onboarding</div>
-    <div class="rail-link" data-go="splash"><span class="rail-num">00</span> Splash</div>
-    <div class="rail-link" data-go="phone"><span class="rail-num">01</span> Phone Sign-In</div>
-    <div class="rail-link" data-go="otp"><span class="rail-num">02</span> OTP</div>
-    <div class="rail-link" data-go="store"><span class="rail-num">03</span> Store Confirm</div>
-    <div class="rail-link" data-go="perms"><span class="rail-num">04</span> Permissions</div>
-
-    <div class="rail-group">Main App</div>
-    <div class="rail-link" data-go="today"><span class="rail-num">05</span> Today</div>
-    <div class="rail-link" data-go="order-list"><span class="rail-num">06</span> Smart Order</div>
-    <div class="rail-link" data-go="sku"><span class="rail-num">07</span> SKU Detail</div>
-    <div class="rail-link" data-go="order-done"><span class="rail-num">08</span> Order Confirmed</div>
-    <div class="rail-link" data-go="floor"><span class="rail-num">09</span> Floor Hub</div>
-    <div class="rail-link" data-go="dock"><span class="rail-num">10</span> Dock Receive</div>
-    <div class="rail-link" data-go="reports"><span class="rail-num">11</span> Reports</div>
-    <div class="rail-link" data-go="briefing"><span class="rail-num">12</span> Daily Briefing</div>
-    <div class="rail-link" data-go="menu"><span class="rail-num">13</span> Menu</div>
-
-    <div class="rail-foot">
-      Built 1:1 from your Figma<br>design system · Inter · orange&nbsp;#ff5b0a<br>
-      <a href="more-system-map.html">← Back to Research Doc</a>
-    </div>
+    <div class="rail-sub">रोज़ Roz · live app</div>
+    <div class="rail-group">Auth</div>
+    <div class="rail-link" data-go="splash"><span class="rail-num">00</span>Splash</div>
+    <div class="rail-link" data-go="phone"><span class="rail-num">01</span>Phone Sign-In</div>
+    <div class="rail-link" data-go="otp"><span class="rail-num">02</span>OTP</div>
+    <div class="rail-link" data-go="store"><span class="rail-num">03</span>Store Confirm</div>
+    <div class="rail-link" data-go="perms"><span class="rail-num">04</span>Permissions</div>
+    <div class="rail-group">App · 5 tabs</div>
+    <div class="rail-link" data-go="today"><span class="rail-num">05</span>Today</div>
+    <div class="rail-link" data-go="order"><span class="rail-num">06</span>Smart Order</div>
+    <div class="rail-link" data-go="floor"><span class="rail-num">07</span>Floor</div>
+    <div class="rail-link" data-go="reports"><span class="rail-num">08</span>Reports</div>
+    <div class="rail-link" data-go="menu"><span class="rail-num">09</span>Menu</div>
+    <button class="rail-reset" onclick="resetApp()">↺ Reset app data</button>
+    <div class="rail-foot">Built 1:1 from your Figma<br>system · everything is editable<br><a href="more-system-map.html">← Back to Research Doc</a></div>
   </aside>
 
-  <!-- ===================== STAGE ===================== -->
   <div class="stage">
     <div class="stage-head">
-      <h1>Roz — Interactive Prototype</h1>
-      <p>Tap through it like the real app · bottom-nav + flows are live</p>
+      <h1>Roz — Live App</h1>
+      <p>Real app · edit quantities, approve, add inputs · your changes save</p>
     </div>
-    <div class="stage-controls">
-      <button class="sc-btn" onclick="go('splash')">↺ Restart flow</button>
-      <button class="sc-btn" onclick="goBack()">← Back</button>
-    </div>
-
     <div class="device">
       <div class="device-screen">
+        <div class="offline-strip">⚡ Offline — actions queued, will sync</div>
         <div class="screens" id="screens">
-
-          <!-- ============ 00 · SPLASH ============ -->
-          <div class="screen" id="s-splash" data-bg="hero">
-            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="body flush hero-grad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;cursor:pointer" onclick="go('phone')">
-              <div style="background:#fff;color:var(--orange-500);font-weight:800;font-size:46px;letter-spacing:-2px;padding:18px 40px;border-radius:var(--r-2xl);box-shadow:var(--e4)">more</div>
-              <div style="margin-top:22px;font-size:18px;font-weight:700">रोज़ · Roz</div>
-              <div style="font-size:13px;opacity:0.85;margin-top:4px;max-width:240px">your store, sorted — taza, sasta, ekdum&nbsp;smart</div>
-              <div style="position:absolute;bottom:60px;font-size:12px;opacity:0.7">tap anywhere to start →</div>
-            </div>
-          </div>
-
-          <!-- ============ 01 · PHONE ============ -->
-          <div class="screen" id="s-phone">
-            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="body flush hero-grad" style="display:flex;flex-direction:column;justify-content:flex-end">
-              <div style="padding:40px 24px 20px;color:#fff">
-                <div style="font-size:34px;font-weight:800;line-height:1.12;letter-spacing:-0.5px">
-                  get the <span style="font-style:italic">freshest</span><br>store data at your<br>fingertips, <span style="color:var(--orange-200)">faaaaasssttt</span>
-                </div>
-              </div>
-              <div style="background:#fff;border-radius:24px 24px 0 0;padding:24px 20px 30px">
-                <div class="overline" style="margin-bottom:8px">Store Manager Sign-In</div>
-                <div class="field" style="margin-bottom:10px">
-                  <label>can we have your number?</label>
-                  <div class="input"><span class="in-prefix">🇮🇳 +91</span><input value="98765 43210" readonly></div>
-                </div>
-                <div style="display:flex;gap:8px;margin-bottom:16px">
-                  <span class="chip active">हिंदी</span><span class="chip">English</span>
-                </div>
-                <button class="btn btn-primary" onclick="go('otp')">Send OTP</button>
-                <div style="font-size:11px;color:var(--gray-400);text-align:center;margin-top:12px">By continuing, you agree to our T&Cs and Privacy Policy.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ============ 02 · OTP ============ -->
-          <div class="screen" id="s-otp">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('phone')">←</div><div class="ab-title">Verify</div></div>
-            <div class="body">
-              <div style="font-size:32px;font-weight:800;letter-spacing:-0.5px;line-height:1.15;margin:8px 0 6px">we sent you<br>an OTP <span style="color:var(--orange-500)">(onion,</span><br><span style="color:var(--orange-500);text-decoration:line-through;text-decoration-color:var(--gray-300)">tomato, potato)</span><br>valid for 59s only</div>
-              <div style="font-size:13px;color:var(--gray-500);margin-bottom:24px">Sent to +91 98765 43210 · <span style="color:var(--orange-600);font-weight:600">change</span></div>
-              <div class="otp-row" style="margin-bottom:20px">
-                <div class="otp-box filled">9</div><div class="otp-box filled">4</div><div class="otp-box filled">9</div>
-                <div class="otp-box filled">1</div><div class="otp-box">·</div><div class="otp-box">·</div>
-              </div>
-              <div style="font-size:12px;color:var(--gray-500);text-align:center;margin-bottom:24px">Resend code in <b style="color:var(--gray-800)">0:42</b></div>
-              <button class="btn btn-primary" onclick="go('store')">Verify & Continue</button>
-            </div>
-          </div>
-
-          <!-- ============ 03 · STORE CONFIRM ============ -->
-          <div class="screen" id="s-store">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('otp')">←</div><div class="ab-title">Confirm store</div></div>
-            <div class="body">
-              <div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">Roz auto-detected your store from HR records. Looks right?</div>
-              <div class="card" style="margin-bottom:12px">
-                <div style="display:flex;align-items:center;gap:14px">
-                  <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--orange-50);display:flex;align-items:center;justify-content:center;font-size:26px">🏪</div>
-                  <div>
-                    <div style="font-size:16px;font-weight:800">more. Indiranagar</div>
-                    <div style="font-size:12px;color:var(--gray-500)">Store #142 · Bengaluru · Hybrid</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:14px">
-                <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--purple-50);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div>
-                <div>
-                  <div style="font-size:16px;font-weight:800">Radhika Sharma</div>
-                  <div style="font-size:12px;color:var(--gray-500)">Store Manager · 8 staff reporting</div>
-                </div>
-              </div>
-              <div style="text-align:center;font-size:12px;color:var(--orange-600);font-weight:600;margin:16px 0">Wrong store? Edit details</div>
-              <button class="btn btn-primary" onclick="go('perms')">That's right — continue</button>
-            </div>
-          </div>
-
-          <!-- ============ 04 · PERMISSIONS ============ -->
-          <div class="screen" id="s-perms">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-title">Roz needs 3 things</div></div>
-            <div class="body">
-              <div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">So Roz can scan, alert, and listen on the floor.</div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">📷</div><div class="lr-body"><div class="lr-title">Camera</div><div class="lr-sub">Scan QR challans + barcodes</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🔔</div><div class="lr-body"><div class="lr-title">Notifications</div><div class="lr-sub">Peak, stockout & vendor alerts</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🎙</div><div class="lr-body"><div class="lr-title">Microphone</div><div class="lr-sub">Voice notes on your briefing</div></div><div style="color:var(--green-600);font-size:18px">✓</div></div>
-              <div style="margin-top:20px"><button class="btn btn-primary" onclick="go('today')">Allow all · enter Roz</button></div>
-            </div>
-          </div>
-
-          <!-- ============ 05 · TODAY ============ -->
-          <div class="screen has-nav" id="s-today" data-tab="today">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar">
-              <div style="flex:1">
-                <div style="font-size:12px;color:var(--gray-500);font-weight:600">सुप्रभात, Radhika · Sat 14 Dec · ☀ 28°</div>
-                <div class="ab-title" style="font-size:22px">Today</div>
-              </div>
-              <div class="ab-icon" onclick="alert('Voice Roz — Hindi/English')">🎙</div>
-            </div>
-            <div class="body">
-              <!-- hero briefing -->
-              <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:16px">✦</span><span class="overline" style="color:var(--orange-300)">Roz brief · 7:00 AM</span></div>
-                <div style="font-size:14px;line-height:1.5">Strong Saturday ahead — festival eve. Footfall up <b style="color:var(--green-300)">~12%</b>, peak 9–11 AM. Tomorrow's order is drafted & waiting. Mother Dairy runs late today.</div>
-                <div style="margin-top:12px;font-size:12px;color:var(--orange-300);font-weight:600" onclick="go('briefing')">Open full briefing →</div>
-              </div>
-              <!-- KPI -->
-              <div class="kpi-grid" style="margin-bottom:6px">
-                <div class="kpi"><div class="kpi-label">Sales today</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta down">-22%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Open alerts</div><div class="kpi-val">3<span class="kpi-delta bad" style="color:var(--gray-400)">unread</span></div></div>
-              </div>
-
-              <div class="section-title">⚡ What needs you now</div>
-              <div class="alert crit" onclick="alert('Peak Predictor — move 2 staff to billing')"><div class="al-ic">⏰</div><div class="al-body"><div class="al-title">Peak in 22 min</div><div class="al-sub">Move 2 staff to billing before the rush</div></div><div class="al-go">›</div></div>
-              <div class="alert" onclick="go('dock')"><div class="al-ic">🍅</div><div class="al-body"><div class="al-title">Tomato low — 45 min to empty</div><div class="al-sub">DC delayed · tap for transfer options</div></div><div class="al-go">›</div></div>
-              <div class="alert info"><div class="al-ic">🚚</div><div class="al-body"><div class="al-title">Vendor delay</div><div class="al-sub">Mother Dairy slips to 11 AM</div></div><div class="al-go">›</div></div>
-
-              <div class="section-title">📌 Today's touchpoints</div>
-              <div class="tp" onclick="go('order-list')"><div class="tp-ic">📦</div><div class="tp-body"><div class="tp-name">Smart Order</div><div class="tp-meta">82 SKUs · ₹47.2K drafted</div><span class="tp-badge b-ready">Ready · review by 12 PM</span></div><div class="tp-go">›</div></div>
-              <div class="tp" onclick="go('briefing')"><div class="tp-ic" style="background:var(--blue-50)">📝</div><div class="tp-body"><div class="tp-name">HQ Briefing</div><div class="tp-meta">Auto-drafts at 7:30 PM</div><span class="tp-badge b-pending">Pending</span></div><div class="tp-go">›</div></div>
-              <div class="tp" onclick="go('dock')"><div class="tp-ic" style="background:var(--green-50)">🚚</div><div class="tp-body"><div class="tp-name">Vendors today</div><div class="tp-meta">4 incoming · 1 delayed</div><span class="tp-badge b-warn">1 needs you</span></div><div class="tp-go">›</div></div>
-              <div class="tp" onclick="go('reports')"><div class="tp-ic" style="background:var(--purple-50)">💰</div><div class="tp-body"><div class="tp-name">Cash recon</div><div class="tp-meta">7 PM · 3 counters · last var ₹0</div><span class="tp-badge b-pending">Scheduled</span></div><div class="tp-go">›</div></div>
-
-              <div class="section-title">🌀 Roz activity <span class="st-link">since 6 AM</span></div>
-              <div class="card" style="padding:6px 14px">
-                <div class="act"><div class="act-time">8:42 AM</div><div class="act-text"><b>Drafted tomorrow's order</b> · 82 SKUs · ₹47.2K</div></div>
-                <div class="act"><div class="act-time">8:15 AM</div><div class="act-text"><b>Dock cleared</b> · Reliance Fresh · 12/14 crates ✓</div></div>
-                <div class="act"><div class="act-time">7:30 AM</div><div class="act-text"><b>Briefing delivered</b> · area mgr read it</div></div>
-                <div class="act" style="border:none"><div class="act-time">7:00 AM</div><div class="act-text"><b>Vendor score updated</b> · Suresh Mandi 0.92→0.87 ▼</div></div>
-              </div>
-
-              <div class="section-title">⚡ Quick actions</div>
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-                <div onclick="go('dock')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">📥<br>Dock</div>
-                <div onclick="go('floor')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🔍<br>Quality</div>
-                <div onclick="go('floor')" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🕐<br>Expiry</div>
-                <div style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">🎙<br>Voice</div>
-              </div>
-            </div>
-            <div class="navbar-host"></div>
-          </div>
-
-          <!-- ============ 06 · ORDER LIST ============ -->
-          <div class="screen has-nav" id="s-order-list" data-tab="order">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-title">Smart Order</div><div class="ab-actions"><div class="ab-icon">🔍</div></div></div>
-            <div class="body">
-              <div class="card hero-grad" style="border:none;color:#fff;margin-bottom:14px">
-                <div class="overline" style="color:rgba(255,255,255,0.8)">Tomorrow's order · ready</div>
-                <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
-                  <div style="font-size:30px;font-weight:800;letter-spacing:-0.5px">82 SKUs</div>
-                  <div style="font-size:16px;font-weight:700;opacity:0.9">· ₹47,200</div>
-                </div>
-                <div style="font-size:12px;opacity:0.85;margin-top:2px">Roz forecast across 11 factors · 4 vendors</div>
-              </div>
-              <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto">
-                <span class="chip active">All 82</span><span class="chip">Fresh</span><span class="chip">Dairy</span><span class="chip">Dry</span><span class="chip">⚠ Flagged 3</span>
-              </div>
-
-              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🍅</div><div class="lr-body"><div class="lr-title">Tomato · 1kg</div><div class="lr-sub">↑ vs last week · festival demand</div></div><div style="text-align:right"><div class="lr-val">40 kg</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🥛</div><div class="lr-body"><div class="lr-title">Milk 500ml</div><div class="lr-sub">Festival surge +30%</div></div><div style="text-align:right"><div class="lr-val">60 pks</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🍚</div><div class="lr-body"><div class="lr-title">Rice 5kg</div><div class="lr-sub" style="color:var(--yellow-700)">⚠ vendor delay risk</div></div><div style="text-align:right"><div class="lr-val">12 bags</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="lrow" onclick="go('sku')"><div style="font-size:22px">🧅</div><div class="lr-body"><div class="lr-title">Onion · 1kg</div><div class="lr-sub">Steady demand</div></div><div style="text-align:right"><div class="lr-val">35 kg</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div style="text-align:center;font-size:12px;color:var(--gray-400);padding:6px">+ 78 more SKUs · scroll</div>
-
-              <div style="position:sticky;bottom:0;padding-top:8px">
-                <button class="btn btn-primary" onclick="go('order-done')">Approve all 82 · 1 tap</button>
-              </div>
-            </div>
-            <div class="navbar-host"></div>
-          </div>
-
-          <!-- ============ 07 · SKU DETAIL ============ -->
-          <div class="screen" id="s-sku">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('order-list')">←</div><div class="ab-title">Tomato · 1kg</div></div>
-            <div class="body">
-              <div class="card" style="text-align:center;margin-bottom:12px">
-                <div style="font-size:48px">🍅</div>
-                <div style="font-size:13px;color:var(--gray-500);margin-top:4px">Roz suggests</div>
-                <div style="font-size:40px;font-weight:800;letter-spacing:-1px;color:var(--orange-600)">40 kg</div>
-                <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--gray-400);margin-top:2px">7-day trend <span style="color:var(--green-600);font-weight:700">▁▂▃▅▇ ↑</span></div>
-              </div>
-              <div class="section-title" style="margin-top:6px">Why 40 kg? Top factors</div>
-              <div class="card" style="padding:6px 14px">
-                <div class="act"><div class="act-text" style="flex:1"><b>Day</b> · Saturday</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+15%</div></div>
-                <div class="act"><div class="act-text" style="flex:1"><b>Festival eve</b> · Karva Chauth</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+22%</div></div>
-                <div class="act"><div class="act-text" style="flex:1"><b>Weather</b> · clear, 28°</div><div style="color:var(--green-600);font-weight:700;font-size:12px">+8%</div></div>
-                <div class="act" style="border:none"><div class="act-text" style="flex:1"><b>Vendor reliability</b> · 0.92</div><div style="color:var(--gray-500);font-weight:700;font-size:12px">steady</div></div>
-              </div>
-              <div class="section-title">Adjust quantity</div>
-              <div class="card" style="display:flex;align-items:center;justify-content:space-between">
-                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;cursor:pointer">−</div>
-                <div style="font-size:28px;font-weight:800">40 kg</div>
-                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;cursor:pointer">+</div>
-              </div>
-              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('order-list')">Approve this SKU</button></div>
-            </div>
-          </div>
-
-          <!-- ============ 08 · ORDER DONE ============ -->
-          <div class="screen" id="s-order-done">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px">
-              <div style="width:88px;height:88px;border-radius:var(--r-pill);background:var(--green-500);display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff;box-shadow:0 8px 24px rgba(22,163,74,0.4)">✓</div>
-              <div style="font-size:24px;font-weight:800;margin-top:20px">Order sent to Oracle ERP</div>
-              <div style="font-size:14px;color:var(--gray-500);margin-top:6px">82 SKUs · ₹47,200 · 4 vendors</div>
-              <div class="card" style="width:100%;margin-top:20px;text-align:left">
-                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Delivery</span><b>Tomorrow · 7:00 AM</b></div>
-                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Indent ID</span><b>#IND-2294</b></div>
-                <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Forecast accuracy</span><b style="color:var(--green-600)">76% avg</b></div>
-              </div>
-              <div style="margin-top:24px;width:100%"><button class="btn btn-primary" onclick="go('today')">Done</button></div>
-            </div>
-          </div>
-
-          <!-- ============ 09 · FLOOR HUB ============ -->
-          <div class="screen has-nav" id="s-floor" data-tab="floor">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-title">Floor tools</div></div>
-            <div class="body">
-              <div class="card" style="background:var(--orange-50);border-color:var(--orange-100);margin-bottom:14px;display:flex;align-items:center;gap:10px">
-                <span style="font-size:20px">📥</span><div style="font-size:13px;font-weight:600;color:var(--orange-800)">Now · 7:00 AM dock window is open</div>
-              </div>
-              <div class="lrow" onclick="go('dock')"><div class="lr-ic">📥</div><div class="lr-body"><div class="lr-title">Dock Receive</div><div class="lr-sub">Scan challan · tally vs indent</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('quality')"><div class="lr-ic">🔍</div><div class="lr-body"><div class="lr-title">Quality Inspect</div><div class="lr-sub">Photo + reject · vendor score</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('roster')"><div class="lr-ic">👥</div><div class="lr-body"><div class="lr-title">Roster</div><div class="lr-sub">8 staff · 1 absent · redeployed</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('expiry')"><div class="lr-ic">🕐</div><div class="lr-body"><div class="lr-title">Expiry Scan</div><div class="lr-sub">12 SKUs near · floor walk 2 PM</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('markdown')"><div class="lr-ic">🏷</div><div class="lr-body"><div class="lr-title">Markdown</div><div class="lr-sub">Optimal % · recover ₹2,340</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('queue')"><div class="lr-ic">🧾</div><div class="lr-body"><div class="lr-title">Queue Monitor</div><div class="lr-sub">Live counter load</div></div><div class="lr-go">›</div></div>
-            </div>
-            <div class="navbar-host"></div>
-          </div>
-
-          <!-- ============ 10 · DOCK ============ -->
-          <div class="screen" id="s-dock">
-            <div class="statusbar light"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Dock · Reliance Fresh</div></div>
-            <div class="body">
-              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
-                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
-                <div style="font-size:40px">📷</div><div style="font-size:13px;margin-top:8px;opacity:0.8">Scan vendor QR challan</div>
-              </div>
-              <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-                <div style="font-size:13px;font-weight:700">Tally vs indent</div>
-                <div style="font-size:13px;font-weight:800;color:var(--orange-600)">12 / 14 crates</div>
-              </div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Tomato · 40kg</div><div class="lr-sub">Matches indent</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Onion · 30kg received</div><div class="lr-sub">Indent was 50kg · 20kg short</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Coriander · 5kg</div><div class="lr-sub">Matches indent</div></div></div>
-              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('floor')">Close vendor · flag 1 issue</button></div>
-            </div>
-          </div>
-
-          <!-- ============ 11 · REPORTS ============ -->
-          <div class="screen has-nav" id="s-reports" data-tab="reports">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-title">Reports</div></div>
-            <div class="body">
-              <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:10px;background:var(--yellow-50);border-color:var(--yellow-200)">
-                <span style="font-size:18px">📝</span><div style="font-size:13px;font-weight:600;color:var(--yellow-700)">Today's HQ briefing is drafted — review by 8 PM</div>
-              </div>
-              <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📝</div><div class="lr-body"><div class="lr-title">EOD Brief Builder</div><div class="lr-sub">Auto-drafted · 1-tap send</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('cash')"><div class="lr-ic">💰</div><div class="lr-body"><div class="lr-title">Cash Reconciliation</div><div class="lr-sub">3 counters · 1 mismatch</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('trends')"><div class="lr-ic">📈</div><div class="lr-body"><div class="lr-title">7-Day Trends</div><div class="lr-sub">Sales · wastage · footfall</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📤</div><div class="lr-body"><div class="lr-title">HQ Outbox</div><div class="lr-sub">All reports sent · read receipts</div></div><div class="lr-go">›</div></div>
-            </div>
-            <div class="navbar-host"></div>
-          </div>
-
-          <!-- ============ 12 · DAILY BRIEFING ============ -->
-          <div class="screen" id="s-briefing">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="goBack()">←</div><div class="ab-title">Daily Briefing</div><div class="ab-actions"><div class="ab-icon">📅</div></div></div>
-            <div class="body">
-              <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span>✦</span><span class="overline" style="color:var(--orange-300)">Roz · Sat 14 Dec</span></div>
-                <div style="font-size:15px;line-height:1.6">Solid day. Sales <b style="color:var(--green-300)">₹1.2L (+8%)</b> on festival-eve footfall. Wastage down to 2.1kg with on-time markdowns. Mother Dairy ran late — flagged for vendor score. Tomorrow's order is staged & ready.</div>
-              </div>
-              <div class="kpi-grid" style="margin-bottom:14px">
-                <div class="kpi"><div class="kpi-label">Sales</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta down">-22%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Avg basket</div><div class="kpi-val">₹291<span class="kpi-delta up">+3%</span></div></div>
-              </div>
-              <div class="alert crit" style="cursor:default"><div class="al-ic">⚠</div><div class="al-body"><div class="al-title">Anomaly: dairy sales −40%</div><div class="al-sub">Likely the 2 PM cold-storage dip · Roz flagged</div></div></div>
-              <div class="section-title">Add your note</div>
-              <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--purple-50);border-color:var(--purple-100)">
-                <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--purple-400);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff">🎙</div>
-                <div><div style="font-size:13px;font-weight:700">Tap to add voice note</div><div style="font-size:11px;color:var(--gray-500)">Hindi or English · transcribed</div></div>
-              </div>
-              <div style="margin-top:16px"><button class="btn btn-primary" onclick="go('reports')">Send to HQ + Area Mgr</button></div>
-            </div>
-          </div>
-
-          <!-- ============ 13 · MENU ============ -->
-          <div class="screen has-nav" id="s-menu" data-tab="menu">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-title">Menu</div></div>
-            <div class="body">
-              <div class="card" style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
-                <div style="width:52px;height:52px;border-radius:var(--r-pill);background:var(--purple-100);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div>
-                <div style="flex:1"><div style="font-size:16px;font-weight:800">Radhika Sharma</div><div style="font-size:12px;color:var(--gray-500)">more. Indiranagar #142</div></div>
-                <div style="font-size:11px;font-weight:700;color:var(--green-600)">✓ Synced 12s ago</div>
-              </div>
-              <div class="lrow" onclick="go('vendors')"><div class="lr-ic">⭐</div><div class="lr-body"><div class="lr-title">Vendor Scores</div><div class="lr-sub">90-day reliability ranking</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('train')"><div class="lr-ic">🧠</div><div class="lr-body"><div class="lr-title">Train Roz</div><div class="lr-sub">3 recent overrides to review</div></div><div class="lr-go">›</div></div>
-              <div class="lrow"><div class="lr-ic">📡</div><div class="lr-body"><div class="lr-title">Offline & Sync</div><div class="lr-sub">All caught up</div></div><div class="lr-go">›</div></div>
-              <div class="lrow"><div class="lr-ic">⚙️</div><div class="lr-body"><div class="lr-title">Settings</div><div class="lr-sub">Language · notifications · voice</div></div><div class="lr-go">›</div></div>
-              <div class="lrow"><div class="lr-ic">❓</div><div class="lr-body"><div class="lr-title">Help & Support</div><div class="lr-sub">FAQ · WhatsApp helpline</div></div><div class="lr-go">›</div></div>
-              <div class="lrow" onclick="go('splash')"><div class="lr-ic">🚪</div><div class="lr-body"><div class="lr-title">Sign Out</div></div><div class="lr-go">›</div></div>
-            </div>
-            <div class="navbar-host"></div>
-          </div>
-
-          <!-- ============ QUALITY INSPECT ============ -->
-          <div class="screen" id="s-quality">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Quality · Crate 1/14</div></div>
-            <div class="body">
-              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
-                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
-                <div style="font-size:38px">📷</div><div style="font-size:13px;margin-top:6px;opacity:0.8">Photo the crate</div>
-              </div>
-              <div class="section-title" style="margin-top:0">Reject reason</div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-                <span class="chip active">Bruised</span><span class="chip">Spoiled</span><span class="chip">Wrong SKU</span><span class="chip">Underweight</span>
-              </div>
-              <div class="card" style="display:flex;align-items:center;justify-content:space-between;background:var(--red-50);border-color:var(--red-200);margin-bottom:14px">
-                <div style="font-size:13px;font-weight:700;color:var(--red-700)">Suresh Mandi · vendor score</div>
-                <div style="font-size:15px;font-weight:800;color:var(--red-600)">0.87 ▼</div>
-              </div>
-              <button class="btn btn-primary" onclick="go('floor')">Save & next crate</button>
-            </div>
-          </div>
-
-          <!-- ============ ROSTER ============ -->
-          <div class="screen" id="s-roster">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Roster · 8 staff</div></div>
-            <div class="body">
-              <div class="card" style="background:var(--blue-50);border-color:var(--blue-200);margin-bottom:14px">
-                <div class="overline" style="color:var(--blue-700)">Predicted footfall</div>
-                <div style="font-size:13px;font-weight:600;color:var(--blue-800);margin-top:2px">Peaks 9–11 AM & 5–8 PM · staff weighted to billing</div>
-              </div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Suresh · 7 AM–3 PM</div><div class="lr-sub">Floor → billing at peak</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Anita · 9 AM–5 PM</div><div class="lr-sub">Billing</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Ravi · absent (sick)</div><div class="lr-sub">Roz: redeploy Priya to billing</div></div></div>
-              <button class="btn btn-primary" style="margin-top:10px" onclick="go('floor')">Apply Roz suggestion</button>
-            </div>
-          </div>
-
-          <!-- ============ EXPIRY ============ -->
-          <div class="screen" id="s-expiry">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Expiry · 12 near</div></div>
-            <div class="body">
-              <div style="background:var(--gray-900);border-radius:var(--r-lg);height:120px;display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;position:relative">
-                <div style="position:absolute;inset:14px;border:2px dashed rgba(255,255,255,0.3);border-radius:var(--r-md)"></div>
-                <div style="text-align:center"><div style="font-size:32px">📷</div><div style="font-size:12px;opacity:0.8">Scan barcode</div></div>
-              </div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🍅</div><div class="lr-body"><div class="lr-title">Tomato</div><div class="lr-sub">18 hrs left · 8kg</div></div><div class="lr-val" style="color:var(--red-600)">18h</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🥛</div><div class="lr-body"><div class="lr-title">Curd 200ml</div><div class="lr-sub">24 hrs left · 12 packs</div></div><div class="lr-val" style="color:var(--yellow-700)">24h</div></div>
-              <div class="card" style="background:var(--gray-100);border:none;font-size:11px;color:var(--gray-500);margin:6px 0 14px">No date on loose produce? Roz uses category-default (Fresh 1–5 days).</div>
-              <button class="btn btn-primary" onclick="go('markdown')">Go to Markdown →</button>
-            </div>
-          </div>
-
-          <!-- ============ MARKDOWN ============ -->
-          <div class="screen" id="s-markdown">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('expiry')">←</div><div class="ab-title">Markdown</div></div>
-            <div class="body">
-              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Tomato · 18h</div><div class="lr-sub">velocity × hours-to-expiry</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">30% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Curd 200ml · 24h</div><div class="lr-sub">steady clearance</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">20% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Bread 400g · 6h</div><div class="lr-sub">fast clear needed</div></div><div style="text-align:right"><div class="lr-val" style="color:var(--orange-600)">50% off</div><div style="font-size:10px;color:var(--green-600);font-weight:700">Roz pick</div></div></div>
-              <div class="card" style="background:var(--green-50);border-color:var(--green-200);text-align:center;margin:6px 0 14px"><div class="overline" style="color:var(--green-700)">Estimated recovery</div><div style="font-size:24px;font-weight:800;color:var(--green-700)">₹2,340</div></div>
-              <button class="btn btn-primary" onclick="go('floor')">Apply all · print labels</button>
-            </div>
-          </div>
-
-          <!-- ============ QUEUE ============ -->
-          <div class="screen" id="s-queue">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Queue · live</div></div>
-            <div class="body">
-              <div class="kpi-grid" style="margin-bottom:12px">
-                <div class="kpi"><div class="kpi-label">Counter 1</div><div class="kpi-val">4 min<span class="kpi-delta" style="color:var(--gray-400)">6 in q</span></div></div>
-                <div class="kpi" style="border-color:var(--red-300)"><div class="kpi-label">Counter 2</div><div class="kpi-val" style="color:var(--red-600)">7 min<span class="kpi-delta bad">11 in q</span></div></div>
-              </div>
-              <div class="alert crit" style="cursor:default"><div class="al-ic">⚠</div><div class="al-body"><div class="al-title">Avg wait &gt; 3 min</div><div class="al-sub">Roz: open Counter 3, move Anita</div></div></div>
-              <button class="btn btn-primary" style="margin-top:8px" onclick="go('floor')">Open Counter 3 · notify Anita</button>
-            </div>
-          </div>
-
-          <!-- ============ CASH RECON ============ -->
-          <div class="screen" id="s-cash">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">Cash Recon · 7 PM</div></div>
-            <div class="body">
-              <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:14px">Roz auto-matched POS vs counted. Only mismatches surface.</div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Counter 1 · ₹38,200</div><div class="lr-sub">Matched</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--green-500)"><div class="lr-body"><div class="lr-title">✓ Counter 2 · ₹42,800</div><div class="lr-sub">Matched</div></div></div>
-              <div class="lrow" style="cursor:default;border-left:3px solid var(--red-500)"><div class="lr-body"><div class="lr-title" style="color:var(--red-600)">⚠ Counter 3 · ₹150 short</div><div class="lr-sub">₹27,400 counted vs ₹27,250 POS</div></div></div>
-              <button class="btn btn-primary" style="margin-top:10px" onclick="go('reports')">Resolve & log</button>
-            </div>
-          </div>
-
-          <!-- ============ TRENDS ============ -->
-          <div class="screen" id="s-trends">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">7-Day Trends</div></div>
-            <div class="body">
-              <div class="card" style="margin-bottom:12px">
-                <div class="overline">Sales · last 7 days</div>
-                <div style="display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:10px">
-                  <div style="flex:1;background:var(--orange-200);height:55%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-200);height:62%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-300);height:70%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-300);height:58%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-400);height:80%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-500);height:100%;border-radius:4px 4px 0 0"></div>
-                  <div style="flex:1;background:var(--orange-300);height:66%;border-radius:4px 4px 0 0"></div>
-                </div>
-              </div>
-              <div class="kpi-grid" style="margin-bottom:14px">
-                <div class="kpi"><div class="kpi-label">Avg daily sales</div><div class="kpi-val">₹1.1L<span class="kpi-delta up">+5%</span></div></div>
-                <div class="kpi"><div class="kpi-label">Avg wastage</div><div class="kpi-val">2.6kg<span class="kpi-delta down">-18%</span></div></div>
-              </div>
-              <button class="btn btn-primary" onclick="go('reports')">Share to HQ</button>
-            </div>
-          </div>
-
-          <!-- ============ VENDOR SCORES ============ -->
-          <div class="screen" id="s-vendors">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Vendor Scores</div></div>
-            <div class="body">
-              <div style="display:flex;gap:8px;margin-bottom:12px"><span class="chip active">Score ▼</span><span class="chip">Last 90 days</span></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🟢</div><div class="lr-body"><div class="lr-title">Reliance Fresh</div><div class="lr-sub">On-time · low rejection</div></div><div class="lr-val" style="color:var(--green-600)">0.94</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🟢</div><div class="lr-body"><div class="lr-title">Mother Dairy</div><div class="lr-sub">Occasionally late</div></div><div class="lr-val" style="color:var(--green-600)">0.91</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🟡</div><div class="lr-body"><div class="lr-title">Suresh Mandi</div><div class="lr-sub">▼ from 0.92 · quality dips</div></div><div class="lr-val" style="color:var(--yellow-700)">0.87</div></div>
-              <div class="lrow" style="cursor:default"><div class="lr-ic">🔴</div><div class="lr-body"><div class="lr-title">Local FMCG</div><div class="lr-sub">Frequent wrong-SKU</div></div><div class="lr-val" style="color:var(--red-600)">0.72</div></div>
-            </div>
-          </div>
-
-          <!-- ============ TRAIN ROZ ============ -->
-          <div class="screen" id="s-train">
-            <div class="statusbar"><span>9:41</span><span class="sb-right">● ● ● &nbsp;4G&nbsp; ▮▮▮</span></div>
-            <div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Train Roz</div></div>
-            <div class="body">
-              <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:14px">Your overrides teach Roz. 3 recent — tell Roz why.</div>
-              <div class="card" style="margin-bottom:10px">
-                <div style="font-size:13px;font-weight:700;margin-bottom:8px">Smart Order · Tomato 40→60kg</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip active">Local event</span><span class="chip">Promo</span><span class="chip">Weather</span></div>
-              </div>
-              <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--purple-50);border-color:var(--purple-100)">
-                <div style="width:40px;height:40px;border-radius:var(--r-pill);background:var(--purple-400);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">🎙</div>
-                <div style="font-size:12px;font-weight:600">Explain in voice — Hindi or English</div>
-              </div>
-              <button class="btn btn-primary" style="margin-top:14px" onclick="go('menu')">Save feedback</button>
-            </div>
-          </div>
-
+          <div class="screen" id="s-splash"></div>
+          <div class="screen" id="s-phone"></div>
+          <div class="screen" id="s-otp"></div>
+          <div class="screen" id="s-store"></div>
+          <div class="screen" id="s-perms"></div>
+          <div class="screen" id="s-today"></div>
+          <div class="screen" id="s-order"></div>
+          <div class="screen" id="s-sku"></div>
+          <div class="screen" id="s-order-done"></div>
+          <div class="screen" id="s-floor"></div>
+          <div class="screen" id="s-dock"></div>
+          <div class="screen" id="s-quality"></div>
+          <div class="screen" id="s-roster"></div>
+          <div class="screen" id="s-expiry"></div>
+          <div class="screen" id="s-markdown"></div>
+          <div class="screen" id="s-queue"></div>
+          <div class="screen" id="s-reports"></div>
+          <div class="screen" id="s-briefing"></div>
+          <div class="screen" id="s-cash"></div>
+          <div class="screen" id="s-trends"></div>
+          <div class="screen" id="s-menu"></div>
+          <div class="screen" id="s-vendors"></div>
+          <div class="screen" id="s-settings"></div>
+          <div class="screen" id="s-train"></div>
         </div>
+        <div class="sheet-back" id="sheetBack"><div class="sheet" id="sheet"></div></div>
+        <div class="toast" id="toast"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  // ===== NAV MODEL =====
-  const TABS = [
-    { id:'today',      label:'Today',   ic:'🏠' },
-    { id:'order-list', label:'Order',   ic:'📦' },
-    { id:'floor',      label:'Floor',   ic:'📋' },
-    { id:'reports',    label:'Reports', ic:'📊' },
-    { id:'menu',       label:'Menu',    ic:'☰' }
-  ];
+/* ============================================================
+   ROZ — stateful frontend.  Everything the manager touches is real.
+============================================================ */
 
-  // Build the bottom nav inside each tab screen
-  function buildNavbars(){
-    document.querySelectorAll('.navbar-host').forEach(host => {
-      const screen = host.closest('.screen');
-      const activeTab = screen.dataset.tab;
-      host.innerHTML = '<div class="navbar">' + TABS.map(t =>
-        `<div class="nb ${t.id===activeTab?'active':''}" onclick="go('${t.id}')">
-           <span class="nb-ic">${t.ic}</span><span>${t.label}</span>
-         </div>`).join('') + '</div>';
-    });
-  }
+// ---------- SEED DATA ----------
+const CATS = ['Fresh','Dairy','Staples','FMCG','Frozen','Care'];
+const SKU_SEED = [
+  {id:'tomato',n:'Tomato',e:'🍅',c:'Fresh',u:'kg',p:24,roz:40,why:[['Saturday','+15%'],['Festival eve','+22%'],['Clear 28°','+8%']]},
+  {id:'onion',n:'Onion',e:'🧅',c:'Fresh',u:'kg',p:31,roz:35,why:[['Steady demand','flat'],['Vendor 0.94','ok']]},
+  {id:'potato',n:'Potato',e:'🥔',c:'Fresh',u:'kg',p:20,roz:30,why:[['Daily staple','flat']]},
+  {id:'coriander',n:'Coriander',e:'🌿',c:'Fresh',u:'bunch',p:10,roz:50,why:[['Festival cooking','+30%']]},
+  {id:'banana',n:'Banana',e:'🍌',c:'Fresh',u:'dozen',p:48,roz:18,why:[['Weekend','+10%']]},
+  {id:'milk',n:'Milk 500ml',e:'🥛',c:'Dairy',u:'packs',p:27,roz:60,why:[['Festival surge','+30%'],['Morning staple','high']]},
+  {id:'curd',n:'Curd 200ml',e:'🥣',c:'Dairy',u:'packs',p:20,roz:24,why:[['Summer','+12%']]},
+  {id:'paneer',n:'Paneer 200g',e:'🧀',c:'Dairy',u:'packs',p:85,roz:15,why:[['Festival cooking','+40%']]},
+  {id:'eggs',n:'Eggs',e:'🥚',c:'Dairy',u:'trays',p:78,roz:10,why:[['Steady','flat']]},
+  {id:'rice',n:'Rice 5kg',e:'🍚',c:'Staples',u:'bags',p:340,roz:12,flag:'vendor delay risk',why:[['Bulk buy','steady'],['⚠ vendor late','risk']]},
+  {id:'atta',n:'Atta 5kg',e:'🌾',c:'Staples',u:'bags',p:225,roz:14,why:[['Daily staple','high']]},
+  {id:'dal',n:'Toor Dal 1kg',e:'🫘',c:'Staples',u:'packs',p:140,roz:18,why:[['Festival','+15%']]},
+  {id:'oil',n:'Sunflower Oil 1L',e:'🛢️',c:'Staples',u:'btls',p:155,roz:20,why:[['Cooking surge','+18%']]},
+  {id:'maggi',n:'Maggi 12-pack',e:'🍜',c:'FMCG',u:'cases',p:144,roz:8,why:[['Snack demand','steady']]},
+  {id:'parleg',n:'Parle-G',e:'🍪',c:'FMCG',u:'packs',p:10,roz:80,why:[['Tea-time','high']]},
+  {id:'salt',n:'Tata Salt 1kg',e:'🧂',c:'FMCG',u:'packs',p:28,roz:15,why:[['Staple','flat']]},
+  {id:'tea',n:'Tata Tea 500g',e:'🍵',c:'FMCG',u:'packs',p:265,roz:12,why:[['Morning','steady']]},
+  {id:'peas',n:'Frozen Peas 500g',e:'🟩',c:'Frozen',u:'packs',p:90,roz:10,flag:'cold-chain cap 12',why:[['Cold-chain ceiling','cap 12']]},
+  {id:'icecream',n:'Ice Cream 1L',e:'🍨',c:'Frozen',u:'tubs',p:180,roz:8,why:[['Warm day','+14%']]},
+  {id:'soap',n:'Soap (Lux)',e:'🧼',c:'Care',u:'units',p:35,roz:24,why:[['Monthly cycle','steady']]},
+  {id:'shampoo',n:'Shampoo sachet',e:'🧴',c:'Care',u:'strips',p:60,roz:10,why:[['Sachet demand','high']]},
+];
+const CATALOG = [
+  {id:'apple',n:'Apple 1kg',e:'🍎',c:'Fresh',u:'kg',p:120},
+  {id:'lemon',n:'Lemon 250g',e:'🍋',c:'Fresh',u:'packs',p:30},
+  {id:'butter',n:'Butter 100g',e:'🧈',c:'Dairy',u:'packs',p:56},
+  {id:'sugar',n:'Sugar 1kg',e:'🍬',c:'Staples',u:'packs',p:45},
+  {id:'biscuit',n:'Good Day',e:'🍪',c:'FMCG',u:'packs',p:30},
+  {id:'toothpaste',n:'Colgate 100g',e:'🪥',c:'Care',u:'units',p:55},
+];
 
-  let history = [];
-  function go(id){
-    const cur = document.querySelector('.screen.active');
-    if (cur && cur.id !== 's-'+id) history.push(cur.id.replace('s-',''));
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const next = document.getElementById('s-'+id);
-    if (!next) return;
-    next.classList.add('active');
-    next.querySelector('.body').scrollTop = 0;
-    syncRail(id);
-  }
-  function goBack(){
-    if (!history.length){ return; }
-    const prev = history.pop();
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('s-'+prev).classList.add('active');
-    syncRail(prev);
-  }
-  function syncRail(id){
-    document.querySelectorAll('.rail-link').forEach(l => l.classList.toggle('active', l.dataset.go===id));
-  }
+function defaultState(){
+  return {
+    onboarded:false,
+    phone:'98765 43210', lang:'hi', otp:['','','','','',''],
+    perms:{camera:true,notif:true,mic:true},
+    settings:{notif:true,voice:true, sound:false},
+    offline:false,
+    order:{ items: SKU_SEED.map(s=>({...s, qty:s.roz, incl:true, reason:''})), sent:false },
+    alerts:[
+      {id:'a1',type:'crit',ic:'⏰',title:'Peak in 22 min',sub:'Move 2 staff to billing before the rush',status:'open'},
+      {id:'a2',type:'',ic:'🍅',title:'Tomato low — 45 min to empty',sub:'DC delayed · transfer or markdown',status:'open'},
+      {id:'a3',type:'info',ic:'🚚',title:'Vendor delay',sub:'Mother Dairy slips to 11 AM',status:'open'},
+    ],
+    dock:{ vendor:'Reliance Fresh', items:[
+      {n:'Tomato',exp:40,got:40,u:'kg'},{n:'Onion',exp:50,got:30,u:'kg'},
+      {n:'Coriander',exp:5,got:5,u:'kg'},{n:'Milk 500ml',exp:60,got:60,u:'pk'},
+    ], closed:false},
+    quality:{crate:1,total:14,score:0.92,reason:''},
+    roster:[{n:'Suresh',sh:'7 AM–3 PM',present:true},{n:'Anita',sh:'9 AM–5 PM',present:true},{n:'Ravi',sh:'10 AM–6 PM',present:false},{n:'Priya',sh:'on-call',present:true}],
+    markdown:[{n:'Tomato',hrs:18,pct:30,kg:8,p:24},{n:'Curd 200ml',hrs:24,pct:20,kg:0,p:20,packs:12},{n:'Bread 400g',hrs:6,pct:50,kg:0,p:40,packs:9}],
+    cash:[{n:'Counter 1',pos:38200,counted:38200},{n:'Counter 2',pos:42800,counted:42800},{n:'Counter 3',pos:27250,counted:27400}],
+    briefing:{text:"Solid day. Sales ₹1.2L (+8%) on festival-eve footfall. Wastage down to 2.1kg with on-time markdowns. Mother Dairy ran late — flagged for vendor score. Tomorrow's order is staged & ready.", notes:[], sent:false},
+    vendors:[{n:'Reliance Fresh',s:0.94,note:'On-time · low rejection'},{n:'Mother Dairy',s:0.91,note:'Occasionally late'},{n:'Suresh Mandi',s:0.87,note:'▼ quality dips'},{n:'Local FMCG',s:0.72,note:'Frequent wrong-SKU'}],
+  };
+}
 
-  document.querySelectorAll('.rail-link').forEach(l => l.addEventListener('click', () => go(l.dataset.go)));
+// ---------- STATE ----------
+const KEY='roz-app-state-v2';
+let S = load();
+function load(){ try{const x=localStorage.getItem(KEY);return x?JSON.parse(x):defaultState();}catch(e){return defaultState();} }
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+function resetApp(){ if(confirm('Reset all app data to defaults?')){ S=defaultState(); save(); go('splash'); toast('App reset'); } }
 
-  buildNavbars();
-  go('splash');
+// ---------- HELPERS ----------
+const $=id=>document.getElementById(id);
+const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function greeting(){const h=new Date().getHours();if(S.lang==='hi')return h<12?'सुप्रभात':h<17?'नमस्ते':'शुभ संध्या';return h<12?'Good morning':h<17?'Good afternoon':'Good evening';}
+function T(hi,en){return S.lang==='hi'?hi:en;}
+const SB=`<span class="sb-r">● ● ● &nbsp;4G&nbsp; ▮▮▮</span>`;
+function statusbar(light){return `<div class="statusbar ${light?'light':''}"><span>9:41</span>${SB}</div>`;}
+
+let toastTimer;
+function toast(msg,actionLabel,actionFn){
+  const t=$('toast'); t.innerHTML=esc(msg);
+  if(actionLabel&&actionFn){const b=document.createElement('button');b.textContent=actionLabel;b.onclick=()=>{actionFn();t.classList.remove('show');};t.appendChild(b);}
+  t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3600);
+}
+function openSheet(html){$('sheet').innerHTML='<div class="sheet-grip"></div>'+html;$('sheetBack').classList.add('open');}
+function closeSheet(){$('sheetBack').classList.remove('open');}
+$('sheetBack')?.addEventListener('click',e=>{if(e.target.id==='sheetBack')closeSheet();});
+
+// ---------- NAV ----------
+const TABS=[['today','🏠','Today'],['order','📦',()=>T('Order','Order')],['floor','📋','Floor'],['reports','📊','Reports'],['menu','☰','Menu']];
+function navbar(active){
+  const open=S.alerts.filter(a=>a.status==='open').length;
+  return `<div class="navwrap"><div class="navbar">`+TABS.map(([id,ic,lbl])=>{
+    const label=typeof lbl==='function'?lbl():lbl;
+    const badge=(id==='today'&&open)?'badge':'';
+    return `<div class="nb ${id===active?'active':''} ${badge}" onclick="go('${id}')"><span class="nb-ic">${ic}</span><span>${label}</span><span class="nb-dot"></span></div>`;
+  }).join('')+`</div></div>`;
+}
+
+let hist=[];
+const RENDER={};
+function go(id){
+  const cur=document.querySelector('.screen.active');
+  if(cur&&cur.id!=='s-'+id)hist.push(cur.id.replace('s-',''));
+  if(RENDER[id])$('s-'+id).innerHTML=RENDER[id]();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('s-'+id).classList.add('active');
+  const b=$('s-'+id).querySelector('.body'); if(b)b.scrollTop=0;
+  document.querySelectorAll('.rail-link').forEach(l=>l.classList.toggle('active',l.dataset.go===id));
+}
+function goBack(){ if(!hist.length){go('today');return;} const p=hist.pop(); if(RENDER[p])$('s-'+p).innerHTML=RENDER[p](); document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); $('s-'+p).classList.add('active'); document.querySelectorAll('.rail-link').forEach(l=>l.classList.toggle('active',l.dataset.go===p)); }
+function rerender(id){ if(RENDER[id])$('s-'+id).innerHTML=RENDER[id](); }
+
+/* ============================================================
+   SCREENS
+============================================================ */
+
+// ---- SPLASH ----
+RENDER.splash=()=>`${statusbar(true)}
+  <div class="body flush hero-grad" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;cursor:pointer" onclick="go('phone')">
+    <div style="background:#fff;color:var(--orange-500);font-weight:800;font-size:46px;letter-spacing:-2px;padding:18px 40px;border-radius:var(--r-2xl);box-shadow:var(--e4)">more</div>
+    <div style="margin-top:22px;font-size:18px;font-weight:700">रोज़ · Roz</div>
+    <div style="font-size:13px;opacity:.85;margin-top:4px;max-width:240px">your store, sorted — taza, sasta, ekdum&nbsp;smart</div>
+    <div style="position:absolute;bottom:60px;font-size:12px;opacity:.7">tap anywhere to start →</div>
+  </div>`;
+
+// ---- PHONE ----
+RENDER.phone=()=>`${statusbar(true)}
+  <div class="body flush hero-grad" style="display:flex;flex-direction:column;justify-content:flex-end">
+    <div style="padding:40px 24px 18px;color:#fff"><div style="font-size:33px;font-weight:800;line-height:1.13;letter-spacing:-.5px">get the <span style="font-style:italic">freshest</span><br>store data at your<br>fingertips, <span style="color:var(--orange-200)">faaaaasssttt</span></div></div>
+    <div style="background:#fff;border-radius:24px 24px 0 0;padding:22px 20px 28px">
+      <div class="overline" style="margin-bottom:8px">Store Manager Sign-In</div>
+      <div class="field" style="margin-bottom:10px"><label>${T('आपका नंबर?','can we have your number?')}</label>
+        <div class="input"><span class="in-prefix">🇮🇳 +91</span><input id="phoneInput" value="${esc(S.phone)}" inputmode="numeric" oninput="S.phone=this.value;save()"></div></div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <span class="chip ${S.lang==='hi'?'active':''}" onclick="setLang('hi')">हिंदी</span>
+        <span class="chip ${S.lang==='en'?'active':''}" onclick="setLang('en')">English</span></div>
+      <button class="btn btn-primary" onclick="go('otp')">${T('OTP भेजें','Send OTP')}</button>
+      <div style="font-size:11px;color:var(--gray-400);text-align:center;margin-top:12px">By continuing, you agree to our T&Cs and Privacy Policy.</div>
+    </div></div>`;
+function setLang(l){S.lang=l;save();rerender('phone');toast(l==='hi'?'हिंदी चुनी गई':'English selected');}
+
+// ---- OTP ---- (typeable)
+RENDER.otp=()=>{
+  const filled=S.otp.filter(x=>x!=='').length;
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('phone')">←</div><div class="ab-title">Verify</div></div>
+  <div class="body">
+    <div style="font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.15;margin:6px 0 6px">we sent you<br>an OTP <span style="color:var(--orange-500)">(onion,</span><br><span style="color:var(--orange-500);text-decoration:line-through;text-decoration-color:var(--gray-300)">tomato, potato)</span></div>
+    <div style="font-size:13px;color:var(--gray-500);margin-bottom:22px">Sent to +91 ${esc(S.phone)} · <span style="color:var(--orange-600);font-weight:600" onclick="go('phone')">change</span></div>
+    <div class="otp-row" style="margin-bottom:18px">${S.otp.map((d,i)=>`<div class="otp-box ${d?'filled':''} ${i===filled?'cursor':''}" onclick="otpFocus()">${d||'·'}</div>`).join('')}</div>
+    <input id="otpHidden" inputmode="numeric" maxlength="6" value="${S.otp.join('')}" oninput="otpType(this.value)" style="position:absolute;opacity:0;height:1px;width:1px;">
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px">
+      <button class="mini" onclick="otpAuto()">↳ Auto-fill from SMS</button>
+      <button class="mini ghost" onclick="toast('OTP resent')">Resend</button></div>
+    <button class="btn btn-primary" ${filled<4?'disabled':''} onclick="go('store')">${filled<4?'Enter code':'Verify & Continue'}</button>
+  </div>`;
+};
+function otpFocus(){const h=$('otpHidden');if(h)h.focus();}
+function otpType(v){v=v.replace(/\D/g,'').slice(0,6);S.otp=[0,1,2,3,4,5].map(i=>v[i]||'');save();rerender('otp');setTimeout(otpFocus,0);}
+function otpAuto(){S.otp=['9','4','9','1','2','6'];save();rerender('otp');toast('OTP auto-read');}
+
+// ---- STORE (editable) ----
+RENDER.store=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('otp')">←</div><div class="ab-title">Confirm store</div></div>
+  <div class="body">
+    <div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">Roz auto-detected your store from HR records. Looks right?</div>
+    <div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:14px">
+      <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--orange-50);display:flex;align-items:center;justify-content:center;font-size:26px">🏪</div>
+      <div style="flex:1"><div style="font-size:16px;font-weight:800">more. Indiranagar</div><div style="font-size:12px;color:var(--gray-500)">Store #142 · Bengaluru · Hybrid</div></div>
+      <span class="mini" onclick="editStore()">Edit</span></div>
+    <div class="card" style="margin-bottom:12px;display:flex;align-items:center;gap:14px">
+      <div style="width:52px;height:52px;border-radius:var(--r-md);background:var(--purple-50);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div>
+      <div><div style="font-size:16px;font-weight:800">Radhika Sharma</div><div style="font-size:12px;color:var(--gray-500)">Store Manager · 8 staff</div></div></div>
+    <button class="btn btn-primary" onclick="go('perms')">That's right — continue</button>
+  </div>`;
+function editStore(){openSheet(`<h3>Edit store</h3><p class="sub">Pick the correct store if Roz got it wrong.</p>
+  ${['more. Indiranagar #142','more. Koramangala #88','more. Whitefield #211'].map((s,i)=>`<div class="lrow" onclick="closeSheet();toast('Store set')"><div class="lr-body"><div class="lr-title">${s}</div></div><div class="lr-go">›</div></div>`).join('')}`);}
+
+// ---- PERMISSIONS (real toggles) ----
+RENDER.perms=()=>{
+  const P=S.perms; const all=P.camera&&P.notif&&P.mic;
+  const row=(k,ic,t,s)=>`<div class="lrow" style="cursor:default"><div class="lr-ic">${ic}</div><div class="lr-body"><div class="lr-title">${t}</div><div class="lr-sub">${s}</div></div><div class="switch ${P[k]?'on':''}" onclick="togglePerm('${k}')"></div></div>`;
+  return `${statusbar()}<div class="appbar"><div class="ab-title">Roz needs 3 things</div></div>
+  <div class="body"><div style="font-size:14px;color:var(--gray-500);margin:4px 0 18px">Toggle on so Roz can scan, alert, and listen on the floor.</div>
+  ${row('camera','📷','Camera','Scan QR challans + barcodes')}
+  ${row('notif','🔔','Notifications','Peak, stockout & vendor alerts')}
+  ${row('mic','🎙','Microphone','Voice notes on your briefing')}
+  <div style="margin-top:20px"><button class="btn btn-primary" ${all?'':'disabled'} onclick="finishOnboard()">${all?'Enter Roz':'Allow all 3 to continue'}</button></div>
+  ${!all?'<div style="text-align:center;font-size:12px;color:var(--gray-400);margin-top:10px">You can change these later in Settings</div>':''}</div>`;
+};
+function togglePerm(k){S.perms[k]=!S.perms[k];save();rerender('perms');}
+function finishOnboard(){S.onboarded=true;save();go('today');toast(T('रोज़ में आपका स्वागत है','Welcome to Roz'));}
+
+// ---- TODAY ----
+RENDER.today=()=>{
+  const open=S.alerts.filter(a=>a.status==='open');
+  const ord=orderTotals();
+  const alertCard=a=>`<div class="alert ${a.type}"><div class="al-ic">${a.ic}</div><div class="al-body"><div class="al-title">${esc(a.title)}</div><div class="al-sub">${esc(a.sub)}</div>
+    <div class="alert-actions"><button class="mini primary" onclick="actAlert('${a.id}','done')">${a.id==='a2'?'Fix it':'Accept'}</button><button class="mini" onclick="actAlert('${a.id}','snooze')">Snooze</button><button class="mini ghost" onclick="actAlert('${a.id}','dismiss')">Dismiss</button></div>
+  </div></div>`;
+  return `${statusbar()}
+  <div class="appbar"><div style="flex:1"><div style="font-size:12px;color:var(--gray-500);font-weight:600">${greeting()}, Radhika · Sat 14 Dec · ☀ 28°</div><div class="ab-title" style="font-size:22px">Today</div></div><div class="ab-icon" onclick="openVoice()">🎙</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span>✦</span><span class="overline" style="color:var(--orange-300)">Roz brief · 7:00 AM</span></div>
+      <div style="font-size:14px;line-height:1.5">Strong Saturday — festival eve. Footfall up <b style="color:var(--green-200)">~12%</b>, peak 9–11 AM. Tomorrow's order is drafted & waiting. Mother Dairy runs late today.</div>
+      <div style="margin-top:12px;font-size:12px;color:var(--orange-300);font-weight:600" onclick="go('briefing')">Open full briefing →</div></div>
+    <div class="kpi-grid" style="margin-bottom:6px">
+      <div class="kpi"><div class="kpi-label">Sales today</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
+      <div class="kpi"><div class="kpi-label">Wastage</div><div class="kpi-val">2.1kg<span class="kpi-delta up">-22%</span></div></div>
+      <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div>
+      <div class="kpi"><div class="kpi-label">Open alerts</div><div class="kpi-val">${open.length}<span class="kpi-delta" style="color:var(--gray-400)">now</span></div></div></div>
+    <div class="section-title">⚡ ${T('अभी ध्यान दें','What needs you now')}</div>
+    ${open.length?open.map(alertCard).join(''):`<div class="card" style="text-align:center;color:var(--green-700);background:var(--green-50);border-color:var(--green-200)">✓ All clear — nothing needs you right now</div>`}
+    <div class="section-title">📌 Today's touchpoints</div>
+    <div class="tp" onclick="go('order')"><div class="tp-ic">📦</div><div class="tp-body"><div class="tp-name">Smart Order</div><div class="tp-meta">${ord.cnt} SKUs · ${money(ord.val)} ${S.order.sent?'· sent ✓':'drafted'}</div><span class="tp-badge ${S.order.sent?'b-ready':'b-warn'}">${S.order.sent?'Sent':'Review by 12 PM'}</span></div><div class="tp-go">›</div></div>
+    <div class="tp" onclick="go('briefing')"><div class="tp-ic" style="background:var(--blue-50)">📝</div><div class="tp-body"><div class="tp-name">HQ Briefing</div><div class="tp-meta">${S.briefing.sent?'Sent to HQ ✓':'Auto-drafts at 7:30 PM'}</div><span class="tp-badge ${S.briefing.sent?'b-ready':'b-pending'}">${S.briefing.sent?'Done':'Pending'}</span></div><div class="tp-go">›</div></div>
+    <div class="tp" onclick="go('dock')"><div class="tp-ic" style="background:var(--green-50)">🚚</div><div class="tp-body"><div class="tp-name">Vendors today</div><div class="tp-meta">4 incoming · ${S.dock.closed?'dock closed ✓':'1 delayed'}</div><span class="tp-badge ${S.dock.closed?'b-ready':'b-warn'}">${S.dock.closed?'Done':'1 needs you'}</span></div><div class="tp-go">›</div></div>
+    <div class="tp" onclick="go('cash')"><div class="tp-ic" style="background:var(--purple-50)">💰</div><div class="tp-body"><div class="tp-name">Cash recon</div><div class="tp-meta">7 PM · 3 counters · ${cashVar()===0?'matched':money(cashVar())+' var'}</div><span class="tp-badge b-pending">Scheduled</span></div><div class="tp-go">›</div></div>
+    <div class="section-title">⚡ Quick actions</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      ${[['📥','Dock','dock'],['🔍','Quality','quality'],['🕐','Expiry','expiry'],['🎙','Voice','voice']].map(([i,l,t])=>`<div onclick="${t==='voice'?'openVoice()':"go('"+t+"')"}" style="background:var(--orange-50);border-radius:var(--r-md);padding:12px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--orange-700);cursor:pointer">${i}<br>${l}</div>`).join('')}</div>
+  </div>${navbar('today')}`;
+};
+function actAlert(id,act){
+  const a=S.alerts.find(x=>x.id===id);if(!a)return;
+  const prev=a.status; a.status=act==='snooze'?'snoozed':act==='dismiss'?'dismissed':'done'; save(); rerender('today');
+  const msg=act==='snooze'?'Snoozed 15 min':act==='dismiss'?'Dismissed':'Done ✓';
+  toast(msg,'Undo',()=>{a.status=prev;save();rerender('today');});
+}
+function openVoice(){
+  openSheet(`<h3>🎙 ${T('रोज़ से बात करें','Talk to Roz')}</h3><p class="sub">Ask anything — "today's order", "how much rice?", "open dock".</p>
+  <div class="card" style="background:var(--purple-50);border-color:var(--purple-100);text-align:center;padding:24px"><div style="font-size:40px">🎙</div><div style="font-size:13px;font-weight:700;margin-top:8px">Listening… <span style="color:var(--gray-400)">(demo)</span></div></div>
+  <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+    ${[['Show today\'s order','order'],['Open dock receive','dock'],['Go to briefing','briefing']].map(([q,t])=>`<button class="mini" style="text-align:left;padding:11px 14px" onclick="closeSheet();go('${t}')">"${q}"</button>`).join('')}</div>`);
+}
+
+// ---- SMART ORDER (fully interactive) ----
+function orderTotals(){const inc=S.order.items.filter(i=>i.incl);return{cnt:inc.length,val:inc.reduce((s,i)=>s+i.qty*i.p,0)};}
+let orderFilter='All', orderSearch='';
+RENDER.order=()=>{
+  const tot=orderTotals();
+  let items=S.order.items.slice();
+  if(orderFilter==='Flagged')items=items.filter(i=>i.flag);
+  else if(orderFilter!=='All')items=items.filter(i=>i.c===orderFilter);
+  if(orderSearch)items=items.filter(i=>i.n.toLowerCase().includes(orderSearch.toLowerCase()));
+  const chips=['All',...CATS,'Flagged'].map(c=>`<span class="chip ${orderFilter===c?'active':''}" onclick="setOrderFilter('${c}')">${c==='Flagged'?'⚠ Flagged':c}</span>`).join('');
+  const row=i=>`<div class="sku ${i.incl?'':'out'} ${i.flag?'flag':''}">
+    <div class="sku-top">
+      <div class="sku-incl ${i.incl?'on':''}" onclick="toggleIncl('${i.id}')">✓</div>
+      <span class="sku-emoji">${i.e}</span>
+      <div class="sku-info"><div class="sku-name">${esc(i.n)}</div><div class="sku-sub">${i.flag?'<span style="color:var(--yellow-700)">⚠ '+esc(i.flag)+'</span>':esc(i.c)+' · '+money(i.p)+'/'+i.u}</div></div>
+      <div style="text-align:right"><div class="sku-price"><b>${money(i.qty*i.p)}</b></div><div style="font-size:10px;color:var(--green-600);font-weight:700">${i.qty===i.roz?'Roz pick':'edited'}</div></div>
+    </div>
+    <div class="sku-bottom">
+      <span class="why" onclick="toggleWhy('${i.id}')">Why ${i.roz} ${i.u}? ▾</span>
+      <div class="stepper"><button onclick="stepQty('${i.id}',-1)">−</button><span class="sv">${i.qty} ${i.u}</span><button onclick="stepQty('${i.id}',1)">+</button></div>
+    </div>
+    <div class="why-panel" id="why-${i.id}">${(i.why||[]).map(w=>`<div class="why-row"><span class="muted">${esc(w[0])}</span><b>${esc(w[1])}</b></div>`).join('')}${i.qty!==i.roz?`<div class="why-row" style="border-top:1px dashed var(--gray-200);margin-top:4px;padding-top:6px"><span class="muted">Your override</span><b style="color:var(--orange-600)">${i.qty} vs Roz ${i.roz}</b></div>`:''}</div>
+  </div>`;
+  return `${statusbar()}
+  <div class="appbar"><div class="ab-title">Smart Order</div><div class="ab-icon" onclick="orderSearchSheet()">🔍</div></div>
+  <div class="body">
+    <div class="card hero-grad" style="border:none;color:#fff;margin-bottom:12px">
+      <div class="overline" style="color:rgba(255,255,255,.85)">Tomorrow's order · ${S.order.sent?'sent ✓':'ready to review'}</div>
+      <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><div style="font-size:30px;font-weight:800;letter-spacing:-.5px">${tot.cnt} SKUs</div><div style="font-size:16px;font-weight:700;opacity:.9">· ${money(tot.val)}</div></div>
+      <div style="font-size:12px;opacity:.85;margin-top:2px">Roz forecast across 11 factors · tap any number to change it</div></div>
+    <div class="chip-row">${chips}</div>
+    ${orderSearch?`<div style="font-size:12px;color:var(--gray-500);margin-bottom:8px">Search: "${esc(orderSearch)}" · <span style="color:var(--orange-600)" onclick="orderSearch='';rerender('order')">clear</span></div>`:''}
+    ${items.length?items.map(row).join(''):`<div class="empty"><div class="e-ic">🔍</div>No SKUs here</div>`}
+    <button class="btn btn-outline" style="margin:4px 0 8px" onclick="addItemSheet()">+ Add an item Roz missed</button>
+  </div>
+  <div class="summary-bar"><div><div class="sb-info">${tot.cnt} SKUs included</div><div class="sb-total">${money(tot.val)}</div></div><button onclick="sendOrder()">${S.order.sent?'Re-send':'Approve & send'}</button></div>
+  ${navbar('order')}`;
+};
+function setOrderFilter(c){orderFilter=c;rerender('order');}
+function toggleIncl(id){const i=S.order.items.find(x=>x.id===id);i.incl=!i.incl;save();rerender('order');}
+function stepQty(id,d){const i=S.order.items.find(x=>x.id===id);i.qty=Math.max(0,i.qty+d);if(i.qty===0)i.incl=false;save();rerender('order');}
+function toggleWhy(id){const p=$('why-'+id);if(p)p.classList.toggle('open');}
+function orderSearchSheet(){openSheet(`<h3>Search SKUs</h3><div class="input" style="margin-top:6px"><span>🔍</span><input id="srch" placeholder="Type a product…" value="${esc(orderSearch)}" oninput="orderSearch=this.value"></div><button class="btn btn-primary" style="margin-top:14px" onclick="closeSheet();rerender('order')">Search</button>`);setTimeout(()=>$('srch')?.focus(),60);}
+function addItemSheet(){
+  const inIds=S.order.items.map(i=>i.id);
+  const avail=CATALOG.filter(c=>!inIds.includes(c.id));
+  openSheet(`<h3>+ Add an item</h3><p class="sub">Roz didn't forecast these — add what you know you need.</p>
+  ${avail.length?avail.map(c=>`<div class="lrow" onclick="addItem('${c.id}')"><span class="lr-ic">${c.e}</span><div class="lr-body"><div class="lr-title">${esc(c.n)}</div><div class="lr-sub">${c.c} · ${money(c.p)}/${c.u}</div></div><span class="mini primary">Add</span></div>`).join(''):'<div class="empty">All catalog items already in your order</div>'}`);
+}
+function addItem(id){const c=CATALOG.find(x=>x.id===id);if(!c)return;S.order.items.push({...c,roz:0,qty:5,incl:true,reason:'manual add',why:[['Added by you','manual']]});save();closeSheet();rerender('order');toast(c.n+' added · set qty');}
+function sendOrder(){
+  const tot=orderTotals(); if(!tot.cnt){toast('Include at least 1 SKU');return;}
+  openSheet(`<h3>Send order to Oracle ERP?</h3><p class="sub">${tot.cnt} SKUs · ${money(tot.val)} · delivery tomorrow 7 AM</p>
+  <div class="card" style="background:var(--gray-50);border:none;margin-bottom:14px"><div style="font-size:12px;color:var(--gray-600)">Edited from Roz: <b>${S.order.items.filter(i=>i.incl&&i.qty!==i.roz).length}</b> SKUs · these teach Roz for next time.</div></div>
+  <button class="btn btn-primary" onclick="confirmSend()">Yes, send to ERP</button>
+  <button class="btn btn-ghost" style="margin-top:8px" onclick="closeSheet()">Keep editing</button>`);
+}
+function confirmSend(){S.order.sent=true;save();closeSheet();go('order-done');}
+
+RENDER['order-done']=()=>{const t=orderTotals();return `${statusbar()}
+  <div class="body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px">
+    <div style="width:88px;height:88px;border-radius:var(--r-pill);background:var(--green-500);display:flex;align-items:center;justify-content:center;font-size:44px;color:#fff;box-shadow:0 8px 24px rgba(22,163,74,.4)">✓</div>
+    <div style="font-size:24px;font-weight:800;margin-top:20px">Order sent to Oracle ERP</div>
+    <div style="font-size:14px;color:var(--gray-500);margin-top:6px">${t.cnt} SKUs · ${money(t.val)}</div>
+    <div class="card" style="width:100%;margin-top:20px;text-align:left">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Delivery</span><b>Tomorrow · 7:00 AM</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">Indent ID</span><b>#IND-2294</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span class="muted">You edited</span><b style="color:var(--orange-600)">${S.order.items.filter(i=>i.incl&&i.qty!==i.roz).length} SKUs</b></div></div>
+    <button class="btn btn-primary" style="margin-top:24px" onclick="go('today')">Back to Today</button>
+    <button class="btn btn-ghost" style="margin-top:8px" onclick="go('order')">View order</button>
+  </div>`;};
+
+// ---- FLOOR ----
+RENDER.floor=()=>`${statusbar()}<div class="appbar"><div class="ab-title">Floor tools</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--orange-50);border-color:var(--orange-100);margin-bottom:14px;display:flex;align-items:center;gap:10px"><span style="font-size:20px">📥</span><div style="font-size:13px;font-weight:600;color:var(--orange-800)">Now · 7:00 AM dock window is open</div></div>
+    ${[['📥','Dock Receive',S.dock.closed?'Closed ✓':'Scan challan · tally vs indent','dock'],['🔍','Quality Inspect','Crate '+S.quality.crate+'/'+S.quality.total+' · score '+S.quality.score.toFixed(2),'quality'],['👥','Roster',S.roster.filter(r=>r.present).length+'/'+S.roster.length+' present','roster'],['🕐','Expiry Scan','12 SKUs near · floor walk 2 PM','expiry'],['🏷','Markdown','Recover '+money(markdownRecovery()),'markdown'],['🧾','Queue Monitor','Live counter load','queue']].map(([i,t,s,g])=>`<div class="lrow" onclick="go('${g}')"><div class="lr-ic">${i}</div><div class="lr-body"><div class="lr-title">${t}</div><div class="lr-sub">${s}</div></div><div class="lr-go">›</div></div>`).join('')}
+  </div>${navbar('floor')}`;
+
+// ---- DOCK (input received qty) ----
+RENDER.dock=()=>{
+  const rows=S.dock.items.map((it,idx)=>{
+    const short=it.got<it.exp, over=it.got>it.exp;
+    return `<div class="sku ${short?'flag':''}" style="${short?'border-left-color:var(--red-500)':over?'border-left:3px solid var(--yellow-400)':'border-left:3px solid var(--green-500)'}">
+      <div class="sku-top"><div class="sku-info"><div class="sku-name">${short?'⚠ ':over?'⚠ ':'✓ '}${esc(it.n)}</div><div class="sku-sub">Indent ${it.exp} ${it.u} · ${short?'<span style="color:var(--red-600)">'+(it.exp-it.got)+' short</span>':over?'<span style="color:var(--yellow-700)">'+(it.got-it.exp)+' extra</span>':'matches'}</div></div>
+      <div class="stepper"><button onclick="dockStep(${idx},-1)">−</button><span class="sv">${it.got} ${it.u}</span><button onclick="dockStep(${idx},1)">+</button></div></div></div>`;
+  }).join('');
+  const issues=S.dock.items.filter(it=>it.got!==it.exp).length;
+  return `${statusbar(true)}<div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Dock · ${esc(S.dock.vendor)}</div></div>
+  <div class="body">
+    <div class="scan" onclick="dockScan()"><div style="font-size:38px">📷</div><div style="font-size:13px;margin-top:6px;opacity:.85">Tap to scan QR challan</div></div>
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-size:13px;font-weight:700">Tally vs indent</div><div style="font-size:13px;font-weight:800;color:${issues?'var(--red-600)':'var(--green-600)'}">${issues?issues+' mismatch':'all matched'}</div></div>
+    <div style="font-size:11px;color:var(--gray-500);margin-bottom:8px">Adjust the received count if it doesn't match what arrived:</div>
+    ${rows}
+    <button class="btn btn-outline" style="margin:4px 0" onclick="dockScan()">+ Scan another item</button>
+    <button class="btn btn-primary" style="margin-top:6px" onclick="closeDock()">Close vendor${issues?' · flag '+issues+' issue'+(issues>1?'s':''):''}</button>
+  </div>`;
+};
+function dockStep(idx,d){S.dock.items[idx].got=Math.max(0,S.dock.items[idx].got+d);save();rerender('dock');}
+function dockScan(){const pool=[['Potato',25,25,'kg'],['Curd 200ml',24,24,'pk'],['Paneer',12,10,'pk']];const used=S.dock.items.map(i=>i.n);const next=pool.find(p=>!used.includes(p[0]));if(!next){toast('All items scanned');return;}S.dock.items.push({n:next[0],exp:next[1],got:next[2],u:next[3]});save();rerender('dock');toast(next[0]+' scanned');}
+function closeDock(){const issues=S.dock.items.filter(it=>it.got!==it.exp).length;S.dock.closed=true;if(issues){const v=S.vendors.find(x=>x.n.includes('Suresh'))||S.vendors[2];}save();go('floor');toast(issues?'Vendor closed · '+issues+' flagged to score':'Vendor closed · all matched ✓');}
+
+// ---- QUALITY (pick reason, capture, score updates) ----
+RENDER.quality=()=>{
+  const reasons=['Bruised','Spoiled','Wrong SKU','Underweight','OK — accept'];
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Quality · Crate ${S.quality.crate}/${S.quality.total}</div></div>
+  <div class="body">
+    <div class="scan" style="height:140px" onclick="toast('Photo captured 📸')"><div style="font-size:34px">📷</div><div style="font-size:12px;margin-top:6px;opacity:.85">Tap to photo the crate</div></div>
+    <div class="section-title" style="margin-top:0">Verdict</div>
+    <div class="chip-row" style="flex-wrap:wrap">${reasons.map(r=>`<span class="chip ${S.quality.reason===r?'active':''}" onclick="setQReason('${r}')">${r}</span>`).join('')}</div>
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;background:${S.quality.score<0.9?'var(--red-50)':'var(--green-50)'};border-color:${S.quality.score<0.9?'var(--red-200)':'var(--green-200)'};margin:8px 0 14px">
+      <div style="font-size:13px;font-weight:700;color:${S.quality.score<0.9?'var(--red-700)':'var(--green-700)'}">Suresh Mandi · vendor score</div>
+      <div style="font-size:16px;font-weight:800;color:${S.quality.score<0.9?'var(--red-600)':'var(--green-600)'}">${S.quality.score.toFixed(2)}${S.quality.score<0.92?' ▼':''}</div></div>
+    <button class="btn btn-primary" ${S.quality.reason?'':'disabled'} onclick="saveQuality()">${S.quality.reason?'Save & next crate':'Pick a verdict'}</button>
+  </div>`;
+};
+function setQReason(r){S.quality.reason=r;save();rerender('quality');}
+function saveQuality(){
+  const rej=S.quality.reason!=='OK — accept';
+  if(rej)S.quality.score=Math.max(0.5,+(S.quality.score-0.02).toFixed(2));
+  if(S.quality.crate<S.quality.total)S.quality.crate++;
+  S.quality.reason='';save();
+  if(S.quality.crate>=S.quality.total){toast('All crates done ✓');go('floor');}
+  else{rerender('quality');toast(rej?'Rejected · score updated':'Accepted ✓');}
+}
+
+// ---- ROSTER (mark present, apply) ----
+RENDER.roster=()=>{
+  const absent=S.roster.filter(r=>!r.present);
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Roster · ${S.roster.filter(r=>r.present).length}/${S.roster.length}</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--blue-50);border-color:var(--blue-200);margin-bottom:14px"><div class="overline" style="color:var(--blue-700)">Predicted footfall</div><div style="font-size:13px;font-weight:600;color:var(--blue-700);margin-top:2px">Peaks 9–11 AM & 5–8 PM · weight staff to billing</div></div>
+    ${S.roster.map((r,i)=>`<div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">${r.present?'✓ ':'✕ '}${esc(r.n)}</div><div class="lr-sub">${esc(r.sh)}</div></div><div class="switch ${r.present?'on':''}" onclick="togglePresent(${i})"></div></div>`).join('')}
+    ${absent.length?`<div class="card" style="background:var(--orange-50);border-color:var(--orange-100);margin-top:6px"><div style="font-size:13px;font-weight:600;color:var(--orange-800)">⚠ ${absent.map(a=>a.n).join(', ')} absent — Roz suggests redeploying Priya to billing.</div><button class="btn btn-primary" style="margin-top:10px" onclick="toast('Suggestion applied ✓')">Apply suggestion</button></div>`:`<div class="card" style="background:var(--green-50);border-color:var(--green-200);margin-top:6px;text-align:center;color:var(--green-700);font-weight:600">✓ Full roster present</div>`}
+  </div>`;
+};
+function togglePresent(i){S.roster[i].present=!S.roster[i].present;save();rerender('roster');}
+
+// ---- EXPIRY ----
+RENDER.expiry=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Expiry · 12 near</div></div>
+  <div class="body">
+    <div class="scan" style="height:120px" onclick="toast('Scanned · added to list')"><div style="text-align:center"><div style="font-size:32px">📷</div><div style="font-size:12px;opacity:.85">Tap to scan barcode</div></div></div>
+    ${S.markdown.map(m=>`<div class="lrow" style="cursor:default"><div class="lr-ic">${m.n.includes('Tomato')?'🍅':m.n.includes('Curd')?'🥣':'🍞'}</div><div class="lr-body"><div class="lr-title">${esc(m.n)}</div><div class="lr-sub">${m.hrs} hrs left</div></div><div class="lr-val" style="color:${m.hrs<12?'var(--red-600)':'var(--yellow-700)'}">${m.hrs}h</div></div>`).join('')}
+    <div class="card" style="background:var(--gray-100);border:none;font-size:11px;color:var(--gray-500);margin:6px 0 14px">No date on loose produce? Roz uses category-default (Fresh 1–5 days).</div>
+    <button class="btn btn-primary" onclick="go('markdown')">Set markdowns →</button>
+  </div>`;
+
+// ---- MARKDOWN (adjustable %, live recovery) ----
+function markdownRecovery(){return S.markdown.reduce((s,m)=>{const units=m.kg||m.packs||1;return s+units*m.p*(m.pct/100)*0.8;},0);}
+RENDER.markdown=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('expiry')">←</div><div class="ab-title">Markdown</div></div>
+  <div class="body">
+    <div style="font-size:12px;color:var(--gray-500);margin:2px 0 10px">Roz suggests a % — nudge it to match your floor sense.</div>
+    ${S.markdown.map((m,i)=>`<div class="sku"><div class="sku-top"><div class="sku-info"><div class="sku-name">${esc(m.n)}</div><div class="sku-sub">${m.hrs}h left · ${m.kg?m.kg+'kg':m.packs+' packs'}</div></div><div style="text-align:right"><div style="font-size:18px;font-weight:800;color:var(--orange-600)">${m.pct}%</div><div style="font-size:10px;color:var(--gray-400)">off</div></div></div>
+      <div class="sku-bottom"><span class="muted" style="font-size:11px">${m.pct===mdSuggest(m)?'Roz pick':'edited from '+mdSuggest(m)+'%'}</span><div class="stepper"><button onclick="mdStep(${i},-5)">−</button><span class="sv">${m.pct}%</span><button onclick="mdStep(${i},5)">+</button></div></div></div>`).join('')}
+    <div class="card" style="background:var(--green-50);border-color:var(--green-200);text-align:center;margin:6px 0 14px"><div class="overline" style="color:var(--green-700)">Estimated recovery</div><div style="font-size:24px;font-weight:800;color:var(--green-700)">${money(markdownRecovery())}</div></div>
+    <button class="btn btn-primary" onclick="go('floor');toast('Markdowns applied · labels queued 🏷')">Apply all · print labels</button>
+  </div>`;
+const MD_SUGGEST={Tomato:30,'Curd 200ml':20,'Bread 400g':50};
+function mdSuggest(m){return MD_SUGGEST[m.n]||25;}
+function mdStep(i,d){S.markdown[i].pct=Math.min(70,Math.max(0,S.markdown[i].pct+d));save();rerender('markdown');}
+
+// ---- QUEUE ----
+RENDER.queue=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('floor')">←</div><div class="ab-title">Queue · live</div></div>
+  <div class="body">
+    <div class="kpi-grid" style="margin-bottom:12px">
+      <div class="kpi"><div class="kpi-label">Counter 1</div><div class="kpi-val">4 min<span class="kpi-delta" style="color:var(--gray-400)">6 in q</span></div></div>
+      <div class="kpi" style="border-color:var(--red-300)"><div class="kpi-label">Counter 2</div><div class="kpi-val" style="color:var(--red-600)">7 min<span class="kpi-delta bad">11 in q</span></div></div></div>
+    <div class="alert crit"><div class="al-ic">⚠</div><div class="al-body"><div class="al-title">Avg wait &gt; 3 min</div><div class="al-sub">Roz: open Counter 3, move Anita</div></div></div>
+    <button class="btn btn-primary" style="margin-top:8px" onclick="go('floor');toast('Counter 3 opening · Anita notified')">Open Counter 3 · notify Anita</button>
+  </div>`;
+
+// ---- REPORTS ----
+RENDER.reports=()=>`${statusbar()}<div class="appbar"><div class="ab-title">Reports</div></div>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:10px;background:${S.briefing.sent?'var(--green-50)':'var(--yellow-50)'};border-color:${S.briefing.sent?'var(--green-200)':'var(--yellow-200)'}"><span style="font-size:18px">📝</span><div style="font-size:13px;font-weight:600;color:${S.briefing.sent?'var(--green-700)':'var(--yellow-700)'}">${S.briefing.sent?"Today's HQ briefing sent ✓":"Today's HQ briefing is drafted — review by 8 PM"}</div></div>
+    <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📝</div><div class="lr-body"><div class="lr-title">EOD Brief Builder</div><div class="lr-sub">${S.briefing.sent?'Sent · '+S.briefing.notes.length+' notes':'Auto-drafted · 1-tap send'}</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="go('cash')"><div class="lr-ic">💰</div><div class="lr-body"><div class="lr-title">Cash Reconciliation</div><div class="lr-sub">${cashVar()===0?'All matched ✓':money(cashVar())+' variance'}</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="go('trends')"><div class="lr-ic">📈</div><div class="lr-body"><div class="lr-title">7-Day Trends</div><div class="lr-sub">Sales · wastage · footfall</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="go('briefing')"><div class="lr-ic">📤</div><div class="lr-body"><div class="lr-title">HQ Outbox</div><div class="lr-sub">All reports sent · read receipts</div></div><div class="lr-go">›</div></div>
+  </div>${navbar('reports')}`;
+
+// ---- BRIEFING (editable text + notes) ----
+RENDER.briefing=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="goBack()">←</div><div class="ab-title">Daily Briefing</div><div class="ab-icon">📅</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--gray-900);border:none;color:#fff;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span>✦</span><span class="overline" style="color:var(--orange-300)">Roz draft · Sat 14 Dec · tap to edit</span></div>
+      <textarea id="brfText" oninput="S.briefing.text=this.value;save()" style="width:100%;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:14px;line-height:1.6;resize:none;min-height:96px">${esc(S.briefing.text)}</textarea></div>
+    <div class="kpi-grid" style="margin-bottom:12px">
+      <div class="kpi"><div class="kpi-label">Sales</div><div class="kpi-val">₹1.2L<span class="kpi-delta up">+8%</span></div></div>
+      <div class="kpi"><div class="kpi-label">Footfall</div><div class="kpi-val">412<span class="kpi-delta up">+6%</span></div></div></div>
+    <div class="section-title" style="margin-top:6px">Your notes <span class="st-link" onclick="addNote()">+ add</span></div>
+    ${S.briefing.notes.length?S.briefing.notes.map((n,i)=>`<div class="alert info" style="cursor:default"><div class="al-ic">🗒</div><div class="al-body"><div class="al-sub" style="color:var(--gray-700);font-size:12px">${esc(n)}</div></div><span class="mini ghost" onclick="delNote(${i})">✕</span></div>`).join(''):`<div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-500)">No notes yet. Add context HQ should know — power cut, local event, etc.</div>`}
+    <div class="card" style="display:flex;align-items:center;gap:12px;background:var(--purple-50);border-color:var(--purple-100);margin-top:8px;cursor:pointer" onclick="addVoiceNote()">
+      <div style="width:44px;height:44px;border-radius:var(--r-pill);background:var(--purple-400);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff">🎙</div>
+      <div><div style="font-size:13px;font-weight:700">Add voice note</div><div style="font-size:11px;color:var(--gray-500)">Hindi or English · transcribed</div></div></div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="sendBriefing()">${S.briefing.sent?'Re-send to HQ':'Send to HQ + Area Mgr'}</button>
+  </div>`;
+function addNote(){openSheet(`<h3>Add a note</h3><p class="sub">Context for HQ.</p><div class="input"><textarea id="noteIn" rows="3" placeholder="e.g. Power cut 2:00–2:30 PM, dairy fridge affected"></textarea></div><button class="btn btn-primary" style="margin-top:12px" onclick="saveNote()">Add note</button>`);setTimeout(()=>$('noteIn')?.focus(),60);}
+function saveNote(){const v=$('noteIn').value.trim();if(!v){toast('Type something first');return;}S.briefing.notes.push(v);save();closeSheet();rerender('briefing');toast('Note added');}
+function addVoiceNote(){S.briefing.notes.push('🎙 "Power cut do baje, dairy fridge thoda affected hua" (transcribed)');save();rerender('briefing');toast('Voice note transcribed');}
+function delNote(i){S.briefing.notes.splice(i,1);save();rerender('briefing');}
+function sendBriefing(){S.briefing.sent=true;save();toast('Briefing sent to HQ ✓ · read at 8:14 PM');go('reports');}
+
+// ---- CASH (input counted, live variance) ----
+function cashVar(){return S.cash.reduce((s,c)=>s+(c.counted-c.pos),0);}
+RENDER.cash=()=>{
+  const rows=S.cash.map((c,i)=>{const v=c.counted-c.pos;const ok=v===0;
+    return `<div class="sku" style="border-left:3px solid ${ok?'var(--green-500)':'var(--red-500)'}">
+      <div class="sku-top"><div class="sku-info"><div class="sku-name">${ok?'✓ ':'⚠ '}${esc(c.n)}</div><div class="sku-sub">POS ${money(c.pos)} · ${ok?'matched':'<span style="color:var(--red-600)">'+(v>0?'+':'')+money(v)+'</span>'}</div></div>
+      <div class="stepper"><button onclick="cashStep(${i},-50)">−</button><span class="sv">${money(c.counted)}</span><button onclick="cashStep(${i},50)">+</button></div></div></div>`;
+  }).join('');
+  const v=cashVar();
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">Cash Recon · 7 PM</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:12px">Roz pulled POS totals. Enter what you counted — variance updates live.</div>
+    ${rows}
+    <div class="card" style="text-align:center;margin:6px 0 14px;background:${v===0?'var(--green-50)':'var(--red-50)'};border-color:${v===0?'var(--green-200)':'var(--red-200)'}"><div class="overline" style="color:${v===0?'var(--green-700)':'var(--red-700)'}">Total variance</div><div style="font-size:24px;font-weight:800;color:${v===0?'var(--green-700)':'var(--red-700)'}">${v===0?'₹0 · balanced':(v>0?'+':'')+money(v)}</div></div>
+    <button class="btn btn-primary" onclick="go('reports');toast(cashVar()===0?'Cash balanced ✓':'Logged with variance note')">${v===0?'Confirm & log':'Resolve & log variance'}</button>
+  </div>`;
+};
+function cashStep(i,d){S.cash[i].counted=Math.max(0,S.cash[i].counted+d);save();rerender('cash');}
+
+// ---- TRENDS (toggle metric) ----
+let trendMetric='Sales';
+RENDER.trends=()=>{
+  const data={Sales:[55,62,70,58,80,100,66],Wastage:[70,55,48,60,40,30,52],Footfall:[60,72,68,75,85,95,70]};
+  const bars=data[trendMetric].map(h=>`<div style="flex:1;background:var(--orange-${h>85?'500':h>65?'400':'300'});height:${h}%;border-radius:4px 4px 0 0"></div>`).join('');
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('reports')">←</div><div class="ab-title">7-Day Trends</div></div>
+  <div class="body">
+    <div class="chip-row">${['Sales','Wastage','Footfall'].map(m=>`<span class="chip ${trendMetric===m?'active':''}" onclick="trendMetric='${m}';rerender('trends')">${m}</span>`).join('')}</div>
+    <div class="card" style="margin-bottom:12px"><div class="overline">${trendMetric} · last 7 days</div><div style="display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:12px">${bars}</div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--gray-400);margin-top:6px"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></div>
+    <button class="btn btn-primary" onclick="go('reports');toast('Shared to HQ ✓')">Share to HQ</button>
+  </div>`;
+};
+
+// ---- MENU ----
+RENDER.menu=()=>`${statusbar()}<div class="appbar"><div class="ab-title">Menu</div></div>
+  <div class="body">
+    <div class="card" style="display:flex;align-items:center;gap:14px;margin-bottom:8px"><div style="width:52px;height:52px;border-radius:var(--r-pill);background:var(--purple-100);display:flex;align-items:center;justify-content:center;font-size:26px">👩</div><div style="flex:1"><div style="font-size:16px;font-weight:800">Radhika Sharma</div><div style="font-size:12px;color:var(--gray-500)">more. Indiranagar #142</div></div><div style="font-size:11px;font-weight:700;color:${S.offline?'var(--yellow-600)':'var(--green-600)'}">${S.offline?'⚡ Offline':'✓ Synced'}</div></div>
+    <div class="lrow" onclick="go('vendors')"><div class="lr-ic">⭐</div><div class="lr-body"><div class="lr-title">Vendor Scores</div><div class="lr-sub">90-day reliability ranking</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="go('train')"><div class="lr-ic">🧠</div><div class="lr-body"><div class="lr-title">Train Roz</div><div class="lr-sub">${S.order.items.filter(i=>i.qty!==i.roz).length} overrides this session</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="go('settings')"><div class="lr-ic">⚙️</div><div class="lr-body"><div class="lr-title">Settings</div><div class="lr-sub">Language · notifications · offline</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="toast('FAQ · WhatsApp helpline opening')"><div class="lr-ic">❓</div><div class="lr-body"><div class="lr-title">Help & Support</div><div class="lr-sub">FAQ · WhatsApp helpline</div></div><div class="lr-go">›</div></div>
+    <div class="lrow" onclick="signOut()"><div class="lr-ic">🚪</div><div class="lr-body"><div class="lr-title">Sign Out</div></div><div class="lr-go">›</div></div>
+  </div>${navbar('menu')}`;
+function signOut(){openSheet(`<h3>Sign out?</h3><p class="sub">Your data stays saved on this device.</p><button class="btn btn-primary" onclick="closeSheet();go('splash')">Sign out</button><button class="btn btn-ghost" style="margin-top:8px" onclick="closeSheet()">Cancel</button>`);}
+
+// ---- VENDORS ----
+RENDER.vendors=()=>`${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Vendor Scores</div></div>
+  <div class="body"><div style="display:flex;gap:8px;margin-bottom:12px"><span class="chip active">Score ▼</span><span class="chip">Last 90 days</span></div>
+  ${S.vendors.slice().sort((a,b)=>b.s-a.s).map(v=>`<div class="lrow" onclick="toast('${esc(v.n)} · history opening')"><div class="lr-ic">${v.s>0.9?'🟢':v.s>0.8?'🟡':'🔴'}</div><div class="lr-body"><div class="lr-title">${esc(v.n)}</div><div class="lr-sub">${esc(v.note)}</div></div><div class="lr-val" style="color:${v.s>0.9?'var(--green-600)':v.s>0.8?'var(--yellow-700)':'var(--red-600)'}">${v.s.toFixed(2)}</div></div>`).join('')}</div>`;
+
+// ---- SETTINGS (real toggles) ----
+RENDER.settings=()=>{
+  const sw=(k,obj,t,s)=>`<div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">${t}</div><div class="lr-sub">${s}</div></div><div class="switch ${obj[k]?'on':''}" onclick="toggleSetting('${k}')"></div></div>`;
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Settings</div></div>
+  <div class="body">
+    <div class="section-title" style="margin-top:0">Language</div>
+    <div style="display:flex;gap:8px;margin-bottom:6px"><span class="chip ${S.lang==='hi'?'active':''}" onclick="setLangSetting('hi')">हिंदी</span><span class="chip ${S.lang==='en'?'active':''}" onclick="setLangSetting('en')">English</span></div>
+    <div class="section-title">Notifications</div>
+    ${sw('notif',S.settings,'Push alerts','Peak, stockout, vendor')}
+    ${sw('voice',S.settings,'Voice prompts','Roz speaks key alerts')}
+    ${sw('sound',S.settings,'Alert sound','Chime on critical alerts')}
+    <div class="section-title">Connectivity</div>
+    <div class="lrow" style="cursor:default"><div class="lr-body"><div class="lr-title">Simulate offline</div><div class="lr-sub">See how Roz queues actions</div></div><div class="switch ${S.offline?'on':''}" onclick="toggleOffline()"></div></div>
+  </div>`;
+};
+function toggleSetting(k){S.settings[k]=!S.settings[k];save();rerender('settings');toast(S.settings[k]?'On':'Off');}
+function setLangSetting(l){S.lang=l;save();rerender('settings');toast(l==='hi'?'हिंदी':'English');}
+function toggleOffline(){S.offline=!S.offline;save();document.body.classList.toggle('offline',S.offline);rerender('settings');toast(S.offline?'Offline — actions will queue':'Back online — syncing');}
+
+// ---- TRAIN ROZ ----
+RENDER.train=()=>{
+  const overrides=S.order.items.filter(i=>i.qty!==i.roz);
+  return `${statusbar()}<div class="appbar"><div class="ab-back" onclick="go('menu')">←</div><div class="ab-title">Train Roz</div></div>
+  <div class="body">
+    <div class="card" style="background:var(--gray-100);border:none;font-size:12px;color:var(--gray-600);margin-bottom:14px">Your overrides teach Roz. ${overrides.length} this session — tell Roz why so next forecast is sharper.</div>
+    ${overrides.length?overrides.map(i=>`<div class="card" style="margin-bottom:10px"><div style="font-size:13px;font-weight:700;margin-bottom:8px">${i.e} ${esc(i.n)} · Roz ${i.roz} → you ${i.qty} ${i.u}</div><div class="chip-row" style="flex-wrap:wrap">${['Local event','Promo','Weather','Festival','Gut feel'].map(r=>`<span class="chip ${i.reason===r?'active':''}" onclick="setTrainReason('${i.id}','${r}')">${r}</span>`).join('')}</div></div>`).join(''):`<div class="empty"><div class="e-ic">✓</div>No overrides yet — you've trusted every Roz pick.</div>`}
+    ${overrides.length?`<button class="btn btn-primary" style="margin-top:6px" onclick="go('menu');toast('Feedback saved · Roz will learn')">Save feedback</button>`:''}
+  </div>`;
+};
+function setTrainReason(id,r){const i=S.order.items.find(x=>x.id===id);i.reason=r;save();rerender('train');}
+
+// ---------- INIT ----------
+document.querySelectorAll('.rail-link').forEach(l=>l.addEventListener('click',()=>go(l.dataset.go)));
+if(S.offline)document.body.classList.add('offline');
+go(S.onboarded?'today':'splash');
 </script>
 </body>
 </html>
